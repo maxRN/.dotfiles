@@ -122,3 +122,5 @@ export PATH="/opt/homebrew/opt/libiconv/bin:$PATH"
 export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
 alias co='git checkout'
+alias gdp='git diff -p'
+alias glp='git log -p'

@@ -25,25 +25,20 @@ return require("packer").startup(function(use)
     use("neovim/nvim-lspconfig")
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use("nvim-lua/plenary.nvim")
-    use {
-  'nvim-telescope/telescope.nvim',
-  requires = { {'nvim-lua/plenary.nvim'} }
-}
+    use {'nvim-telescope/telescope.nvim', requires = { {'nvim-lua/plenary.nvim'} }}
     use("nvim-telescope/telescope-file-browser.nvim")
     use("kyazdani42/nvim-web-devicons")
     use("jose-elias-alvarez/null-ls.nvim")
     use("jose-elias-alvarez/nvim-lsp-ts-utils")
     use("andweeb/presence.nvim")
-        use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    }
+    use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use("nvim-treesitter/playground")
     use("windwp/nvim-autopairs" )
     use("windwp/nvim-ts-autotag")
     use("ThePrimeagen/harpoon")
     use("numToStr/Comment.nvim")
     use("JoosepAlviste/nvim-ts-context-commentstring")
-    use("abecodes/tabout.nvim")
+    use{"abecodes/tabout.nvim", wants={'nvim-treesitter'}, after={'nvim-cmp'}}
 
     -- auto completion
     use("L3MON4D3/LuaSnip")
@@ -56,4 +51,5 @@ return require("packer").startup(function(use)
     use("hrsh7th/cmp-nvim-lua")
 
     use "rafamadriz/friendly-snippets"
+    use('crispgm/telescope-heading.nvim')
 end)

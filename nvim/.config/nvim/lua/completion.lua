@@ -51,8 +51,8 @@ cmp.setup({
 			c = cmp.mapping.close(),
 
 		}),
-		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-		["<Tab>"] = cmp.mapping(function(fallback)
+		["<C-q>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<C-n>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			else
@@ -62,7 +62,7 @@ cmp.setup({
 			"i",
 			"s",
 		}),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
+		["<C-p>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
 			else
@@ -72,7 +72,7 @@ cmp.setup({
 	},
 	sources = {
 		{ name = "nvim_lsp" },
-		{ name = "luasnip" }, -- For luasnip users.
+		{ name = "luasnip" },
         { name = "nvim_lua"},
 		{ name = "path" },
 		{ name = "buffer", keyword_length = 3 },
