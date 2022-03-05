@@ -1,6 +1,6 @@
 let mapleader = " "
 "from primeagen https://github.com/ThePrimeagen/.dotfiles/blob/master/nvim/.config/nvim/init.vim
-"see also the youtube video: https://www.youtube.com/watch?v=hSHATqh7svM
+"see also the youtube video: https://www.youtube.com/watch?v=hSHATqh8svM
 nnoremap Y y$
 
 inoremap . .<c-g>u
