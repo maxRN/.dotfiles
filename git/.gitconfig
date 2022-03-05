@@ -8,8 +8,6 @@
 	email = github@maxrn.net
 [init]
 	defaultBranch = main
-[credential "https://source.developers.google.com"]
-	helper = gcloud.sh
 [core]
 	excludesfile = /Users/maxrn/.gitignore_global
 	editor = nvim
