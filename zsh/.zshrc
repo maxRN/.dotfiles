@@ -124,3 +124,5 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 alias co='git checkout'
 alias gdp='git diff -p'
 alias glp='git log -p'
+alias gsp='git diff --staged -p'
+export GPG_TTY=$(tty)
