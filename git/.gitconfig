@@ -11,3 +11,5 @@
 [core]
 	excludesfile = /Users/maxrn/.gitignore_global
 	editor = nvim
+[commit]
+	gpgsign = true
