@@ -8,7 +8,7 @@ inoremap , ,<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
 
-nnoremap <leader>en <cmd>tabnew ~/.dotfiles/nvim/.config/nvim/<cr>
+nnoremap <leader>en <cmd>tabnew ~/.config/nvim/<cr>
 
 " nnoremap J :m '>+1<CR>gv=gv
 " vnoremap K :m '<-2<CR>gv=gv
