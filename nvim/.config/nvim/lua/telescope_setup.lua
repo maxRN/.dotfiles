@@ -1,14 +1,14 @@
-require("telescope").load_extension("fzf")
-require("telescope").load_extension("file_browser")
-require("telescope").load_extension("heading")
 require("telescope").setup({
 	extensions = {
 		tele_tabby = {
 			use_highlighter = true,
 		},
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown({
+				-- even more opts
+			}),
+		},
 	},
-})
-require("telescope").setup({
 	pickers = {
 		buffers = {
 			mappings = {
@@ -19,3 +19,7 @@ require("telescope").setup({
 		},
 	},
 })
+require("telescope").load_extension("fzf")
+require("telescope").load_extension("file_browser")
+require("telescope").load_extension("heading")
+require("telescope").load_extension("ui-select")

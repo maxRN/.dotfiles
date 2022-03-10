@@ -8,38 +8,53 @@ vim.cmd([[
 ]])
 
 return require("packer").startup(function(use)
-	-- Packer can manage itself
+	-- Packer MUST manage itself
 	use("wbthomason/packer.nvim")
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
 
 	-- see here: https://github.com/iamcco/markdown-preview.nvim/issues/319
 	-- if it does not work: run :mess after :MarkdownPreview to see the error output
 	-- fix: cd into markdown-preview.nvim directory and run yarn install && yarn upgrade
 	use({ "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" })
+
+	-- themeing themes color icons status line
 	use({ "ellisonleao/gruvbox.nvim" })
+	use("tjdevries/colorbuddy.nvim")
+	use("bkegley/gloombuddy")
+	use("kyazdani42/nvim-web-devicons")
+	use({
+		"nvim-lualine/lualine.nvim",
+		requires = { "kyazdani42/nvim-web-devicons", opt = true },
+	})
+
+	--git stuff
 	use("tpope/vim-fugitive")
 
-	use("neovim/nvim-lspconfig")
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
+	-- other stuff
 	use("nvim-lua/plenary.nvim")
+	use("andweeb/presence.nvim")
+	use("ThePrimeagen/harpoon")
+
+	-- Telescope
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
 	use("nvim-telescope/telescope-file-browser.nvim")
 	use("TC72/telescope-tele-tabby.nvim")
-	use("kyazdani42/nvim-web-devicons")
+	use("nvim-telescope/telescope-ui-select.nvim")
+	use("crispgm/telescope-heading.nvim")
+
+	-- LSP stuff
+	use("neovim/nvim-lspconfig")
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("jose-elias-alvarez/nvim-lsp-ts-utils")
-	use("andweeb/presence.nvim")
+
+	-- TreeSitter stuff and comment
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 	use("nvim-treesitter/playground")
 	use("windwp/nvim-autopairs")
 	use("windwp/nvim-ts-autotag")
-	use("ThePrimeagen/harpoon")
+	use({ "abecodes/tabout.nvim", wants = { "nvim-treesitter" }, after = { "nvim-cmp" } })
 	use("numToStr/Comment.nvim")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
-	use({ "abecodes/tabout.nvim", wants = { "nvim-treesitter" }, after = { "nvim-cmp" } })
 
 	-- auto completion
 	use("L3MON4D3/LuaSnip")
@@ -51,6 +66,6 @@ return require("packer").startup(function(use)
 	use("saadparwaiz1/cmp_luasnip")
 	use("hrsh7th/cmp-nvim-lua")
 
+	-- snippets
 	use("rafamadriz/friendly-snippets")
-	use("crispgm/telescope-heading.nvim")
 end)
