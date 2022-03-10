@@ -16,3 +16,6 @@ require("nvim-web-devicons").setup({
 })
 
 require("lualine").setup({ options = { theme = "gruvbox_dark" } })
+
+-- When opening a file, always jump to the last known cursor position.
+vim.cmd([[autocmd bufreadpost * if line("'\"") > 0 && line("'\"") <= line("$") | execute 'normal! g`"' | endif]])
