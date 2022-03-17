@@ -9,7 +9,5 @@
 [init]
 	defaultBranch = main
 [core]
-	excludesfile = /Users/maxrn/.gitignore_global
+	excludesfile = .gitignore_global
 	editor = nvim
-[commit]
-	gpgsign = true
