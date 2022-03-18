@@ -52,7 +52,8 @@ null_ls.setup({
 		require("null-ls").builtins.completion.spell.with({
 			filetypes = { "markdown" },
 		}),
-		require("null-ls").builtins.formatting.prettier,
+		-- make sure to npm i -g prettier @fsouza/prettierd
+		require("null-ls").builtins.formatting.prettierd,
 	},
 	on_attach = on_attach,
 })
