@@ -11,3 +11,5 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	editor = nvim
+[alias]
+    mgd = "!git merge $1 && git branch -d $1; #"
