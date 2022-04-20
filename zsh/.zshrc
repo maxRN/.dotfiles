@@ -125,4 +125,5 @@ alias co='git checkout'
 alias gdp='git diff -p'
 alias glp='git log -p'
 alias gsp='git diff --staged -p'
+alias gbl='git branch --list'
 export GPG_TTY=$(tty)
