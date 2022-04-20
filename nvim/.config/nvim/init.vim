@@ -28,6 +28,8 @@ set shiftwidth=4
 set expandtab
 set nowrap
 set relativenumber
+" For auto save
+set autowriteall
 
 " Find files using Telescope command-line sugar.
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
