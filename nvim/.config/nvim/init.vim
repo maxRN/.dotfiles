@@ -30,6 +30,7 @@ set nowrap
 set relativenumber
 " For auto save
 set autowriteall
+set statusline=3
 
 " Find files using Telescope command-line sugar.
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
