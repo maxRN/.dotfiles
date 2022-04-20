@@ -27,6 +27,7 @@ set number
 set shiftwidth=4
 set expandtab
 set nowrap
+set relativenumber
 
 " Find files using Telescope command-line sugar.
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
