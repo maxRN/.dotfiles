@@ -88,22 +88,6 @@ lspconfig.tsserver.setup({
 	},
 })
 
-lspconfig.sumneko_lua.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	flags = {
-		-- This will be the default in neovim 0.7+
-		debounce_text_changes = 150,
-	},
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = { "vim" },
-			},
-		},
-	},
-})
-
 require("Comment").setup({
 	pre_hook = function(ctx)
 		local U = require("Comment.utils")
@@ -137,7 +121,7 @@ require("nvim-treesitter.configs").setup({
 		},
 	},
 	-- One of "all", "maintained" (parsers with maintainers), or a list of languages
-	ensure_installed = "maintained",
+	ensure_installed = "all",
 
 	autotag = {
 		enable = true,
