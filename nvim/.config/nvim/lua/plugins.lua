@@ -16,7 +16,7 @@ return require("packer").startup(function(use)
 	-- fix: cd into markdown-preview.nvim directory and run yarn install && yarn upgrade
 	use({ "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" })
 
-	-- themeing themes color icons status line
+	-- theming themes color icons status line
 	use({ "ellisonleao/gruvbox.nvim" })
 	use("tjdevries/colorbuddy.nvim")
 	use("bkegley/gloombuddy")
@@ -39,7 +39,7 @@ return require("packer").startup(function(use)
 	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
 	use("nvim-telescope/telescope-file-browser.nvim")
 	use("TC72/telescope-tele-tabby.nvim")
-	use("nvim-telescope/telescope-ui-select.nvim")
+	-- use("nvim-telescope/telescope-ui-select.nvim")
 	use("crispgm/telescope-heading.nvim")
 
 	-- LSP stuff
