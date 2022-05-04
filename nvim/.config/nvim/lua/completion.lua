@@ -5,43 +5,41 @@ local cmp = require("cmp")
 local ls = require("luasnip")
 
 local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
+	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
 _G.tab_complete = function()
-    if ls and ls.expand_or_jumpable() then
-        return t("<Plug>luasnip-expand-or-jump")
-    else
-        cmp.complete()
-    end
-    return ""
+	if ls and ls.expand_or_jumpable() then
+		return t("<Plug>luasnip-expand-or-jump")
+	else
+		cmp.complete()
+	end
+	return ""
 end
 
 _G.s_tab_complete = function()
-    if ls and ls.jumpable(-1) then
-        return t("<Plug>luasnip-jump-prev")
-    end
-    return ""
+	if ls and ls.jumpable(-1) then
+		return t("<Plug>luasnip-jump-prev")
+	end
+	return ""
 end
-vim.api.nvim_set_keymap("i", "<C-k>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<C-k>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<C-j>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<C-j>", "v:lua.s_tab_complete()", {expr = true})
-
+vim.api.nvim_set_keymap("i", "<C-k>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("s", "<C-k>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("i", "<C-j>", "v:lua.s_tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("s", "<C-j>", "v:lua.s_tab_complete()", { expr = true })
 
 cmp.setup({
 	experimental = {
-		ghost_text = true,
+		ghost_text = false,
 	},
-	native_menu = false,
-
 	snippet = {
 		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
 			require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
 		end,
 	},
-	mapping = {
+	preselect = cmp.PreselectMode.Item,
+	mapping = cmp.mapping.preset.insert({
 		["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 		["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
 		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -49,9 +47,9 @@ cmp.setup({
 		["<C-e>"] = cmp.mapping({
 			i = cmp.mapping.abort(),
 			c = cmp.mapping.close(),
-
 		}),
-		["<C-q>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		-- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<C-q>"] = cmp.mapping.confirm({ select = true }),
 		["<C-n>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
@@ -69,11 +67,11 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-	},
+	}),
 	sources = {
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
-        { name = "nvim_lua"},
+		{ name = "nvim_lua" },
 		{ name = "path" },
 		{ name = "buffer", keyword_length = 3 },
 	},
@@ -87,5 +85,3 @@ cmp.setup({
 		},
 	},
 })
-
-

@@ -31,6 +31,22 @@ set relativenumber
 " For auto save
 set autowriteall
 set statusline=3
+" Change where new split windows open
+set splitright
+set splitbelow
+set encoding=utf-8
+set fileencoding=utf-8
+
+" Abbreviations and fixes for common spelling errors
+iab teh the
+
+inoremap ##O <C-v>u00d6
+inoremap ##o <C-v>u00f6
+inoremap ##A <C-v>u00c4
+inoremap ##a <C-v>u00e4
+inoremap ##U <C-v>u00dc
+inoremap ##u <C-v>u00fc
+inoremap ##s <C-v>u00df
 
 " Find files using Telescope command-line sugar.
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
@@ -45,6 +61,7 @@ nnoremap <leader>hh <cmd>Telescope heading<cr>
 lua require('plugins')
 lua require('globals')
 
+lua require('treesitter')
 lua require('lsp')
 lua require('init')
 lua require('telescope_setup')
