@@ -69,7 +69,7 @@ lua require('completion')
 lua require('luasnipConfig')
 
 set termguicolors
-set background = "dark"
+set background=light
 colorscheme gruvbox
 highlight Normal     ctermbg=NONE guibg=NONE
 set colorcolumn=80
