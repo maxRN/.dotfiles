@@ -14,7 +14,7 @@ return require("packer").startup(function(use)
 	-- see here: https://github.com/iamcco/markdown-preview.nvim/issues/319
 	-- if it does not work: run :mess after :MarkdownPreview to see the error output
 	-- fix: cd into markdown-preview.nvim directory and run yarn install && yarn upgrade
-	use({ "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" })
+	use({ "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install && yarn upgrade" })
 
 	-- theming themes color icons status line
 	use({ "ellisonleao/gruvbox.nvim" })
