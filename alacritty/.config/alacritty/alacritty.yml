@@ -9,6 +9,13 @@ font:
     style: Regular
   size: 20.0
 # Colors (Gruvbox light)
+
+key_bindings:
+  - { key: F, mods: Alt, chars: "\x1bf" }
+  - { key: B, mods: Alt, chars: "\x1bb" }
+  - { key: C, mods: Alt, chars: "\x1bc" }
+  - { key: Q, mods: Control, chars: "\x11" }
+
 colors:
   # Default colors
   primary:
