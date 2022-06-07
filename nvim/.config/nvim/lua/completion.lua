@@ -29,9 +29,6 @@ vim.api.nvim_set_keymap("i", "<C-j>", "v:lua.s_tab_complete()", { expr = true })
 vim.api.nvim_set_keymap("s", "<C-j>", "v:lua.s_tab_complete()", { expr = true })
 
 cmp.setup({
-	experimental = {
-		ghost_text = false,
-	},
 	snippet = {
 		-- REQUIRED - you must specify a snippet engine
 		expand = function(args)
