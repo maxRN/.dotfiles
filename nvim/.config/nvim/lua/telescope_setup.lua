@@ -10,6 +10,20 @@ require("telescope").setup({
 		}, ]]
 	},
 	pickers = {
+		find_files = {
+			theme = "dropdown",
+			previewer = false,
+			layout_config = {
+				width = 100,
+				prompt_position = "top",
+				anchor = "N",
+			},
+			mappings = {
+				i = {
+					["?"] = require("telescope.actions.layout").toggle_preview,
+				},
+			},
+		},
 		buffers = {
 			mappings = {
 				i = {
@@ -22,4 +36,3 @@ require("telescope").setup({
 require("telescope").load_extension("fzf")
 require("telescope").load_extension("file_browser")
 require("telescope").load_extension("heading")
--- require("telescope").load_extension("ui-select")
