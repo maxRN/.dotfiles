@@ -60,7 +60,7 @@ null_ls.setup({
 local lspconfig = require("lspconfig")
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "gopls", "tailwindcss", "yamlls" }
+local servers = { "gopls", "tailwindcss", "yamlls", "phpactor" }
 for _, lsp in pairs(servers) do
 	lspconfig[lsp].setup({
 		capabilities = capabilities,
