@@ -50,9 +50,10 @@ inoremap ##s <C-v>u00df
 
 " Find files using Telescope command-line sugar.
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>rg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>t <cmd>Telescope tele_tabby list<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>fb <cmd>Telescope file_browser<cr>
 nnoremap <leader>fr <cmd>lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <leader>o <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
 nnoremap <leader>hh <cmd>Telescope heading<cr>
