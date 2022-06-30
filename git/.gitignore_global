@@ -1,2 +1,11 @@
 workspace.code-workspace
 .vscode/
+
+*.zoekt
+
+# SonarQube
+.scannerwork/
+
+b
+
+userbundle/

@@ -119,6 +119,6 @@ alias gbl='git branch --list'
 export GPG_TTY=$(tty)
 
 export PATH="$PATH:$HOME/src/sonar-scanner-4.7.0.2747-macosx/bin"
+export PATH="$PATH:$HOME/.dotfiles/bin"
 
-alias dcb='docker compose build'
-alias dbu='docker compose build && docker compose up -d'
+alias dbu='docker compose up -d --build'

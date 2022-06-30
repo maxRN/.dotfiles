@@ -10,6 +10,14 @@ require("telescope").setup({
 		}, ]]
 	},
 	pickers = {
+		lsp_references = {
+			theme = "dropdown",
+			layout_config = {
+				width = 100,
+				prompt_position = "top",
+				anchor = "N",
+			},
+		},
 		find_files = {
 			theme = "dropdown",
 			previewer = false,

@@ -31,8 +31,9 @@ return require("packer").startup(function(use)
 
 	-- other stuff
 	use("nvim-lua/plenary.nvim")
+	-- Discord
 	use("andweeb/presence.nvim")
-	use("ThePrimeagen/harpoon")
+	-- use("ThePrimeagen/harpoon")
 
 	-- Telescope
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
@@ -47,6 +48,9 @@ return require("packer").startup(function(use)
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("jose-elias-alvarez/nvim-lsp-ts-utils")
 
+	-- Code highlighting
+	use("yamatsum/nvim-cursorline")
+
 	-- TreeSitter stuff and comment
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 	use("nvim-treesitter/playground")
@@ -55,6 +59,13 @@ return require("packer").startup(function(use)
 	use({ "abecodes/tabout.nvim", wants = { "nvim-treesitter" }, after = { "nvim-cmp" } })
 	use("numToStr/Comment.nvim")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
+	use({
+		"ThePrimeagen/refactoring.nvim",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-treesitter/nvim-treesitter" },
+		},
+	})
 
 	-- auto completion
 	use("L3MON4D3/LuaSnip")

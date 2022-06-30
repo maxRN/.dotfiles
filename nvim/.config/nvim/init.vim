@@ -8,10 +8,19 @@ inoremap , ,<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
 
-nnoremap <leader>en <cmd>tabnew ~/.config/nvim/<cr>
+nnoremap y "*y
+vnoremap y "*y
 
-" nnoremap J :m '>+1<CR>gv=gv
-" vnoremap K :m '<-2<CR>gv=gv
+nnoremap <leader>pw "_dwP
+vnoremap <leader>p "_dP
+
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+nnoremap <leader>en <cmd>Telescope find_files cwd=~/.config/nvim/<cr>
+
+nnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
 " inoremap <C-j> <esc>:m .+1<CR>==
 " inoremap <C-k> <esc>:m .-2<CR>==
 " nnoremap <leader>j :m .+1<CR>==
@@ -39,6 +48,7 @@ set fileencoding=utf-8
 
 " Abbreviations and fixes for common spelling errors
 iab teh the
+iab cosnt const
 
 inoremap ##O <C-v>u00d6
 inoremap ##o <C-v>u00f6
@@ -68,9 +78,10 @@ lua require('init')
 lua require('telescope_setup')
 lua require('completion')
 lua require('luasnipConfig')
+lua require('cursorline')
 
 set termguicolors
-set background=light
+set background=dark
 colorscheme gruvbox
 highlight Normal     ctermbg=NONE guibg=NONE
 set colorcolumn=80
