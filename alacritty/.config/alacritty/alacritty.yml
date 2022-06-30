@@ -1,4 +1,3 @@
-#window:
 #startup_mode: SimpleFullscreen
 scrolling:
   history: 10000
