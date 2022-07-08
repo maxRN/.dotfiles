@@ -1,4 +1,6 @@
 #startup_mode: SimpleFullscreen
+window:
+  opacity: 0.8
 scrolling:
   history: 10000
   multiplier: 3

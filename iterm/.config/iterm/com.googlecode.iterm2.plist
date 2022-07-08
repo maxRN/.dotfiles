@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AllowClipboardAccess</key>
+	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
 	<key>ApplePressAndHoldEnabled</key>
@@ -1346,8 +1348,16 @@
 	<true/>
 	<key>DimOnlyText</key>
 	<true/>
+	<key>DoubleClickPerformsSmartSelection</key>
+	<true/>
+	<key>EnableDivisionView</key>
+	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
+	<key>HideScrollbar</key>
+	<true/>
+	<key>HideTab</key>
+	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -2037,7 +2047,7 @@
 				<real>0.97999999999999998</real>
 			</dict>
 			<key>Background Image Location</key>
-			<string>/Users/maxrn/Pictures/Screenshot 2022-03-17 at 18.08.26.png</string>
+			<string>/Users/maxrn/Pictures/backgrounds/anya.webp</string>
 			<key>Background Image Mode</key>
 			<integer>2</integer>
 			<key>Badge Color</key>
@@ -4460,7 +4470,11 @@
 	<real>0.4035017824635922</real>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>4</integer>
+	<key>UseBorder</key>
+	<false/>
 	<key>VisualIndicatorForEsc</key>
+	<false/>
+	<key>WindowNumber</key>
 	<false/>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
