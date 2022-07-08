@@ -122,3 +122,4 @@ export PATH="$PATH:$HOME/src/sonar-scanner-4.7.0.2747-macosx/bin"
 export PATH="$PATH:$HOME/.dotfiles/bin"
 
 alias dbu='docker compose up -d --build'
+alias fzvim='fzf | xargs nvim'
