@@ -6,24 +6,24 @@
     # nixos/nixpkgs/master == nixos/nixpkgs
     # nixos/nixpkgs/nixpkgs-unstable
     # nixos/nixpkgs/nixos-2x.xx
-    nixpkgs.url = "github:nixos/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    pkgs-unstable.url = "github:nixos/nixpkgs/master";
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/master";
-      # The `follows` keyword in inputs is used for inheritance.
-      # Here, `inputs.nixpkgs` of home-manager is kept consistent with the `inputs.nixpkgs` of the current flake,
-      # to avoid problems caused by different versions of nixpkgs dependencies.
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-2.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "pkgs-unstable";
+    };
   };
 
   outputs =
@@ -31,8 +31,8 @@
       lix-module,
       nix-darwin,
       nixpkgs,
+      pkgs-unstable,
       home-manager,
-      nixpkgs-stable,
       neovim-nightly-overlay,
       ...
     }:
@@ -44,7 +44,7 @@
         spren = nix-darwin.lib.darwinSystem rec {
           system = "aarch64-darwin";
           specialArgs = {
-            pkgs-stable = import nixpkgs-stable { system = "aarch64-darwin"; };
+            pkgs-unstable = import pkgs-unstable { system = "aarch64-darwin"; };
             inherit neovim-nightly-overlay;
           };
 

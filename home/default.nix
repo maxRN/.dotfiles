@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  pkgs-stable,
+  pkgs-unstable,
   neovim-nightly-overlay,
   ...
 }:
@@ -29,8 +29,8 @@ in
 
   home.packages =
     let
-      stable = with pkgs-stable; [ ];
-      unstable = with pkgs; [
+      unstable = with pkgs-unstable; [ ];
+      stable = with pkgs; [
         # programming langs
         go
         rustup
