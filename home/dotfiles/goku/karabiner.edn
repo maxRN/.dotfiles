@@ -1,5 +1,6 @@
 {:simlayers {
              :semicolon-mode {:key :semicolon}
+             ; :space-mode {:key :spacebar}
              :backslash-mode {:key :backslash}}
   :devices {
             :masterkeys [{:vendor_id 9494 :product_id 60}]
@@ -17,12 +18,12 @@
             [:s :!O2 :semicolon-mode]
             [:d :!O3 :semicolon-mode]
             [:f :!O4 :semicolon-mode]]}
-  {:des "\\ mode -- Use sdfg as arrow keys when baskslash key is held down"
-    :rules [
-            [:g :right_arrow :backslash-mode]
-            [:s :left_arrow :backslash-mode]
-            [:d :up_arrow :backslash-mode]
-            [:f :down_arrow :backslash-mode]]}
+  ; {:des "space mode -- Use sdfg as arrow keys when baskslash key is held down"
+  ;   :rules [
+  ;           [:h :left_arrow :space-mode]
+  ;           [:j :down_arrow :space-mode]
+  ;           [:k :up_arrow :space-mode]
+  ;           [:l :right_arrow :space-mode]]}
 
     ;; !  | means mandatory
     ;; #  | means optional
