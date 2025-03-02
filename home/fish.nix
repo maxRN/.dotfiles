@@ -1,27 +1,24 @@
 {
-  # TODO: Maybe this belongs to nix-darwin?
-  home.sessionVariables = { };
-
-  home.shellAliases = { };
-
   programs = {
     fzf = {
+      enableFishIntegration = true;
+    };
+    direnv = {
+      # Just for documentation. direnv is automatically loaded in fish.
+      # https://github.com/nix-community/home-manager/issues/2357
+      # enableFishIntegration = true;
+    };
+    zoxide = {
+      # same here... apparently this is enabled by default?? Is fish just OP?
+      enableFishIntegration = true;
+    };
+    ghostty = {
       enableFishIntegration = true;
     };
 
     fish = {
       enable = true;
       shellInit = ''
-        function ghrepo
-            git init 2&> /dev/null
-
-            set project_name (basename (pwd))
-            if test (count $argv) -eq 1 && $argv[1] == "public"
-                gh repo create "maxrn/$project_name" --source . --push --public
-            end
-            gh repo create "maxrn/$project_name" --source . --push --private
-        end
-
         abbr --add k kubectl
 
         function nshell
@@ -79,6 +76,8 @@
             end
         end
 
+        # not sure if this is necessary tbh, but it means the shell integration works more reliably
+        # https://ghostty.org/docs/features/shell-integration#manual-shell-integration-setup
         source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
       '';
     };
