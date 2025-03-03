@@ -1,20 +1,23 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
-  home.packages = with pkgs; [
-    # python311Packages.weasyprint
-    glab
-    azure-cli
+  home.packages =
+    let
+      stable = with pkgs; [
+        python311Packages.weasyprint
+        glab
+        azure-cli
 
-    # colima --> using rancher desktop for now
-    # docker-client --> using rancher desktop for now
-    imagemagick
-    gnupg
-    sops
-    quarkus
-    caddy
-    yq
-    cosign
-  ];
+        docker-client
+        imagemagick
+        gnupg
+        sops
+        quarkus
+        yq
+        cosign
+      ];
+      unstable = with pkgs-unstable; [ colima ];
+    in
+    stable ++ unstable;
 
   home.sessionVariables = {
     # ************************** for using rancher **************************************

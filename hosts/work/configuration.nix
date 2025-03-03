@@ -6,31 +6,19 @@ in
 {
   imports = [ ../../modules/configuration.nix ];
   environment = {
-    # This doesn't work... idk why tho :(
-    # Hold up... maybe???
     variables = {
       GOKU_EDN_CONFIG_FILE = "$HOME/.config/goku/karabiner.edn";
     };
-    # Seems to be broken at the moment: https://github.com/LnL7/nix-darwin/issues/1255
-    # launchAgents = {
-    #   aerospace = {
-    #     source = ./com.maxrn.aerospace.plist;
-    #   };
-    # };
   };
 
   homebrew = {
     enable = true;
     taps = [ "FelixKratz/formulae" ];
     brews = [
-      # "borders"
     ];
-    # casks = [ "nikitabobko/tap/aerospace" ];
   };
 
-  # Create /etc/zshrc that loads the nix-darwin environment.
   programs = {
-    zsh.enable = true; # default shell on catalina
     fish.enable = true;
   };
 
