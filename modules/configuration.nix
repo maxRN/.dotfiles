@@ -12,7 +12,6 @@
       automatic = true;
     };
   };
-  nixpkgs.config.allowUnfree = true;
 
   time.timeZone = "Europe/Berlin";
   fonts.packages = [ pkgs.pixel-code ];

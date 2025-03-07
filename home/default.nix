@@ -151,9 +151,5 @@ in
     };
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
   fonts.fontconfig.enable = true;
 }
