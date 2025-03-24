@@ -44,6 +44,13 @@
       }
     ];
 
+    maintenance = {
+      enable = true;
+      repositories = [
+        "/Users/maxrn/work/draci/main"
+      ];
+    };
+
     extraConfig = {
       init.defaultBranch = "main";
       push.autoSetupRemote = true;

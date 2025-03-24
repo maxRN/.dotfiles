@@ -1,7 +1,9 @@
-theme = dark:tokyonight,light:tokyonight-day
+# theme = dark:tokyonight,light:tokyonight-day
+theme = tokyonight
 unfocused-split-opacity = 1
 macos-titlebar-style = tabs
 macos-option-as-alt = true
+copy-on-select = clipboard
 #font-family = Pixel Code Medium
 #font-thicken = true
 
