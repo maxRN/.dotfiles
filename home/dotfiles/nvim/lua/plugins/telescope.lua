@@ -59,7 +59,10 @@ return {
             )
             vim.keymap.set("n", "<leader>sb", require("telescope.builtin").buffers,
                 { desc = "[S] [b]uffers using Telescope." })
-            vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files, { desc = "Search through git files Telescope." })
+            vim.keymap.set("n", "<C-p>", require("telescope.builtin").git_files,
+                { desc = "Search through git files Telescope." })
+            vim.keymap.set("n", "<leader>/", require("telescope.builtin").current_buffer_fuzzy_find,
+                { desc = "Search through current buffer fuzzy." })
         end
     },
 }
