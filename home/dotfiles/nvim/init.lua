@@ -36,6 +36,17 @@ vim.opt.signcolumn = "yes"
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 vim.opt.clipboard = "unnamedplus"
+vim.opt.winborder = 'rounded'
+
+vim.diagnostic.config({
+    -- Use the default configuration
+
+    -- Alternatively, customize specific options
+    virtual_lines = {
+        -- Only show virtual line diagnostics for the current cursor line
+        current_line = true,
+    },
+})
 
 -- additional filetypes
 vim.filetype.add({

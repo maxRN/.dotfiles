@@ -42,6 +42,7 @@ in
         deno
         nixfmt-rfc-style
         lua-language-server
+        uv
 
         # CLIs
         bat # cat++
