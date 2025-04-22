@@ -7,7 +7,7 @@
 }:
 let
   # needs to be absolute path. Important!
-  homeManager = /Users/maxrn/.config/nix-darwin/home;
+  homeManager = /Users/maxrn/code/.dotfiles/home;
   link = config.lib.file.mkOutOfStoreSymlink;
   l = x: link homeManager + "/${x}";
 in
