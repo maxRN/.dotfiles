@@ -8,6 +8,7 @@
         azure-cli
 
         docker-client
+        docker-credential-helpers
         imagemagick
         gnupg
         sops
@@ -15,7 +16,9 @@
         yq
         cosign
       ];
-      unstable = with pkgs-unstable; [ colima ];
+      unstable = with pkgs-unstable; [
+        colima
+      ];
     in
     stable ++ unstable;
 
