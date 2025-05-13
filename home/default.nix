@@ -60,7 +60,7 @@ in
         lazygit
 
         # other tools
-        # (ffmpeg-full.override { withUnfree = true; })
+        (ffmpeg-full.override { withUnfree = true; })
         # kubectl --> using rancher on work machine
         # kubernetes-helm --> using rancher on work machine
         pandoc

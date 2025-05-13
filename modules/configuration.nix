@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   services = {
   };
@@ -15,4 +15,11 @@
 
   time.timeZone = "Europe/Berlin";
   fonts.packages = [ pkgs.pixel-code ];
+
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "ffmpeg-full"
+    ];
+
 }
