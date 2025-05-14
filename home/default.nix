@@ -17,6 +17,7 @@ in
     ./fish.nix
     ./darwin.nix
     ./tmux.nix
+    ./ssh.nix
     ../hosts/work/home.nix
   ];
 
