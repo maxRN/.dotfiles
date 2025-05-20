@@ -4,7 +4,10 @@ let
   username = "maxrn";
 in
 {
-  imports = [ ../../modules/configuration.nix ];
+  imports = [
+    ../../modules/configuration.nix
+    ../../modules/sops.nix
+  ];
   environment = {
     variables = {
       GOKU_EDN_CONFIG_FILE = "$HOME/.config/goku/karabiner.edn";
@@ -44,4 +47,5 @@ in
   };
 
   nix.settings.trusted-users = [ username ];
+
 }

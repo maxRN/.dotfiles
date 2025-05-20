@@ -28,6 +28,7 @@ return {
                 markdown = prettier_config,
                 ocaml = { "ocamlformat" },
                 templ = { "templ fmt", lsp_format = "prefer" },
+                rust = { "rustfmt" },
             },
         },
     },

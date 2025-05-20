@@ -24,6 +24,10 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -34,6 +38,7 @@
       pkgs-unstable,
       home-manager,
       neovim-nightly-overlay,
+      sops-nix,
       ...
     }:
     let
@@ -46,11 +51,13 @@
           specialArgs = {
             pkgs-unstable = import pkgs-unstable { system = "aarch64-darwin"; };
             inherit neovim-nightly-overlay;
+            inherit sops-nix;
           };
 
           modules = [
             ./hosts/work/configuration.nix
             lix-module.nixosModules.default
+            sops-nix.darwinModules.sops
 
             ./darwin/system.nix
             ./modules/fish-fix.nix
