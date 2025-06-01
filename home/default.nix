@@ -120,6 +120,7 @@ in
     ll = "ls -lah";
     k = "kubectl";
     aerospace = "~/code/AeroSpace/.build/debug/aerospace";
+    cd = "z";
   };
 
   home.sessionPath = [

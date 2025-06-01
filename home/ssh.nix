@@ -14,18 +14,6 @@
           User s4389254
           IdentityFile ~/.ssh/scone_masterarbeit_cluster
           SetEnv TERM=xterm-256color
-      Host sgx4
-          Hostname 141.76.44.84
-          IdentityFile ~/.ssh/scone_masterarbeit_cluster
-          User max.grosse
-          ProxyJump jump-serve
-          SetEnv TERM=xterm-256color
-      Host sgx25
-          Hostname 141.76.44.112
-          IdentityFile ~/.ssh/scone_masterarbeit_cluster
-          User max.grosse
-          ProxyJump jump-serve
-          SetEnv TERM=xterm-256color
       Host barney
           Hostname 141.76.44.113
           User ubuntu
@@ -36,6 +24,11 @@
           Hostname zero2
           IdentityFile ~/.ssh/parents_pi2w
           User eltern
+          SetEnv TERM=xterm-256color
+      Host windrunner
+          Hostname 128.140.121.222
+          IdentityFile ~/.ssh/main
+          User root
           SetEnv TERM=xterm-256color
     '';
   };

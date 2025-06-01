@@ -4,8 +4,6 @@ unfocused-split-opacity = 1
 macos-titlebar-style = tabs
 macos-option-as-alt = true
 copy-on-select = clipboard
-#font-family = Pixel Code Medium
-#font-thicken = true
 
 # background-opacity = 0.85
 # background-blur-radius = 20

@@ -55,7 +55,7 @@
           };
 
           modules = [
-            ./hosts/work/configuration.nix
+            ./hosts/work
             lix-module.nixosModules.default
             sops-nix.darwinModules.sops
 
