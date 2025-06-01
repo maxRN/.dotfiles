@@ -59,8 +59,6 @@
             lix-module.nixosModules.default
             sops-nix.darwinModules.sops
 
-            ./modules/fish-fix.nix
-
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

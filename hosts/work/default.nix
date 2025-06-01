@@ -1,18 +1,50 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   hostname = "MB-Q5JMWQ5VFD";
   username = "maxrn";
+  sshkey = key: {
+    name = key;
+    value = {
+      owner = config.users.users.maxrn.name;
+      path = config.users.users.maxrn.home + "/.ssh/" + key;
+      sopsFile = ../../secrets/ssh.yaml;
+    };
+  };
+  pssh = keys: builtins.listToAttrs (map sshkey keys);
 in
 {
   imports = [
-    ../../modules/configuration.nix
-    ../../modules/sops.nix
+    ../../modules/fish-fix.nix
   ];
   environment = {
     variables = {
       GOKU_EDN_CONFIG_FILE = "$HOME/.config/goku/karabiner.edn";
     };
   };
+
+  nix = {
+    enable = true;
+    settings = {
+      experimental-features = "nix-command flakes";
+    };
+    gc = {
+      automatic = true;
+    };
+  };
+
+  time.timeZone = "Europe/Berlin";
+  fonts.packages = [ pkgs.pixel-code ];
+
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "ffmpeg-full"
+    ];
 
   homebrew = {
     enable = true;
@@ -75,5 +107,31 @@ in
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
   environment.shells = [ pkgs.fish ];
+
+  sops = {
+    # This will add secrets.yml to the nix store
+    # You can avoid this by adding a string to the full path instead, i.e.
+    # sops.defaultSopsFile = "/root/.sops/secrets/example.yaml";
+    defaultSopsFile = ../secrets/secrets.yaml;
+
+    age = {
+      # This will automatically import SSH keys as age keys
+      sshKeyPaths = [ (config.users.users.maxrn.home + "/.ssh/main") ];
+      generateKey = true;
+      # This is using an age key that is expected to already be in the filesystem
+      keyFile = config.users.users.maxrn.home + ".config/sops/age/keys.txt";
+    };
+
+    # This is the actual specification of the secrets.
+    secrets = pssh [
+      "scone_masterthesis"
+      "github"
+      "codeberg"
+      "parents_pi2w"
+      "raspi"
+      "se-gitlab"
+      "mn_gitlab"
+    ];
+  };
 
 }
