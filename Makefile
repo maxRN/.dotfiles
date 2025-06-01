@@ -1,6 +1,6 @@
 .PHONY: work mbp
 
-work:
+spren:
 	darwin-rebuild switch --flake .#spren
 
 mbp:
