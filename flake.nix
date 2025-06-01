@@ -6,14 +6,14 @@
     # nixos/nixpkgs/master == nixos/nixpkgs
     # nixos/nixpkgs/nixpkgs-unstable
     # nixos/nixpkgs/nixos-2x.xx
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
     pkgs-unstable.url = "github:nixos/nixpkgs/master";
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lix-module = {
@@ -59,7 +59,6 @@
             lix-module.nixosModules.default
             sops-nix.darwinModules.sops
 
-            ./darwin/system.nix
             ./modules/fish-fix.nix
 
             home-manager.darwinModules.home-manager

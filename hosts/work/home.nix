@@ -3,7 +3,7 @@
   home.packages =
     let
       stable = with pkgs; [
-        python311Packages.weasyprint
+        # python313Packages.weasyprint
         glab
         azure-cli
 
