@@ -13,7 +13,7 @@
       enableFishIntegration = true;
     };
     ghostty = {
-      enableFishIntegration = true;
+      # enableFishIntegration = true;
     };
 
     fish = {
@@ -78,7 +78,10 @@
 
         # not sure if this is necessary tbh, but it means the shell integration works more reliably
         # https://ghostty.org/docs/features/shell-integration#manual-shell-integration-setup
-        source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
+        # source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
+
+        # Prompt
+        fish_config prompt choose minimalist
       '';
     };
   };

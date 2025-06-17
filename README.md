@@ -40,3 +40,20 @@ Some steps still need to be done by hand:
 
 1. Copy `./hosts/work/com.maxrn.aerospace.plist` to `~/Library/LaunchAgents/`.
 2. Run `launchctl load ~/Library/LaunchAgents/com.maxrn.aerospace.plist`
+
+
+## New device
+
+- generate ssh key
+- login to github in browser and add ssh key
+- install determinate systems nix
+- install xcode tools
+- clone dotfiles
+- add new host for new machine
+- find out hostname with 'scutil ...'
+- adapt in config
+- install karabiner elements and enable all the stuff
+- install ghostty
+- run setup
+
+https://www.reddit.com/r/ErgoMechKeyboards/comments/1fojvif/is_anybody_running_kanata_on_macos_to_do_keyboard/

@@ -4,7 +4,6 @@ return {
         branch = "master",
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope-fzf-native.nvim",
         },
         config = function()
             require("telescope").setup({
@@ -35,11 +34,8 @@ return {
                     },
                 },
                 extensions = {
-                    fzf = {}
                 }
             })
-
-            require("telescope").load_extension("fzf")
 
             vim.keymap.set("n", "<leader>sd", require("telescope.builtin").find_files,
                 { desc = "[S]earch [d]irectory using Telescope." })

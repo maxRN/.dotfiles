@@ -69,6 +69,26 @@
             }
           ];
         };
+        ohnezahn = nix-darwin.lib.darwinSystem rec {
+          system = "aarch64-darwin";
+          specialArgs = {
+            pkgs-unstable = import pkgs-unstable { system = "aarch64-darwin"; };
+            inherit neovim-nightly-overlay;
+          };
+
+          modules = [
+            ./hosts/ohnezahn
+
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.verbose = true;
+              home-manager.users.maxrn = ./home;
+              home-manager.extraSpecialArgs = specialArgs;
+            }
+          ];
+        };
       };
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
     };
