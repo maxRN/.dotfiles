@@ -33,20 +33,16 @@ in
       unstable = with pkgs-unstable; [ ];
       stable = with pkgs; [
         # programming langs
-        go
         rustup
-        poetry
-        jdk21
         nixd
         typescript-language-server
         fnm
-        deno
         nixfmt-rfc-style
         lua-language-server
         uv
 
         # CLIs
-        bat # cat++
+        bat
         btop
         curl
         wget
@@ -62,21 +58,14 @@ in
 
         # other tools
         #(ffmpeg-full.override { withUnfree = true; })
-        # kubectl --> using rancher on work machine
-        # kubernetes-helm --> using rancher on work machine
-        pandoc
         tree-sitter
         coreutils
         gnused
         yt-dlp
         zld # faster linker
-        minikube
-        flyctl
         dive # because everytime I need it I have to re-download it again
         # and nix NEVER caches the stupid flake WHAT
         gh
-        sqlite
-        sqlite-utils
         shellcheck
       ];
     in
@@ -85,10 +74,8 @@ in
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".config/wezterm".source = l "dotfiles/wezterm";
     ".config/nvim".source = l "dotfiles/nvim";
     ".config/bat".source = l "dotfiles/bat";
-    ".config/aerospace".source = l "dotfiles/aerospace";
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
     ".config/kanata".source = l "dotfiles/kanata";
@@ -118,8 +105,6 @@ in
     dbu = "docker compose up -d --build";
     fzvim = "fzf | xargs nvim";
     ll = "ls -lah";
-    k = "kubectl";
-    aerospace = "~/code/AeroSpace/.build/debug/aerospace";
     cd = "z";
   };
 
@@ -127,11 +112,9 @@ in
     "$HOME/bin"
     "$XDG_CONFIG_HOME/nix-darwin/home/dotfiles/scripts"
     "$HOME/.local/bin"
-    "$HOME/Library/Python/3.10/bin"
     "./node_modules/.bin"
     "$HOME/go/bin"
     "/opt/homebrew/bin"
-    "$HOME/.rd/bin"
   ];
 
   programs = {

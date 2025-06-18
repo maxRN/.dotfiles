@@ -113,8 +113,13 @@ in
     shell = pkgs.fish;
   };
 
-  nix.settings.trusted-users = [ username ];
-  nix.enable = false;
+  nix = {
+    enable = false;
+    settings = {
+      trusted-users = [ username ];
+      # experimental-features = "nix-command flakes";
+    };
+  };
 
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;

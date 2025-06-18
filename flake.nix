@@ -79,6 +79,7 @@
 
           modules = [
             ./hosts/ohnezahn
+            lix-module.nixosModules.default
             sops-nix.darwinModules.sops
 
             home-manager.darwinModules.home-manager

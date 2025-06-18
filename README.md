@@ -46,7 +46,7 @@ Some steps still need to be done by hand:
 
 - generate ssh key
 - login to github in browser and add ssh key
-- install determinate systems nix
+- install lix
 - install xcode tools
 - clone dotfiles
 - add new host for new machine
@@ -55,5 +55,8 @@ Some steps still need to be done by hand:
 - install karabiner elements and enable all the stuff
 - install ghostty
 - run setup
+
+- after setup steps:
+- chsh -s to make fish default
 
 https://www.reddit.com/r/ErgoMechKeyboards/comments/1fojvif/is_anybody_running_kanata_on_macos_to_do_keyboard/
