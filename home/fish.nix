@@ -82,6 +82,7 @@
 
         # Prompt
         fish_config prompt choose arrow
+        fish_config theme choose my
       '';
     };
   };

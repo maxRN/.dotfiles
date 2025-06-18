@@ -93,6 +93,7 @@ in
     ".config/aerospace".source = l "dotfiles/aerospace";
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
+    ".config/kanata".source = l "dotfiles/kanata";
   };
 
   # TODO: Maybe this belongs to nix-darwin?

@@ -45,6 +45,9 @@ in
       dock = {
         autohide = true;
         magnification = true;
+        tilesize = 50;
+        show-recents = false;
+        largesize = 80;
       };
       NSGlobalDomain = {
         NSWindowShouldDragOnGesture = true;
