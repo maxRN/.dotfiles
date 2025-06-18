@@ -81,7 +81,7 @@
         # source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
 
         # Prompt
-        fish_config prompt choose minimalist
+        fish_config prompt choose arrow
       '';
     };
   };
