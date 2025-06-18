@@ -7,16 +7,20 @@
 let
   hostname = "Max-MacBook-Air";
   username = "maxrn";
+  sshkey = key: {
+    name = key;
+    value = {
+      owner = config.users.users.maxrn.name;
+      path = config.users.users.maxrn.home + "/.ssh/" + key;
+      sopsFile = ../../secrets/ssh.yaml;
+    };
+  };
+  pssh = keys: builtins.listToAttrs (map sshkey keys);
 in
 {
   imports = [
     ../../modules/fish-fix.nix
   ];
-  environment = {
-    variables = {
-      #GOKU_EDN_CONFIG_FILE = "$HOME/.config/goku/karabiner.edn";
-    };
-  };
 
   time.timeZone = "Europe/Berlin";
 
@@ -34,7 +38,6 @@ in
     fish.enable = true;
   };
 
-
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system = {
@@ -42,6 +45,7 @@ in
     stateVersion = 4;
     defaults = {
       smb.NetBIOSName = hostname;
+      trackpad.Clicking = true; # enable tap to click
       dock = {
         autohide = true;
         magnification = true;
@@ -76,6 +80,32 @@ in
     computerName = hostname;
   };
 
+  sops = {
+    # This will add secrets.yml to the nix store
+    # You can avoid this by adding a string to the full path instead, i.e.
+    # sops.defaultSopsFile = "/root/.sops/secrets/example.yaml";
+    defaultSopsFile = ../secrets/secrets.yaml;
+
+    age = {
+      # This will automatically import SSH keys as age keys
+      sshKeyPaths = [ (config.users.users.maxrn.home + "/.ssh/main") ];
+      generateKey = true;
+      # This is using an age key that is expected to already be in the filesystem
+      keyFile = config.users.users.maxrn.home + ".config/sops/age/keys.txt";
+    };
+
+    # This is the actual specification of the secrets.
+    secrets = pssh [
+      "scone_masterthesis"
+      "github"
+      "codeberg"
+      "parents_pi2w"
+      "raspi"
+      "se-gitlab"
+      "mn_gitlab"
+    ];
+  };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."${username}" = {
     home = "/Users/${username}";
@@ -84,7 +114,7 @@ in
   };
 
   nix.settings.trusted-users = [ username ];
-	nix.enable = false;
+  nix.enable = false;
 
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;

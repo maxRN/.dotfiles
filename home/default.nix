@@ -70,7 +70,6 @@ in
         gnused
         yt-dlp
         zld # faster linker
-        #goku
         minikube
         flyctl
         dive # because everytime I need it I have to re-download it again
@@ -87,7 +86,6 @@ in
   # plain files is through 'home.file'.
   home.file = {
     ".config/wezterm".source = l "dotfiles/wezterm";
-    #".config/goku".source = l "dotfiles/goku";
     ".config/nvim".source = l "dotfiles/nvim";
     ".config/bat".source = l "dotfiles/bat";
     ".config/aerospace".source = l "dotfiles/aerospace";

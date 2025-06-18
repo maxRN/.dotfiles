@@ -74,10 +74,12 @@
           specialArgs = {
             pkgs-unstable = import pkgs-unstable { system = "aarch64-darwin"; };
             inherit neovim-nightly-overlay;
+            inherit sops-nix;
           };
 
           modules = [
             ./hosts/ohnezahn
+            sops-nix.darwinModules.sops
 
             home-manager.darwinModules.home-manager
             {
