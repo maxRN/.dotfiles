@@ -41,8 +41,8 @@
     ;; ## | optional any
 
   ; Make side buttons behave normally
-  {:des "Backwards" :rules [[{:pkey :button4} :!Copen_bracket ]]}
-  {:des "Forwards" :rules [[{:pkey :button5} :!Cclose_bracket ]]}
+  ; {:des "Backwards" :rules [[{:pkey :button4} :!Copen_bracket ]]}
+  ; {:des "Forwards" :rules [[{:pkey :button5} :!Cclose_bracket ]]}
 
   ; For windows keyboards
   {:des "Don't ask (makes (`~) work)" :rules [[:grave_accent_and_tilde :non_us_backslash :mage]]}

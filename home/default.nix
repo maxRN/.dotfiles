@@ -92,6 +92,7 @@ in
     ".config/bat".source = l "dotfiles/bat";
     ".config/aerospace".source = l "dotfiles/aerospace";
     ".config/ghostty".source = l "dotfiles/ghostty";
+    ".config/fish/themes".source = l "dotfiles/fish/themes";
   };
 
   # TODO: Maybe this belongs to nix-darwin?
