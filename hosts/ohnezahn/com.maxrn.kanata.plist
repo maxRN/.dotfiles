@@ -8,7 +8,9 @@
     <array>
         <string>/opt/homebrew/bin/kanata</string>
         <string>--cfg</string>
-        <string>/Users/maxrn/.config/kanata/kanata.kbd</string>
+        <string>/Users/maxrn/.config/kanata/macbook.kbd</string>
+        <string>--cfg</string>
+        <string>/Users/maxrn/.config/kanata/mage.kbd</string>
     </array>
     <key>RunAtLoad</key>
     <true/>

@@ -23,6 +23,10 @@ configuration entries.
   use AltGr in your keyboard, you will likely want to follow the simple.kbd
   file while unmapping lctl and ralt from defsrc.
   |#
+;;  macos-dev-names-include (
+ ;;     "Apple Internal Keyboard / Trackpad"
+  ;;)
+
   process-unmapped-keys yes
 )
 
@@ -47,10 +51,10 @@ configuration entries.
 )
 
 (deflayer mylayer
-    _  _   _    _    _    _    _    _   _   _   _   _   _
-    @grv lrld    _    _    _    _    _    _    _    _    _    _    _    _
-    _  _    _    _    _    _    _    _    up    _    _    _    _
-    _ _    _    _    _    _    _    left    down    right    _    _    _    _
+    @esc  _   _    _    _    _    _    _   _   _   _   _   _
+    @grv lrld  lrld-next    _    _    _    _    _    _    _    _    _    _    _
+    _  _    _    _    _    _    _    _    _    _    _    _    _
+    _ _    _    _    _    _    left    down    up    right    _    _    _    _
     _ _  _    _    _    _    _    _    _    _    _    _    _
     _   _ _ _           _            _ _
 )
@@ -58,4 +62,5 @@ configuration entries.
 (defalias
   cap (tap-hold-press 200 200 esc lctl)
   grv (tap-hold-press 200 200 grv (layer-toggle mylayer))
+  esc (tap-hold-press 200 200 esc (layer-toggle mylayer))
 )

@@ -24,6 +24,12 @@ in
 
   time.timeZone = "Europe/Berlin";
 
+  # environment.launchDaemons = {
+  #   "com.maxrn.kanata.plist" = {
+  #     text = builtins.readFile ./com.maxrn.kanata.plist;
+  #   };
+  # };
+
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
