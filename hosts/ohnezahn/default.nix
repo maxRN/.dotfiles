@@ -49,7 +49,7 @@ in
       dock = {
         autohide = true;
         magnification = true;
-        tilesize = 50;
+        tilesize = 64;
         show-recents = false;
         largesize = 80;
       };
