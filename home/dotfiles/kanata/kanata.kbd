@@ -49,8 +49,8 @@ configuration entries.
 (deflayer mylayer
     _  _   _    _    _    _    _    _   _   _   _   _   _
     @grv lrld    _    _    _    _    _    _    _    _    _    _    _    _
-    _  _    _    _    _    _    _    _    _    _    _    _    _
-    _ _    _    _    _    _    _    _    _    _    _    _    _    _
+    _  _    _    _    _    _    _    _    up    _    _    _    _
+    _ _    _    _    _    _    _    left    down    right    _    _    _    _
     _ _  _    _    _    _    _    _    _    _    _    _    _
     _   _ _ _           _            _ _
 )
