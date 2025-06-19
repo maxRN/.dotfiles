@@ -23,9 +23,6 @@ configuration entries.
   use AltGr in your keyboard, you will likely want to follow the simple.kbd
   file while unmapping lctl and ralt from defsrc.
   |#
-;;  macos-dev-names-include (
- ;;     "RGB Keyboard"
-  ;;)
   process-unmapped-keys yes
 )
 

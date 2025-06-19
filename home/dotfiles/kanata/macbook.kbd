@@ -23,9 +23,6 @@ configuration entries.
   use AltGr in your keyboard, you will likely want to follow the simple.kbd
   file while unmapping lctl and ralt from defsrc.
   |#
-;;  macos-dev-names-include (
- ;;     "Apple Internal Keyboard / Trackpad"
-  ;;)
 
   process-unmapped-keys yes
 )
@@ -42,7 +39,7 @@ configuration entries.
 (deflayer base
     ;; everything is exactly the same, only the f-row is changed.
     ;; you can of course change any of the other mappings.
-    esc  🔅   🔆    ✗    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
+    @esc  🔅   🔆    ✗    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
     @grv 1    2    3    4    5    6    7    8    9    0    -    =    bspc
     tab  q    w    e    r    t    y    u    i    o    p    [    ]
     @cap a    s    d    f    g    h    j    k    l    ;    '    \    ret
