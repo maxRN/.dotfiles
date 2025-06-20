@@ -5,7 +5,7 @@
   ...
 }:
 let
-  hostname = "Max-MacBook-Air";
+  hostname = "ohnezahn";
   username = "maxrn";
   sshkey = key: {
     name = key;
