@@ -45,7 +45,7 @@ configuration entries.
 (deflayer mylayer
     @grv lrld    lrld-next    _    _    _    _    _    _    _    _    _    _    _
     _  _    _    _    _    _    _    _    _    _    _    _    _
-    @cap _    _    _    _    _    _    _    _    _    _    _    _    _
+    @cap _    _    _    _    _    left    down    up    right    _    _    _    _
     _ _    _    _    _    _    _    _    _    _    _    _
     _ _ _           _            _ _ _
 )
