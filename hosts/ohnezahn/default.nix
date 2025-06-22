@@ -20,6 +20,7 @@ in
 {
   imports = [
     ../../modules/fish-fix.nix
+    ./homebrew.nix
   ];
 
   time.timeZone = "Europe/Berlin";
@@ -36,10 +37,6 @@ in
       "ffmpeg-full"
     ];
 
-  homebrew = {
-    enable = true;
-  };
-
   programs = {
     fish.enable = true;
   };
@@ -47,7 +44,7 @@ in
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system = {
-    primaryUser = "Max Große";
+    primaryUser = "maxrn";
     stateVersion = 4;
     defaults = {
       smb.NetBIOSName = hostname;
