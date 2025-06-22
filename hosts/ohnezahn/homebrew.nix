@@ -1,7 +1,10 @@
 {
   homebrew = {
     enable = true;
-    casks = [ "discord" ];
+    casks = [
+      "discord"
+      "spotify"
+    ];
     masApps = {
       Tailscale = 1475387142;
       AdBlocker = 1365531024;
