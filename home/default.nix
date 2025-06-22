@@ -7,7 +7,7 @@
 }:
 let
   # needs to be absolute path. Important!
-  homeManager = /Users/maxrn/code/.dotfiles/home;
+  homeManager = builtins.toPath "/Users/${userName}/code/.dotfiles/home";
   link = config.lib.file.mkOutOfStoreSymlink;
   l = x: link homeManager + "/${x}";
   userName = "maxrn";
