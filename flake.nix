@@ -87,7 +87,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.verbose = true;
-              home-manager.users.maxrn = ./home;
+              home-manager.users.maxrn = ./hosts/ohnezahn/home-manager.nix;
               home-manager.extraSpecialArgs = specialArgs;
             }
           ];
