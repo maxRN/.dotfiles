@@ -37,6 +37,7 @@ in
         nixfmt-rfc-style
         lua-language-server
         uv
+        jdk24
 
         # CLIs
         bat
