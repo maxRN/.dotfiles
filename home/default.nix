@@ -30,14 +30,11 @@ in
       unstable = with pkgs-unstable; [ ];
       stable = with pkgs; [
         # programming langs
-        rustup
         nixd
-        typescript-language-server
         fnm
         nixfmt-rfc-style
         lua-language-server
         uv
-        jdk24
 
         # CLIs
         bat
@@ -60,7 +57,6 @@ in
         coreutils
         gnused
         yt-dlp
-        zld # faster linker
         dive # because everytime I need it I have to re-download it again
         # and nix NEVER caches the stupid flake WHAT
         gh
