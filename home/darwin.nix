@@ -4,5 +4,7 @@
     tailscale = "/Applications/Tailscale.app/Contents/MacOS/Tailscale";
   };
 
-  home.packages = [ pkgs.gnupatch ];
+  home.packages = with pkgs; [
+    gnupatch
+  ];
 }

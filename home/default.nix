@@ -30,6 +30,7 @@ in
       unstable = with pkgs-unstable; [ ];
       stable = with pkgs; [
         # programming langs
+        rustup
         nixd
         fnm
         nixfmt-rfc-style
