@@ -32,6 +32,8 @@ return {
                 config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
                 lspconfig[server].setup(config)
             end
+
+            vim.keymap.set("n", "<leader>gt", vim.lsp.buf.type_definition)
         end,
-    },
+    }
 }
