@@ -1,10 +1,3 @@
-local is_big_file = function()
-    -- ignore big files
-    local max_filesize = 50 * 1024 -- 50 KB
-    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(0))
-    return ok and stats and stats.size > max_filesize
-end
-
 return {
     -- {
     --     "nvim-treesitter/nvim-treesitter-textobjects",
