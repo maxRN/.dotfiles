@@ -55,8 +55,6 @@ in
         # other tools
         #(ffmpeg-full.override { withUnfree = true; })
         tree-sitter
-        coreutils
-        gnused
         yt-dlp
         dive # because everytime I need it I have to re-download it again
         # and nix NEVER caches the stupid flake WHAT
