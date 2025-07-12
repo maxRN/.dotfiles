@@ -24,8 +24,8 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
+    codelldb = {
+      url = "github:mrcjkb/rustaceanvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -38,7 +38,7 @@
       pkgs-unstable,
       home-manager,
       neovim-nightly-overlay,
-      sops-nix,
+      codelldb,
       ...
     }:
     let
@@ -50,14 +50,12 @@
           system = "aarch64-darwin";
           specialArgs = {
             pkgs-unstable = import pkgs-unstable { system = "aarch64-darwin"; };
-            inherit neovim-nightly-overlay;
-            inherit sops-nix;
+            inherit neovim-nightly-overlay codelldb;
           };
 
           modules = [
             ./hosts/work
             lix-module.nixosModules.default
-            sops-nix.darwinModules.sops
 
             home-manager.darwinModules.home-manager
             {
@@ -73,14 +71,12 @@
           system = "aarch64-darwin";
           specialArgs = {
             pkgs-unstable = import pkgs-unstable { system = "aarch64-darwin"; };
-            inherit neovim-nightly-overlay;
-            inherit sops-nix;
+            inherit neovim-nightly-overlay codelldb;
           };
 
           modules = [
             ./hosts/ohnezahn
             lix-module.nixosModules.default
-            sops-nix.darwinModules.sops
 
             home-manager.darwinModules.home-manager
             {

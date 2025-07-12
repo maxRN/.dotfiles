@@ -9,5 +9,6 @@ return {
         { "<leader>rg",    function() require "fzf-lua".live_grep_glob() end },
         { "<C-g>",         function() require "fzf-lua".grep_project() end },
         { "<leader>sc",    function() require("fzf-lua").files({ cwd = "/Users/maxrn/.config/nvim" }) end, desc = "[S]earch through neovim [c]onfig" },
+        { "<leader>df",    function() require "fzf-lua".dap_configurations() end,                          desc = "[D]ebug [f]ind configurations." },
     },
 }

@@ -15,7 +15,7 @@ return {
 			require("dap-go").setup()
 			require("nvim-dap-virtual-text").setup({})
 
-			vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
+			vim.keymap.set("n", "<leader>tb", dap.toggle_breakpoint)
 			vim.keymap.set("n", "<leader>gb", dap.run_to_cursor)
 
 			vim.keymap.set("n", "<leader>?", function()
@@ -26,12 +26,12 @@ return {
 			vim.keymap.set("n", "<leader>ds", dap.continue, { desc = "[D]ebugging [S]tart" })
 
 			-- Need to figure out how to use F1 keys on my keyboard :(
-			vim.keymap.set("n", "<F1>", dap.continue)
-			vim.keymap.set("n", "<F2>", dap.step_into)
-			vim.keymap.set("n", "<F3>", dap.step_over)
-			vim.keymap.set("n", "<F4>", dap.step_out)
-			vim.keymap.set("n", "<F5>", dap.step_back)
-			vim.keymap.set("n", "<F13>", dap.restart)
+			vim.keymap.set("n", "<leader>dc", dap.continue)
+			vim.keymap.set("n", "<leader>si", dap.step_into)
+			vim.keymap.set("n", "S-j", dap.step_over)
+			vim.keymap.set("n", "<leader>so", dap.step_out)
+			vim.keymap.set("n", "S-k", dap.step_back)
+			vim.keymap.set("n", "<leader>dr", dap.restart)
 
 			dap.listeners.before.attach.dapui_config = function()
 				ui.open()

@@ -23,7 +23,7 @@ return {
                 templ = {},
                 ts_ls = {},
                 texlab = {},
-                rust_analyzer = {},
+                -- rust_analyzer = {},
             },
         },
         config = function(_, opts)
