@@ -28,7 +28,7 @@ in
 
   home.packages =
     let
-      unstable = with pkgs-unstable; [ lldb ];
+      unstable = with pkgs-unstable; [ ];
       stable = with pkgs; [
         # programming langs
         rustup
