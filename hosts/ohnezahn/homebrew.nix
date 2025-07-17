@@ -14,8 +14,5 @@
       Tailscale = 1475387142;
       AdBlocker = 1365531024;
     };
-    taps = [
-      "sst/tap/opencode"
-    ];
   };
 }
