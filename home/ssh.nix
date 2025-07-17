@@ -22,7 +22,6 @@
           User eltern
       Host windrunner
           Hostname 128.140.121.222
-          IdentityFile ~/.ssh/main
           User root
     '';
   };
