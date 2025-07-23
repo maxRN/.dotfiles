@@ -1,13 +1,19 @@
 return {
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {},
+    opts = {
+        keymap = {
+            fzf = {
+                ["ctrl-q"] = "select-all+accept",
+            },
+        },
+    },
     keys = {
-        { "<C-p>",         require("fzf-lua").files,          desc = "fzf lua: Find files" },
-        { "<C-\\>",        require("fzf-lua").buffers,        desc = "fzf lua: search buffers" },
-        { "<leader><C-b>", require("fzf-lua").builtin,        desc = "fzf lua: search builtins" },
-        { "<leader>rg",    require("fzf-lua").live_grep_glob, desc = "fzf lua: ripgrep" },
-        { "<C-g>",         require("fzf-lua").grep_project,   desc = "fzf lua: grep project" },
+        { "<C-p>",         require("fzf-lua").global,       desc = "fzf lua: Find files" },
+        { "<C-\\>",        require("fzf-lua").buffers,      desc = "fzf lua: search buffers" },
+        { "<leader><C-b>", require("fzf-lua").builtin,      desc = "fzf lua: search builtins" },
+        { "<leader>rg",    require("fzf-lua").live_grep,    desc = "fzf lua: ripgrep" },
+        { "<C-g>",         require("fzf-lua").grep_project, desc = "fzf lua: grep project" },
         {
             "<leader>sc",
             function()
