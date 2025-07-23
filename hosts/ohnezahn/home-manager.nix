@@ -11,7 +11,11 @@
 
   home.packages =
     let
-      unstable = with pkgs-unstable; [ ];
+      unstable = with pkgs-unstable; [
+        opencode
+        claude-code
+      ];
+
       stable = with pkgs; [
       ];
     in
