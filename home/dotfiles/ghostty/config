@@ -53,3 +53,4 @@ keybind = cmd+ctrl+j=resize_split:down,30
 keybind = cmd+ctrl+k=resize_split:up,30
 keybind = cmd+ctrl+h=resize_split:left,30
 keybind = cmd+ctrl+l=resize_split:right,30
+keybind = shift+enter=text:\n
