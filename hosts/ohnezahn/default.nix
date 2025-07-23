@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   ...
 }:
 let
@@ -14,12 +13,6 @@ in
   ];
 
   time.timeZone = "Europe/Berlin";
-
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "ffmpeg-full"
-    ];
 
   programs = {
     fish.enable = true;
