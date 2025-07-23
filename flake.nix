@@ -46,31 +46,18 @@
     in
     {
       darwinConfigurations = {
-        spren = nix-darwin.lib.darwinSystem rec {
-          system = "aarch64-darwin";
-          specialArgs = {
-            pkgs-unstable = import pkgs-unstable { system = "aarch64-darwin"; };
-            inherit neovim-nightly-overlay codelldb;
-          };
-
-          modules = [
-            ./hosts/work
-            lix-module.nixosModules.default
-
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.verbose = true;
-              home-manager.users.maxrn = ./home;
-              home-manager.extraSpecialArgs = specialArgs;
-            }
-          ];
-        };
         ohnezahn = nix-darwin.lib.darwinSystem rec {
           system = "aarch64-darwin";
           specialArgs = {
-            pkgs-unstable = import pkgs-unstable { system = "aarch64-darwin"; };
+            pkgs-unstable = import pkgs-unstable {
+              system = "aarch64-darwin";
+              config.allowUnfreePredicate =
+                pkg:
+                builtins.elem (nixpkgs.lib.getName pkg) [
+                  "ffmpeg-full"
+                  "claude-code"
+                ];
+            };
             inherit neovim-nightly-overlay codelldb;
           };
 
