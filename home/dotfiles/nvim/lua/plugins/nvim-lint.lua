@@ -5,6 +5,7 @@ return {
             typescript = { 'eslint' },
             javascript = { 'eslint' },
             python = { 'ruff' },
+            rust = { 'clippy' },
         }
         vim.api.nvim_create_autocmd({ "BufWritePost" }, {
             callback = function()
