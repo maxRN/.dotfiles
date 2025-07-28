@@ -9,3 +9,7 @@ end, { desc = "Start debugging thing under cursor." })
 vim.keymap.set("n", "<leader>dl", function()
     vim.cmd("RustLsp! debug")
 end, { desc = "Run last debug configuration" })
+
+-- vim.keymap.set("n", "gra", function()
+--     vim.cmd.RustLsp('codeAction')
+-- end, { desc = "Rustaceanvim code action grouped" })
