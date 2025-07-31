@@ -23,6 +23,10 @@
       Host windrunner
           Hostname 128.140.121.222
           User root
+      Host beast
+          User mgrosse
+          HostName 141.76.44.200
+          ProxyJump jump-serve
     '';
   };
 }
