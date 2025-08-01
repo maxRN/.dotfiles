@@ -44,19 +44,25 @@ Some steps still need to be done by hand:
 
 ## New device
 
+- set keyboard layout to English - ABC
 - generate ssh key
 - login to github in browser and add ssh key
-- install lix
 - install xcode tools
+- install lix
 - clone dotfiles
 - add new host for new machine
-- find out hostname with 'scutil ...'
-- adapt in config
+    - find out hostname with 'scutil ...'
+    - Or change it beforehand to a cooler name
+    - adapt in config
 - install karabiner elements and enable all the stuff
-- install ghostty
-- run setup
+- install nix-darwin: https://github.com/nix-darwin/nix-darwin
+
+```shell
+sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ohnezahn
+```
 
 - after setup steps:
 - chsh -s to make fish default
+- start Kanata in one terminal (or really figure out launchDaemon)
 
 https://www.reddit.com/r/ErgoMechKeyboards/comments/1fojvif/is_anybody_running_kanata_on_macos_to_do_keyboard/
