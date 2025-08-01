@@ -1,6 +1,6 @@
 return {
     "yetone/avante.nvim",
-    enabled      = true,
+    enabled      = false,
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     -- ⚠️ must add this setting! ! !
     build        = "make BUILD_FROM_SOURCE=true",
