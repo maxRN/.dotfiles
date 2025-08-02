@@ -79,4 +79,37 @@ in
   security.pam.services.sudo_local.touchIdAuth = true;
   environment.shells = [ pkgs.fish ];
 
+  # environment.launchDaemons.kanata = {
+  #     enable = true;
+  #     source = ./com.maxrn.kanata.plist;
+  # };
+  # launchd.daemons.kanata = {
+  #   # kanata --cfg /Users/maxrn/.config/kanata/macbook.kbd
+  #   # script = ''
+  #   #   exec sudo ${pkgs.kanata}/bin/kanata --cfg /Users/maxrn/.config/kanata/macbook.kbd
+  #   # '';
+  #   serviceConfig = {
+  #     ProgramArguments = [
+  #       "${pkgs.kanata}/bin/kanata"
+  #       "--cfg"
+  #       "/Users/maxrn/.config/kanata/macbook.kbd"
+  #     ];
+  #     KeepAlive = true;
+  #     RunAtLoad = true;
+  #     StandardOutPath = "/var/log/kanata.out.log";
+  #     StandardErrorPath = "/var/log/kanata.err.log";
+  #   };
+  # };
+
+  # launchd.daemons.does-anything-work = {
+  #   serviceConfig = {
+  #     ProgramArguments = [
+  #       "/usr/bin/env"
+  #       "bash"
+  #       "-c"
+  #       "date > /var/log/does-anything-work"
+  #     ];
+  #     RunAtLoad = true;
+  #   };
+  # };
 }
