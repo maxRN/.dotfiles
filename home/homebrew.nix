@@ -11,6 +11,7 @@
       "ghostty"
       "docker-desktop"
       "aldente"
+      "obsidian"
     ];
     masApps = {
       AdBlocker = 1365531024;
