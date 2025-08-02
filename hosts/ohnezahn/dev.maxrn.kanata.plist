@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>org.custom.kanata</string>
+    <string>dev.maxrn.kanata</string>
     <key>ProgramArguments</key>
     <array>
         <string>/opt/homebrew/bin/kanata</string>
