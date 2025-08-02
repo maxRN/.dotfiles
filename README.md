@@ -1,28 +1,5 @@
 # My (new) dotfiles
 
-Steps on new system.
-
-1. Install nix. Preferably using determinate-systems installer.
-2. Setup nix-darwin first time: `nix run nix-darwin -- switch --flake ~/.config/nix-darwin`
-3. Enjoy!
-Too scared to commit `work.nix` to git so instead do:
-
-```shell
-git add --intent-to-add work.nix
-```
-
-and
-
-```shell
-git update-index --assume-unchanged work.nix
-```
-
-Undo: https://stackoverflow.com/questions/62444728/how-to-undo-git-add-intent-to-add
-
-Monitor aerospace:
-
-- https://github.com/nikitabobko/AeroSpace/issues/253
-- https://github.com/nikitabobko/AeroSpace/issues/149#issuecomment-1928127037
 
 ## MacOS settings
 
@@ -31,16 +8,6 @@ Monitor aerospace:
 sudo mkdir -p /Library/Preferences/FeatureFlags/Domain
 sudo /usr/libexec/PlistBuddy -c "Add 'redesigned_text_cursor:Enabled' bool false" /Library/Preferences/FeatureFlags/Domain/UIKit.plist
 ```
-
-## Manual steps
-
-Some steps still need to be done by hand:
-
-### Enable aerospace service
-
-1. Copy `./hosts/work/com.maxrn.aerospace.plist` to `~/Library/LaunchAgents/`.
-2. Run `launchctl load ~/Library/LaunchAgents/com.maxrn.aerospace.plist`
-
 
 ## New device
 
@@ -54,15 +21,28 @@ Some steps still need to be done by hand:
     - find out hostname with 'scutil ...'
     - Or change it beforehand to a cooler name
     - adapt in config
-- install karabiner elements and enable all the stuff
 - install nix-darwin: https://github.com/nix-darwin/nix-darwin
 
 ```shell
 sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ohnezahn
 ```
 
+- install karabiner elements from website: https://karabiner-elements.pqrs.org/
+    - Make sure it has permissions in Private & Security > Input monitoring
+    - and in General > Anmeldeobjekte & Erweiterungen
+- after it's setup, you can install kanata:
+
+```shell
+sudo cp modules/kanata/dev.maxrn.kanata.plist /Library/LaunchDaemons/
+sudo launchctl load /Library/LaunchDaemons/dev.maxrn.kanata.plist
+```
+!!! Make sure that kanata is allowed/added in: !!!
+- Make sure it has permissions in Private & Security > Input monitoring
+- and in General > Anmeldeobjekte & Erweiterungen
+
+
+
 - after setup steps:
 - chsh -s to make fish default
-- start Kanata in one terminal (or really figure out launchDaemon)
 
 https://www.reddit.com/r/ErgoMechKeyboards/comments/1fojvif/is_anybody_running_kanata_on_macos_to_do_keyboard/

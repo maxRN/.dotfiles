@@ -15,7 +15,6 @@
         opencode
         claude-code
         jdk24
-        kanata-with-cmd
         _1password-gui
         _1password-cli
       ];
