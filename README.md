@@ -44,5 +44,5 @@ sudo launchctl load /Library/LaunchDaemons/dev.maxrn.kanata.plist
 
 - after setup steps:
 - chsh -s to make fish default
-
-https://www.reddit.com/r/ErgoMechKeyboards/comments/1fojvif/is_anybody_running_kanata_on_macos_to_do_keyboard/
+- Run and setup aldente
+- Run and configure raycast for app switching
