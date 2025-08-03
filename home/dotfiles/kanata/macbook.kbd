@@ -25,6 +25,16 @@ configuration entries.
   |#
 
   process-unmapped-keys yes
+  danger-enable-cmd yes
+)
+
+;; applications aliases
+(defalias
+  o_safari (cmd open -a "Safari")
+  o_ghostty (cmd open -a "Ghostty")
+  o_obsidian (cmd open -a "Obsidian")
+  o_intellij (cmd open -a "IntelliJ")
+  o_slack (cmd open -a "Slack")
 )
 
 (defsrc
@@ -42,7 +52,7 @@ configuration entries.
     @esc  🔅   🔆    ✗    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
     @grv 1    2    3    4    5    6    7    8    9    0    -    =    bspc
     @tab  q    w    e    r    t    y    u    i    o    p    [    ]
-    @cap a    s    d    f    g    h    j    k    l    ;    '    \    ret
+    @cap a    s    d    f    g    h    j    k    l    @apps    '    \    ret
     lsft lsft  z    x    c    v    b    n    m    ,    .    /    rsft
     lctl   lctl lalt lmet           spc            rmet ralt
 )
@@ -52,6 +62,15 @@ configuration entries.
     @grv lrld  lrld-next    _    _    _    _    _    _    _    _    _    _    _
     _  _    _    _    _    _    _    _    _    _    _    _    _
     _ _    _    _    _    _    left    down    up    right    _    _    _    _
+    _ _  _    _    _    _    _    _    _    _    _    _    _
+    _   _ _ _           _            _ _
+)
+
+(deflayer applayer
+    _  _   _    _    _    _    _    _   _   _   _   _   _
+    _ _  _    _    _    _    _    _    _    _    _    _    _    _
+    @tab  _    _    _    _    _    _    _    _    _    _    _    _
+    _ @o_safari @o_ghostty @o_obsidian f  g  h  j k l @apps    _    _    _
     _ _  _    _    _    _    _    _    _    _    _    _    _
     _   _ _ _           _            _ _
 )
@@ -70,4 +89,5 @@ configuration entries.
   grv (tap-hold-press 200 200 grv (layer-toggle mylayer))
   esc (tap-hold-press 200 200 esc (layer-toggle mylayer))
   tab (tap-hold-press 200 200 tab (layer-toggle nav))
+  apps (tap-hold-press 200 200 ; (layer-toggle applayer))
 )

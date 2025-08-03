@@ -28,7 +28,7 @@ in
 
   home.packages =
     let
-      unstable = with pkgs-unstable; [ ];
+      unstable = with pkgs-unstable; [ kanata-with-cmd ];
       stable = with pkgs; [
         # programming langs
         rustup
