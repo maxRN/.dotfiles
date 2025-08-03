@@ -37,6 +37,12 @@ configuration entries.
   o_slack (cmd open -a "Slack")
 )
 
+(defalias
+    navleft (cmd open "rectangle://execute-action?name=left-half")
+    navright (cmd open "rectangle://execute-action?name=right-half")
+    navmax (cmd open "rectangle://execute-action?name=maximize")
+)
+
 (defsrc
     esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
     IntlBackslash 1    2    3    4    5    6    7    8    9    0    -    =    bspc
@@ -51,8 +57,8 @@ configuration entries.
     ;; you can of course change any of the other mappings.
     @esc  🔅   🔆    ✗    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
     @grv 1    2    3    4    5    6    7    8    9    0    -    =    bspc
-    @tab  q    w    e    r    t    y    u    i    o    p    [    ]
-    @cap a    s    d    f    g    h    j    k    l    @apps    '    \    ret
+    tab  q    w    e    r    t    y    u    i    o    p    [    ]
+    @cap a    s    d    f    g    h    j    k    @nav    @apps    '    \    ret
     lsft lsft  z    x    c    v    b    n    m    ,    .    /    rsft
     lctl   lctl lalt lmet           spc            rmet ralt
 )
@@ -69,17 +75,17 @@ configuration entries.
 (deflayer applayer
     _  _   _    _    _    _    _    _   _   _   _   _   _
     _ _  _    _    _    _    _    _    _    _    _    _    _    _
-    @tab  _    _    _    _    _    _    _    _    _    _    _    _
+    _  _    _    _    _    _    _    _    _    _    _    _    _
     _ @o_safari @o_ghostty @o_obsidian f  g  h  j k l @apps    _    _    _
     _ _  _    _    _    _    _    _    _    _    _    _    _
     _   _ _ _           _            _ _
 )
 
-(deflayer nav
+(deflayer navlayer
     _  _   _    _    _    _    _    _   _   _   _   _   _
     _ _  _    _    _    _    _    _    _    _    _    _    _    _
-    @tab  _    _    _    _    _    _    _    _    _    _    _    _
-    _ _    _    _    _    _    _    A-1    A-2    A-3    A-4    _    _    _
+    _  _    _    _    _    _    _    _    _    _    _    _    _
+    _ a @navleft @navright @navmax  g  h  j k @nav _  _    _    _
     _ _  _    _    _    _    _    _    _    _    _    _    _
     _   _ _ _           _            _ _
 )
@@ -88,6 +94,6 @@ configuration entries.
   cap (tap-hold-press 200 200 esc lctl)
   grv (tap-hold-press 200 200 grv (layer-toggle mylayer))
   esc (tap-hold-press 200 200 esc (layer-toggle mylayer))
-  tab (tap-hold-press 200 200 tab (layer-toggle nav))
   apps (tap-hold-press 200 200 ; (layer-toggle applayer))
+  nav (tap-hold-press 200 200 l (layer-toggle navlayer))
 )
