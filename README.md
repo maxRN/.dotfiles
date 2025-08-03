@@ -46,3 +46,8 @@ sudo launchctl load /Library/LaunchDaemons/dev.maxrn.kanata.plist
 - chsh -s to make fish default
 - Run and setup aldente
 - Run and configure raycast for app switching
+
+## Config reference
+
+- Kanata: https://jtroo.github.io/config.html#tap-hold
+- Someone else's Kanata config: https://github.com/linkarzu/dotfiles-latest/blob/main/kanata/configs/macos.kbd
