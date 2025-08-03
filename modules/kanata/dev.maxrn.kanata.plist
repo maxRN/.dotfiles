@@ -6,7 +6,7 @@
     <string>dev.maxrn.kanata</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/kanata</string>
+        <string>/etc/profiles/per-user/maxrn/bin/kanata</string>
         <string>--cfg</string>
         <string>/Users/maxrn/.config/kanata/macbook.kbd</string>
         <string>--cfg</string>
