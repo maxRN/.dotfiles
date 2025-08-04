@@ -95,5 +95,5 @@ configuration entries.
   grv (tap-hold-press 200 200 grv (layer-toggle mylayer))
   esc (tap-hold-press 200 200 esc (layer-toggle mylayer))
   apps (tap-hold-press 200 200 ; (layer-toggle applayer))
-  nav (tap-hold 100 200 l (layer-toggle navlayer))
+  nav (tap-hold 10 200 l (layer-toggle navlayer))
 )
