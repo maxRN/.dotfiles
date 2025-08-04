@@ -33,7 +33,7 @@ configuration entries.
   o_safari (cmd open -a "Safari")
   o_ghostty (cmd open -a "Ghostty")
   o_obsidian (cmd open -a "Obsidian")
-  o_intellij (cmd open -a "IntelliJ")
+  o_intellij (cmd open -a "IntelliJ IDEA")
   o_slack (cmd open -a "Slack")
 )
 
@@ -75,8 +75,8 @@ configuration entries.
 (deflayer applayer
     _  _   _    _    _    _    _    _   _   _   _   _   _
     _ _  _    _    _    _    _    _    _    _    _    _    _    _
-    _  _    _    _    _    _    _    _    _    _    _    _    _
-    _ @o_safari @o_ghostty @o_obsidian f  g  h  j k l @apps    _    _    _
+    _  @o_slack _    _    _    _    _    _    _    _    _    _    _
+    _ @o_safari @o_ghostty @o_obsidian @o_intellij  g  h  j k l @apps    _    _    _
     _ _  _    _    _    _    _    _    _    _    _    _    _
     _   _ _ _           _            _ _
 )

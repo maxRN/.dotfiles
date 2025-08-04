@@ -11,6 +11,8 @@
       "aldente"
       "obsidian"
       "routine"
+      "google-chrome"
+      "dropbox"
     ];
     masApps = {
       AdBlocker = 1365531024;

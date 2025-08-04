@@ -6,6 +6,7 @@
       "1password"
       "docker-desktop"
       "yaak"
+      "slack"
     ];
   };
 }
