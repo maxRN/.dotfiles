@@ -1,10 +1,11 @@
 {
   pkgs,
+  config,
   ...
 }:
 let
   hostname = "ohnezahn";
-  username = "maxrn";
+  username = config.system.primaryUser;
 in
 {
   imports = [
@@ -45,6 +46,6 @@ in
   services.kanata = {
     enable = true;
     user = username;
-    configs = [ "/Users/maxrn/.config/kanata/macbook.kbd" ];
+    configs = [ "/Users/${username}/.config/kanata/macbook.kbd" ];
   };
 }

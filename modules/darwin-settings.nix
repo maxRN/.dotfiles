@@ -1,10 +1,8 @@
 { config, ... }:
 {
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
   system = {
     primaryUser = "maxrn";
-    stateVersion = 4;
+    stateVersion = 6;
     defaults = {
       smb.NetBIOSName = config.networking.hostName;
       trackpad.Clicking = true; # enable tap to click

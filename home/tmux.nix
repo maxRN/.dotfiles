@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs.tmux = {
     enable = true;
@@ -43,7 +43,7 @@
 
       # window_activity is last time of activity in current window in unix time
       # formatting is done with strftime, see man strftime for more information
-      # set -g status-right "maxrn #{t/f/%%H#:%%M %%Y-%%-m-%%d %%A:window_activity} "
+      # set -g status-right "${config.home.username} #{t/f/%%H#:%%M %%Y-%%-m-%%d %%A:window_activity} "
 
       # So session name doesn't get cut off
       set -g status-left-length 30 # could be any number

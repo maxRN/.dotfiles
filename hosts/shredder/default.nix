@@ -1,10 +1,11 @@
 {
   pkgs,
+  config,
   ...
 }:
 let
   hostname = "shredder";
-  username = "maxrn";
+  username = config.home.username;
 in
 {
   imports = [

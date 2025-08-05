@@ -7,7 +7,7 @@ in
     enable = lib.mkEnableOption "Enable kanata service";
     user = lib.mkOption {
       type = lib.types.str;
-      example = "maxrn";
+      example = "\${config.home.username}";
       description = "The username where";
     };
     pkg = lib.mkOption {
@@ -19,7 +19,7 @@ in
     configs = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       description = "Config files to use.";
-      example = "[ \"/Users/maxrn/.config/kanata/macbook.kbd\" ]";
+      example = "[ \"config.user.\${config.home.username}/.config/kanata/macbook.kbd\" ]";
     };
   };
   config =

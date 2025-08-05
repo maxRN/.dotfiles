@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 {
   # `programs.git` will generate the config file: ~/.config/git/config
   # to make git use this config file, `~/.gitconfig` should not exist!
@@ -30,12 +30,7 @@
       ".direnv/"
       ".quarkus/"
       ".venv/"
-      "draci-sessionizer.sh"
       "__pycache__/"
-      # please noone look here
-      "LOCAL Testing.bru"
-      "DEV Testing.bru"
-      "INT Testing.bru"
     ];
 
     includes = [
@@ -50,13 +45,6 @@
       }
     ];
 
-    maintenance = {
-      enable = true;
-      repositories = [
-        "/Users/maxrn/work/draci/main"
-      ];
-    };
-
     extraConfig = {
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
@@ -70,7 +58,7 @@
       diff.colorMoved = "default";
       merge.tool = "nvim";
       credential.helper = "osxkeychain";
-      core.excludesFile = "/Users/maxrn/.config/git/ignore";
+      core.excludesFile =  "${config.home.homeDirectory}/.config/git/ignore";
       rerere.enabled = true;
     };
 
