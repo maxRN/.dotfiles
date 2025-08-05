@@ -11,6 +11,7 @@ in
     ../../modules/fish-fix.nix
     ./homebrew.nix
     ../../modules/darwin-settings.nix
+    ../../modules/kanata/kanata.nix
   ];
 
   time.timeZone = "Europe/Berlin";
@@ -41,4 +42,9 @@ in
   };
 
   environment.shells = [ pkgs.fish ];
+  services.kanata = {
+    enable = true;
+    user = username;
+    configs = [ "/Users/maxrn/.config/kanata/macbook.kbd" ];
+  };
 }
