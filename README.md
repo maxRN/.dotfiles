@@ -30,16 +30,10 @@ sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ohnezahn
 - install karabiner elements from website: https://karabiner-elements.pqrs.org/
     - Make sure it has permissions in Private & Security > Input monitoring
     - and in General > Anmeldeobjekte & Erweiterungen
-- after it's setup, you can install kanata:
 
-```shell
-sudo cp modules/kanata/dev.maxrn.kanata.plist /Library/LaunchDaemons/
-sudo launchctl load /Library/LaunchDaemons/dev.maxrn.kanata.plist
-```
 !!! Make sure that kanata is allowed/added in: !!!
 - Make sure it has permissions in Private & Security > Input monitoring
 - and in General > Anmeldeobjekte & Erweiterungen
-
 
 
 - after setup steps:

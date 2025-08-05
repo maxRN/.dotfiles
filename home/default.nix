@@ -8,10 +8,9 @@
 }:
 let
   # needs to be absolute path. Important!
-  homeManager = builtins.toPath "/Users/${userName}/code/.dotfiles/home";
+  homeManager = builtins.toPath "/Users/${config.home.username}/code/.dotfiles/home";
   link = config.lib.file.mkOutOfStoreSymlink;
   l = x: link homeManager + "/${x}";
-  userName = "maxrn";
 in
 {
   imports = [
@@ -21,10 +20,10 @@ in
     ./ssh.nix
   ];
 
-  home.username = userName;
-  home.homeDirectory = "/Users/${userName}";
+  home.username = "maxrn";
+  home.homeDirectory = "/Users/${config.home.username}";
 
-  home.stateVersion = "24.11"; # Please read the comment before changing.
+  home.stateVersion = "25.05";
 
   home.packages =
     let

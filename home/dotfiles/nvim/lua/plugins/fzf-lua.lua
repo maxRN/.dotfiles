@@ -17,7 +17,7 @@ return {
         {
             "<leader>sc",
             function()
-                require("fzf-lua").files({ cwd = "/Users/maxrn/.config/nvim" })
+                require("fzf-lua").files({ cwd = vim.fn.stdpath("config") })
             end,
             desc = "fzf lua: [S]earch through neovim [c]onfig"
         },
