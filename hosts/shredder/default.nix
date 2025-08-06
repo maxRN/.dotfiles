@@ -5,13 +5,14 @@
 }:
 let
   hostname = "shredder";
-  username = config.home.username;
+  username = config.system.primaryUser;
 in
 {
   imports = [
     ../../modules/fish-fix.nix
     ./homebrew.nix
     ../../modules/darwin-settings.nix
+    ../../modules/kanata/kanata.nix
   ];
 
   time.timeZone = "Europe/Berlin";
@@ -43,4 +44,9 @@ in
   };
 
   environment.shells = [ pkgs.fish ];
+  services.kanata = {
+    enable = true;
+    user = username;
+    configs = [ "/Users/${username}/.config/kanata/macbook.kbd" ];
+  };
 }
