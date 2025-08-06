@@ -15,7 +15,7 @@
       "dropbox"
     ];
     masApps = {
-      AdBlocker = 1365531024;
+      "uBlock Origin Lite" = 6745342698;
     };
   };
 }
