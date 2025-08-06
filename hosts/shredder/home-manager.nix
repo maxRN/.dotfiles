@@ -14,7 +14,7 @@
       unstable = with pkgs-unstable; [
         opencode
         claude-code
-        jdk24
+        jdk17
         _1password-gui
         _1password-cli
       ];
