@@ -35,10 +35,10 @@ in
   };
 
   nix = {
-    enable = false;
+    enable = true;
     settings = {
       trusted-users = [ username ];
-      # experimental-features = "nix-command flakes";
+      experimental-features = "nix-command flakes";
     };
   };
 

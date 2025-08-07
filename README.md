@@ -39,7 +39,7 @@ sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ohnezahn
 - after setup steps:
 - chsh -s to make fish default
 - Run and setup aldente
-- Run and configure raycast for app switching
+- Optionally install tailscale if needed
 
 ## Config reference
 
