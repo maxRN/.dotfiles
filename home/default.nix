@@ -17,7 +17,6 @@ in
     ./git.nix
     ./fish.nix
     ./tmux.nix
-    ./ssh.nix
   ];
 
   home.username = "maxrn";
