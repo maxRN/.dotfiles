@@ -31,11 +31,9 @@ in
     in
     lib.mkIf cfg.enable {
       launchd.daemons.kanata-nix = {
+        command = "${cfg.pkg} ${builtins.toString config_args}";
+        # path = [ cfg.pkg ];
         serviceConfig = {
-          ProgramArguments = [
-            cfg.pkg
-          ]
-          ++ config_args;
           Label = "org.nix-darwin.kanata";
           KeepAlive = true;
           RunAtLoad = true;

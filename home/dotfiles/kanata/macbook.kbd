@@ -41,6 +41,7 @@ configuration entries.
     navleft (cmd open "rectangle://execute-action?name=left-half")
     navright (cmd open "rectangle://execute-action?name=right-half")
     navmax (cmd open "rectangle://execute-action?name=maximize")
+    navdisplay (cmd open "rectangle://execute-action?name=next-display")
 )
 
 (defsrc
@@ -84,7 +85,7 @@ configuration entries.
 (deflayer navlayer
     _  _   _    _    _    _    _    _   _   _   _   _   _
     _ _  _    _    _    _    _    _    _    _    _    _    _    _
-    _  _    _    _    _    _    _    _    _    _    _    _    _
+    _  _    _    _    _  @navdisplay  _    _    _    _    _    _    _
     _ a @navleft @navright @navmax  g  h  j k @nav _  _    _    _
     _ _  _    _    _    _    _    _    _    _    _    _    _
     _   _ _ _           _            _ _
