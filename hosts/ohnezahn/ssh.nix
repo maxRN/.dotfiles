@@ -20,8 +20,7 @@
           Hostname zero2
           IdentityFile ~/.ssh/parents_pi2w
           User eltern
-      Host windrunner
-          Hostname 128.140.121.222
+      Host kaladin
           User root
       Host beast
           User mgrosse

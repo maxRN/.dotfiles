@@ -7,6 +7,7 @@
   imports = [
     ../../home/default.nix
     ../../home/darwin.nix
+    ./ssh.nix
   ];
 
   home.packages =
