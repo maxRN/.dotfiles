@@ -13,15 +13,17 @@ in
     ./homebrew.nix
     ../../modules/darwin-settings.nix
     ../../modules/kanata/kanata.nix
+    ../../modules/nix-gc-optimise.nix
+    ../../modules/common-options.nix
   ];
 
   time.timeZone = "Europe/Berlin";
 
+  nixpkgs.hostPlatform = "aarch64-darwin";
+
   programs = {
     fish.enable = true;
   };
-
-  nixpkgs.hostPlatform = "aarch64-darwin";
 
   networking = {
     hostName = hostname;
@@ -33,14 +35,6 @@ in
     home = "/Users/${username}";
     description = username;
     shell = pkgs.fish;
-  };
-
-  nix = {
-    enable = false;
-    settings = {
-      trusted-users = [ username ];
-      # experimental-features = "nix-command flakes";
-    };
   };
 
   environment.shells = [ pkgs.fish ];

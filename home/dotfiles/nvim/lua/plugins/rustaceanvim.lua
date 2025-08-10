@@ -1,6 +1,1 @@
-return {
-    'mrcjkb/rustaceanvim',
-    enabled = true,
-    version = '^6', -- Recommended
-    lazy = false, -- This plugin is already lazy
-}
+vim.pack.add({ "https://github.com/mrcjkb/rustaceanvim" })
