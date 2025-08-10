@@ -16,9 +16,9 @@
     userEmail = "max12.gro@gmail.com";
 
     signing = {
-        format = "ssh";
-        key = "~/.ssh/id_ed25519.pub";
-        signByDefault = true;
+      format = "ssh";
+      key = "~/.ssh/id_ed25519.pub";
+      signByDefault = true;
     };
 
     delta.enable = true; # try new differ https://github.com/dandavison/delta
@@ -58,7 +58,7 @@
       diff.colorMoved = "default";
       merge.tool = "nvim";
       credential.helper = "osxkeychain";
-      core.excludesFile =  "${config.home.homeDirectory}/.config/git/ignore";
+      core.excludesFile = "${config.home.homeDirectory}/.config/git/ignore";
       rerere.enabled = true;
     };
 
