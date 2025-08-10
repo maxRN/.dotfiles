@@ -38,9 +38,4 @@ in
   };
 
   environment.shells = [ pkgs.fish ];
-  services.kanata = {
-    enable = true;
-    user = username;
-    configs = [ "/Users/${username}/.config/kanata/macbook.kbd" ];
-  };
 }
