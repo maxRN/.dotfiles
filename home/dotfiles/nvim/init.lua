@@ -1,10 +1,14 @@
+---get rid of undefined "vim" global warning
+---@diagnostic disable: undefined-global
+vim.pack.add({
+    "https://github.com/folke/tokyonight.nvim",
+    "https://github.com/nvim-tree/nvim-web-devicons",
+})
+
+vim.cmd.colorscheme("tokyonight")
+
 vim.g.mapleader = " "
-
-require("config.lazy")
-
-vim.keymap.set("n", "<leader><leader>x", "<cmd>source %<CR>")
-vim.keymap.set("n", "<leader>x", ":.lua<CR>")
-vim.keymap.set("v", "<leader>x", ":lua<CR>")
+vim.keymap.set("n", "<leader>so", ":source<CR>")
 
 -- vim.keymap.set("n", "<C-d>", "<C-d>zz")
 -- vim.keymap.set("n", "<C-u>", "<C-u>zz")
@@ -38,27 +42,13 @@ vim.opt.colorcolumn = "80"
 vim.opt.clipboard = "unnamedplus"
 vim.opt.winborder = 'rounded'
 
-vim.diagnostic.config({
-    -- Use the default configuration
-
-    -- Alternatively, customize specific options
-    virtual_lines = {
-        -- Only show virtual line diagnostics for the current cursor line
-        current_line = true,
-    },
-})
-
--- additional filetypes
-vim.filetype.add({
-    extension = {
-        templ = "templ",
-    },
-})
-
-vim.api.nvim_create_autocmd("TextYankPost", {
-    desc = "Highlight when yanking test",
-    group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
-    callback = function()
-        vim.hl.on_yank()
-    end,
-})
+require("plugins.lsp")
+require("plugins.neogit")
+require("plugins.oil")
+require("plugins.fzf-lua")
+require("plugins.conform")
+require("plugins.nvim-lint")
+require("plugins.harpoon")
+require("plugins.rustaceanvim")
+require("plugins.treesitter")
+-- require("plugins.blink")

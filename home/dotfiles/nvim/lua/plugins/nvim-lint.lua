@@ -1,18 +1,15 @@
-return {
-    "mfussenegger/nvim-lint",
-    config = function()
-        require('lint').linters_by_ft = {
-            typescript = { 'eslint' },
-            javascript = { 'eslint' },
-            python = { 'ruff' },
-            rust = { 'clippy' },
-        }
-        vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-            callback = function()
-                -- try_lint without arguments runs the linters defined in `linters_by_ft`
-                -- for the current filetype
-                require("lint").try_lint()
-            end,
-        })
-    end
+vim.pack.add({ "https://github.com/mfussenegger/nvim-lint" })
+
+require('lint').linters_by_ft = {
+    typescript = { 'eslint' },
+    javascript = { 'eslint' },
+    python = { 'ruff' },
+    rust = { 'clippy' },
 }
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    callback = function()
+        -- try_lint without arguments runs the linters defined in `linters_by_ft`
+        -- for the current filetype
+        require("lint").try_lint()
+    end,
+})

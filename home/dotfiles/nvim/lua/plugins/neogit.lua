@@ -1,15 +1,7 @@
-return {
-	{
-		"TimUntersberger/neogit",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-
-			"sindrets/diffview.nvim", -- optional - Diff integration
-			"nvim-telescope/telescope.nvim",
-		},
-		keys = {
-			{ "<leader>gs", "<Cmd>Neogit<Cr>" },
-		},
-		config = true,
-	},
-}
+vim.pack.add({
+    "https://github.com/TimUntersberge/neogit",
+    "https://github.com/sindrets/diffview.nvim",
+    "https://github.com/nvim-lua/plenary.nvim",
+})
+require("neogit").setup()
+vim.keymap.set("n", "<leader>gs", ":Neogit<CR>")
