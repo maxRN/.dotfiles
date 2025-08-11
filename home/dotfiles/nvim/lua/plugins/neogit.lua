@@ -1,5 +1,5 @@
 vim.pack.add({
-    "https://github.com/TimUntersberge/neogit",
+    "https://github.com/NeogitOrg/neogit",
     "https://github.com/sindrets/diffview.nvim",
     "https://github.com/nvim-lua/plenary.nvim",
 })
