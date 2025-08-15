@@ -41,7 +41,7 @@
             @esc  🔅   🔆    ✗    ✗    ✗    ✗    ◀◀   ▶⏸   ▶▶   🔇   🔉   🔊
             @grv 1    2    3    4    5    6    7    8    9    0    -    =    bspc
             tab  q    w    e    r    t    y    u    i    o    p    [    ]
-            @cap a    s    d    f    g    h    j    k    @nav    @apps    '    \    ret
+            @cap a    s    d    f    g    h    j    k    l    @apps  @nav  \    ret
             lsft lsft  z    x    c    v    b    n    m    ,    .    /    rsft
             lctl   lctl lalt lmet           spc            rmet ralt
         )
@@ -68,7 +68,7 @@
             _  _   _    _    _    _    _    _   _   _   _   _   _
             _ _  _    _    _    _    _    _    _    _    _    _    _    _
             _  _    _    _    _  @navdisplay  _    _    _    _    _    _    _
-            _ a @navleft @navright @navmax  g  h  j k @nav _  _    _    _
+            _ a @navleft @navright @navmax  g  h  j k l _  @nav  _    _
             _ _  _    _    _    _    _    _    _    _    _    _    _
             _   _ _ _           _            _ _
         )
@@ -78,7 +78,7 @@
           grv (tap-hold-press 200 200 grv (layer-toggle mylayer))
           esc (tap-hold-press 200 200 esc (layer-toggle mylayer))
           apps (tap-hold-press 200 200 ; (layer-toggle applayer))
-          nav (tap-hold 10 200 l (layer-toggle navlayer))
+          nav (tap-hold 10 200 ' (layer-toggle navlayer))
         )
       '';
     };
