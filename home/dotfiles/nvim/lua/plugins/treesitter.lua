@@ -2,7 +2,19 @@ vim.pack.add({
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" }
 })
 
-local langs = { "go", "kotlin", "rust", "javascript", "typescript" }
+local langs = {
+    "css",
+    "go",
+    "html",
+    "java",
+    "javascript",
+    "kotlin",
+    "nix",
+    "python",
+    "rust",
+    "typescript",
+    "typst",
+}
 
 require("nvim-treesitter").install(langs)
 

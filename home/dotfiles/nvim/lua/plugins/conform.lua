@@ -21,5 +21,6 @@ require("conform").setup({
         ocaml = { "ocamlformat" },
         templ = { "templ fmt", lsp_format = "prefer" },
         rust = { "rustfmt" },
+        typst = { "typstyle" },
     },
 })
