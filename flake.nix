@@ -24,10 +24,6 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
-    codelldb = {
-      url = "github:mrcjkb/rustaceanvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -38,7 +34,6 @@
       pkgs-unstable,
       home-manager,
       neovim-nightly-overlay,
-      codelldb,
       ...
     }:
     let
@@ -58,7 +53,7 @@
                   "claude-code"
                 ];
             };
-            inherit neovim-nightly-overlay codelldb;
+            inherit neovim-nightly-overlay;
           };
 
           modules = [
@@ -90,7 +85,7 @@
                   "1password-cli"
                 ];
             };
-            inherit neovim-nightly-overlay codelldb;
+            inherit neovim-nightly-overlay;
           };
 
           modules = [

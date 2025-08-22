@@ -26,6 +26,10 @@
           User mgrosse
           HostName 141.76.44.200
           ProxyJump jump-serve
+      Host bigboy
+          User max
+          HostName 141.76.44.182
+          ProxyJump beast
     '';
   };
 }
