@@ -3,7 +3,6 @@
   pkgs,
   pkgs-unstable,
   neovim-nightly-overlay,
-  codelldb,
   ...
 }:
 let
@@ -62,10 +61,7 @@ in
         shellcheck
       ];
     in
-    stable
-    ++ unstable
-    ++ [ neovim-nightly-overlay.packages.${pkgs.system}.default ]
-    ++ [ codelldb.outputs.packages.${pkgs.system}.codelldb ];
+    stable ++ unstable ++ [ neovim-nightly-overlay.packages.${pkgs.system}.default ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
