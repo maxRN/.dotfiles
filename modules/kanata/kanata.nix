@@ -10,15 +10,6 @@
         process-unmapped-keys yes
       '';
       config = ''
-        ;; applications aliases
-        (defalias
-          o_safari (cmd open -a "Safari")
-          o_ghostty (cmd open -a "Ghostty")
-          o_obsidian (cmd open -a "Obsidian")
-          o_intellij (cmd open -a "IntelliJ IDEA")
-          o_slack (cmd open -a "Slack")
-        )
-
         (defalias
             navleft (cmd open "rectangle://execute-action?name=left-half")
             navright (cmd open "rectangle://execute-action?name=right-half")
@@ -55,12 +46,22 @@
             _   _ _ _           _            _ _
         )
 
+        ;; applications aliases
+        (defalias
+          o_safari (cmd open -a "Safari")
+          o_ghostty (cmd open -a "Ghostty")
+          o_obsidian (cmd open -a "Obsidian")
+          o_intellij (cmd open -a "IntelliJ IDEA")
+          o_slack (cmd open -a "Slack")
+          o_xcode (cmd open -a "Xcode")
+        )
+
         (deflayer applayer
             _  _   _    _    _    _    _    _   _   _   _   _   _
             _ _  _    _    _    _    _    _    _    _    _    _    _    _
             _  @o_slack _    _    _    _    _    _    _    _    _    _    _
             _ @o_safari @o_ghostty @o_obsidian @o_intellij  g  h  j k l @apps    _    _    _
-            _ _  _    _    _    _    _    _    _    _    _    _    _
+            _ _  _    @o_xcode  _    _    _    _    _    _    _    _    _
             _   _ _ _           _            _ _
         )
 
