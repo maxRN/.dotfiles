@@ -8,6 +8,7 @@
     ../../home/default.nix
     ../../home/darwin.nix
     ./ssh.nix
+    ./tmux.nix
   ];
 
   home.packages =
