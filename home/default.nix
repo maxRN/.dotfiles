@@ -89,6 +89,10 @@ in
         url_encoded=$(echo $question | ${pkgs.jq}/bin/jq -sRr @uri)
         open "https://t3.chat/new?model=gemini-2.5-flash&q=$url_encoded"
       '')
+      (pkgs.writeShellScriptBin "ask-tldr" ''
+        read -p "Enter CLI/programming lang: " topic
+        ${pkgs.tldr}/bin/tldr $topic
+      '')
     ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
