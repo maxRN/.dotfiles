@@ -65,11 +65,26 @@ in
     ++ unstable
     ++ [ neovim-nightly-overlay.packages.${pkgs.system}.default ]
     ++ [
-      (pkgs.writeShellScriptBin "tmux-sessionizer" (
-        builtins.readFile ./dotfiles/scripts/tmux-sessionizer.sh
-      ))
+      (pkgs.writeShellScriptBin "tmux-sessionizer" ''
+        if [[ $# -eq 1 ]]; then
+            selected=$1
+        else
+            selected=$(find ~/work ~/code ~/uni ~/notes -mindepth 1 -maxdepth 1 -type d | fzf --tmux --color gutter:-1)
+        fi
+
+        if [[ -z $selected ]]; then
+            exit 0
+        fi
+
+        selected_name=$(basename "$selected" | tr . _)
+
+        if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+            tmux new-session -ds "$selected_name" -c "$selected"
+        fi
+
+        tmux switch-client -t "$selected_name"
+      '')
       (pkgs.writeShellScriptBin "ask-gpt" ''
-        #!/${pkgs.bash}/bin/bash
         read -p "Ask Gemini: " question 
         url_encoded=$(echo $question | ${pkgs.jq}/bin/jq -sRr @uri)
         open "https://t3.chat/new?model=gemini-2.5-flash&q=$url_encoded"
@@ -80,7 +95,6 @@ in
   # plain files is through 'home.file'.
   home.file = {
     ".config/nvim".source = l "dotfiles/nvim";
-    ".config/bat".source = l "dotfiles/bat";
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
     ".config/kanata".source = l "dotfiles/kanata";
