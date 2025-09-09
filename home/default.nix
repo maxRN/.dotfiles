@@ -65,26 +65,10 @@ in
     ++ unstable
     ++ [ neovim-nightly-overlay.packages.${pkgs.system}.default ]
     ++ [
-      (pkgs.writeShellScriptBin "tmux-sessionizer" ''
-        #!${pkgs.bash}/bin/bash
-          if [[ $# -eq 1 ]]; then
-            selected=$1
-          else
-              selected=$(find ~/work ~/code ~/uni ~/notes -mindepth 1 -maxdepth 1 -type d | fzf --tmux --color gutter:-1)
-          fi
-
-          if [[ -z $selected ]]; then
-              exit 0
-          fi
-
-          selected_name=$(basename "$selected" | tr . _)
-
-          if ! tmux has-session -t="$selected_name" 2> /dev/null; then
-              tmux new-session -ds "$selected_name" -c "$selected"
-          fi
-
-          tmux switch-client -t "$selected_name"
-      '')
+      (pkgs.writeShellScriptBin "tmux-sessionizer" (
+        builtins.readFile ./dotfiles/scripts/tmux-sessionizer.sh
+      ))
+      (pkgs.writeShellScriptBin "ask-gpt" (builtins.readFile ./dotfiles/scripts/ask-gpt.sh))
     ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
