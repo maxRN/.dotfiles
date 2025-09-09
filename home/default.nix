@@ -68,7 +68,12 @@ in
       (pkgs.writeShellScriptBin "tmux-sessionizer" (
         builtins.readFile ./dotfiles/scripts/tmux-sessionizer.sh
       ))
-      (pkgs.writeShellScriptBin "ask-gpt" (builtins.readFile ./dotfiles/scripts/ask-gpt.sh))
+      (pkgs.writeShellScriptBin "ask-gpt" ''
+        #!/${pkgs.bash}/bin/bash
+        read -p "Ask Gemini: " question 
+        url_encoded=$(echo $question | ${pkgs.jq}/bin/jq -sRr @uri)
+        open "https://t3.chat/new?model=gemini-2.5-flash&q=$url_encoded"
+      '')
     ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
