@@ -27,6 +27,7 @@
       # bind == bind-key
       bind-key -r f run-shell "tmux-sessionizer"
       bind-key -r I display-popup -E 'ask-gpt' 
+      bind-key -r T display-popup -h '80%' 'ask-tldr'
       bind-key c new-window -c "#{pane_current_path}"
 
 	  bind-key -r r source-file ~/.config/tmux/tmux.conf \; display-message "tmux config reloaded!"
