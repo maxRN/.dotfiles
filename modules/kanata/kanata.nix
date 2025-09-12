@@ -54,6 +54,7 @@
           o_intellij (cmd open -a "IntelliJ IDEA")
           o_slack (cmd open -a "Slack")
           o_xcode (cmd open -a "Xcode")
+          o_zotero (cmd open -a "Zotero")
         )
 
         (deflayer applayer
@@ -61,7 +62,7 @@
             _ _  _    _    _    _    _    _    _    _    _    _    _    _
             _  @o_slack _    _    _    _    _    _    _    _    _    _    _
             _ @o_safari @o_ghostty @o_obsidian @o_intellij  g  h  j k l @apps    _    _    _
-            _ _  _    @o_xcode  _    _    _    _    _    _    _    _    _
+            _ _  @o_zotero  @o_xcode  _    _    _    _    _    _    _    _    _
             _   _ _ _           _            _ _
         )
 
