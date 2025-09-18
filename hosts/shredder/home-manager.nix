@@ -28,7 +28,6 @@
       ];
 
       stable = with pkgs; [
-        nixos-rebuild-ng
       ];
     in
     stable ++ unstable;
