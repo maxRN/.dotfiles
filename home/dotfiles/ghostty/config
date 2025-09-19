@@ -5,17 +5,20 @@ macos-titlebar-style = tabs
 macos-option-as-alt = true
 copy-on-select = clipboard
 
+window-padding-x=4
+window-padding-y=4
+
 shell-integration = fish
 keybind = shift+enter=text:\n
 
 keybind = opt+a=text:ä
 keybind = opt+u=text:ü
 keybind = opt+o=text:ö
-keybind = opt+A=text:Ä
-keybind = opt+U=text:Ü
-keybind = opt+O=text:Ö
+keybind = opt+shift+a=text:Ä
+keybind = opt+shift+u=text:Ü
+keybind = opt+shift+o=text:Ö
 keybind = opt+s=text:ß
-keybind = opt+S=text:ẞ
+keybind = opt+shift+s=text:ẞ
 
 # keybind = ctrl+1=goto_tab:1
 # keybind = ctrl+2=goto_tab:2
