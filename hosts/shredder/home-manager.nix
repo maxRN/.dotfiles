@@ -20,8 +20,6 @@
   home.packages =
     let
       unstable = with pkgs-unstable; [
-        opencode
-        claude-code
         jdk17
         _1password-gui
         _1password-cli

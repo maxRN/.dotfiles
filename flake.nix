@@ -80,7 +80,6 @@
                 pkg:
                 builtins.elem (nixpkgs.lib.getName pkg) [
                   "ffmpeg-full"
-                  "claude-code"
                   "1password"
                   "1password-cli"
                 ];
