@@ -3,7 +3,6 @@
   homebrew = {
     enable = true;
     casks = [
-      "1password"
       "docker-desktop"
       "yaak"
       "slack"
