@@ -14,6 +14,7 @@
   home.packages =
     let
       unstable = with pkgs-unstable; [
+        bacon
       ];
 
       stable = with pkgs; [
