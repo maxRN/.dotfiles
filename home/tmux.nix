@@ -5,7 +5,7 @@
     baseIndex = 1;
     clock24 = true;
     disableConfirmationPrompt = true;
-    historyLimit = 10000;
+    historyLimit = 100000;
     prefix = "C-a";
     shell = "${pkgs.fish}/bin/fish";
     shortcut = "a";
