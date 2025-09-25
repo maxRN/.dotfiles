@@ -20,12 +20,13 @@
   home.packages =
     let
       unstable = with pkgs-unstable; [
-        jdk17
         _1password-gui
         _1password-cli
       ];
 
       stable = with pkgs; [
+        awscli2
+        jdk17
       ];
     in
     stable ++ unstable;
