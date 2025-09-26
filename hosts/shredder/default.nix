@@ -11,8 +11,9 @@ in
   imports = [
     ../../modules/fish-fix.nix
     ./homebrew.nix
+    ./aerospace.nix
+    ./kanata.nix
     ../../modules/darwin-settings.nix
-    ../../modules/kanata/kanata.nix
     ../../modules/nix-gc-optimise.nix
     ../../modules/common-options.nix
   ];

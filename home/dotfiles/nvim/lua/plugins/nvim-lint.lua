@@ -18,6 +18,16 @@ local groups = { "severity", "file", "lnum", "end_lnum", "col", "end_col", "code
 local defaults = { ["source"] = "oxlint" }
 local binary_name = "oxlint"
 
+local function file_exists(filepath)
+  local f = io.open(filepath, "r")
+  if f then
+    f:close()
+    return true
+  else
+    return false
+  end
+end
+
 require('lint').linters.bun_oxlint = {
     cmd = function()
         return "bunx"
@@ -32,6 +42,9 @@ require('lint').linters.bun_oxlint = {
 }
 
 local function file_contains(path, str)
+    if vim.fn.filereadable(path) == 0 then
+        return false
+    end
     local lines = vim.fn.readfile(path)
     for _, line in ipairs(lines) do
         if string.find(line, str, 1, true) then
