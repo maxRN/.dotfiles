@@ -1,4 +1,8 @@
-{ config, ... }:
+{ config, pkgs, ... }:
+let
+  berkeleyMono = pkgs.callPackage ../fonts/berkeleyMono.nix { };
+  tx02 = pkgs.callPackage ../fonts/tx02.nix { };
+in
 {
   system = {
     primaryUser = "maxrn";
@@ -48,4 +52,8 @@
     touchIdAuth = true;
     reattach = true;
   };
+  fonts.packages = [
+    berkeleyMono
+    tx02
+  ];
 }
