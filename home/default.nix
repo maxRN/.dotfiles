@@ -53,6 +53,7 @@ in
         hyperfine
         tokei # better SLOC estimater than cloc
         lazygit
+        git-crypt
 
         # other tools
         #(ffmpeg-full.override { withUnfree = true; })
@@ -161,6 +162,4 @@ in
       enable = true;
     };
   };
-
-  fonts.fontconfig.enable = true;
 }
