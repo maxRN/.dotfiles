@@ -54,6 +54,7 @@ in
         tokei # better SLOC estimater than cloc
         lazygit
         git-crypt
+        gnupg
 
         # other tools
         #(ffmpeg-full.override { withUnfree = true; })
