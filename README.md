@@ -17,8 +17,6 @@ sudo /usr/libexec/PlistBuddy -c "Add 'redesigned_text_cursor:Enabled' bool false
 - install xcode tools
 - install lix
 - clone dotfiles
-- nix-shell -p git-crypt
-- Install https://github.com/AGWA/git-crypt
 - add new host for new machine
     - find out hostname with 'scutil ...'
     - Or change it beforehand to a cooler name
