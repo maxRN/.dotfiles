@@ -3,7 +3,6 @@
   homebrew = {
     enable = true;
     casks = [
-      "discord"
       "musicbrainz-picard"
       "orbstack"
     ];

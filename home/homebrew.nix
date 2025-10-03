@@ -3,6 +3,7 @@
     enable = true;
     casks = [
       "spotify"
+      "discord"
       # "maestral"
       "rectangle" # Installing via homebrew instead of home-manager, because apps don't show up in spotlight otherwise
       # tbf they do show up in Raycast, but I'm trying to go back from that
