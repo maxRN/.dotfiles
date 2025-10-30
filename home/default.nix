@@ -140,6 +140,7 @@ in
     "./node_modules/.bin"
     "$HOME/go/bin"
     "/opt/homebrew/bin"
+    "/opt/homebrew/lib/ruby/gems/3.4.0/bin"
   ];
 
   programs = {
