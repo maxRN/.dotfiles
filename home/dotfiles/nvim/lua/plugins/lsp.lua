@@ -6,6 +6,6 @@ vim.lsp.enable({
     "lua_ls",
     "gopls",
     "nixd",
-    "ts_ls",
+    "ts_ls", -- testing typescript-tools.nvim for now
     "tinymist",
 })

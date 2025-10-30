@@ -83,6 +83,13 @@
         # Prompt
         fish_config prompt choose arrow
         fish_config theme choose my
+
+        fish_add_path /opt/homebrew/opt/ruby/bin
+
+        set -gx LDFLAGS "-L/opt/homebrew/opt/ruby/lib"
+        set -gx CPPFLAGS "-I/opt/homebrew/opt/ruby/include"
+
+        set -gx PKG_CONFIG_PATH "/opt/homebrew/opt/ruby/lib/pkgconfig"
       '';
     };
   };
