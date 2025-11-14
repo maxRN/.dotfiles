@@ -1,10 +1,10 @@
 vim.pack.add({ "https://github.com/mfussenegger/nvim-lint" })
 
 require('lint').linters_by_ft = {
-    typescript = { 'eslint' },
-    javascript = { 'eslint' },
-    typescriptreact = { 'eslint' },
-    javascriptreact = { 'eslint' },
+    -- typescript = { 'eslint' },
+    -- javascript = { 'eslint' },
+    -- typescriptreact = { 'eslint' },
+    -- javascriptreact = { 'eslint' },
     python = { 'ruff' },
     rust = { 'clippy' },
 }

@@ -1,0 +1,38 @@
+{
+  "plugins": {
+    "conform.nvim": {
+      "rev": "9fd3d5e"
+    },
+    "diffview.nvim": [],
+    "fzf-lua": {
+      "rev": "a8458b7"
+    },
+    "harpoon": [],
+    "neogit": {
+      "rev": "268ddf7c"
+    },
+    "nvim-lint": {
+      "rev": "9da1fb9"
+    },
+    "nvim-lspconfig": {
+      "rev": "e25994a"
+    },
+    "nvim-treesitter": {
+      "rev": "64f4755b",
+      "version": "'main'"
+    },
+    "nvim-web-devicons": {
+      "rev": "8dcb311"
+    },
+    "oil.nvim": {
+      "rev": "7e1cd77"
+    },
+    "plenary.nvim": [],
+    "rustaceanvim": {
+      "rev": "be0d1d1"
+    },
+    "tokyonight.nvim": {
+      "rev": "2642dbb"
+    }
+  }
+}
