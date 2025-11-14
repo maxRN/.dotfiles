@@ -28,7 +28,8 @@ for _, lang_setup in ipairs(langs_config) do
     table.insert(patterns, pattern)
 end
 
-require("nvim-treesitter").install(langs)
+local treesitter = require("nvim-treesitter")
+treesitter.install(langs)
 
 vim.api.nvim_create_autocmd('FileType', {
     pattern = patterns,
@@ -42,4 +43,6 @@ vim.api.nvim_create_autocmd('FileType', {
     end,
 })
 
-vim.cmd([[:TSUpdate]])
+treesitter.update()
+
+

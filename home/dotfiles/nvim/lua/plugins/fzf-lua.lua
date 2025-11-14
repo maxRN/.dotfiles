@@ -37,4 +37,4 @@ vim.keymap.set("n",
     { desc = "fzf lua: LSP: code actions" }
 )
 
-vim.cmd('FzfLua register_ui_select')
+fzl.register_ui_select()

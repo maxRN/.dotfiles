@@ -28,6 +28,8 @@ in
       unstable = with pkgs-unstable; [
         kanata-with-cmd
         opencode
+        claude-code
+        gemini-cli
         codex
       ];
       stable = with pkgs; [
