@@ -28,7 +28,7 @@
           ProxyJump jump-serve
       Host bigboy
           User max
-          HostName 141.76.44.182
+          HostName 141.76.44.185
           ProxyJump beast
     '';
   };
