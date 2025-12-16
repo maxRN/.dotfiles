@@ -1,38 +1,65 @@
 {
   "plugins": {
     "conform.nvim": {
-      "rev": "9fd3d5e"
+      "rev": "9fd3d5e0b689ec1bf400c53cbbec72c6fdf24081",
+      "src": "https://github.com/stevearc/conform.nvim"
     },
-    "diffview.nvim": [],
+    "diffview.nvim": {
+      "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
+      "src": "https://github.com/sindrets/diffview.nvim"
+    },
     "fzf-lua": {
-      "rev": "a8458b7"
+      "rev": "a8458b79a957a6e3e217d84106a0fd4b9470ff4c",
+      "src": "https://github.com/ibhagwan/fzf-lua"
     },
-    "harpoon": [],
+    "harpoon": {
+      "rev": "1bc17e3e42ea3c46b33c0bbad6a880792692a1b3",
+      "src": "https://github.com/theprimeagen/harpoon"
+    },
     "neogit": {
-      "rev": "268ddf7c"
+      "rev": "268ddf7cabad7203e761df62eaa99f8c635c1907",
+      "src": "https://github.com/NeogitOrg/neogit"
     },
     "nvim-lint": {
-      "rev": "9da1fb9"
+      "rev": "9da1fb942dd0668d5182f9c8dee801b9c190e2bb",
+      "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "e25994a"
+      "rev": "e25994a1c2373784364852cd904cb39b6d75f227",
+      "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-treesitter": {
-      "rev": "64f4755b",
+      "rev": "64f4755b9d6ea9008265b09eb79fd91727311682",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
     "nvim-web-devicons": {
-      "rev": "8dcb311"
+      "rev": "8dcb311b0c92d460fac00eac706abd43d94d68af",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
-      "rev": "7e1cd77"
+      "rev": "7e1cd7703ff2924d7038476dcbc04b950203b902",
+      "src": "https://github.com/stevearc/oil.nvim"
     },
-    "plenary.nvim": [],
+    "plenary.nvim": {
+      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
     "rustaceanvim": {
-      "rev": "be0d1d1"
+      "rev": "be0d1d14b8504c1c0965b608dc7ed39f2d588c91",
+      "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "tokyonight.nvim": {
-      "rev": "2642dbb"
+      "rev": "2642dbb83333e0575d1c3436e1d837926871c5fb",
+      "src": "https://github.com/folke/tokyonight.nvim"
+    },
+    "typescript-tools.nvim": {
+      "rev": "bf11d98ad5736e1cbc1082ca9a03196d45c701f1",
+      "src": "https://github.com/pmizio/typescript-tools.nvim"
+    },
+    "typst-preview.nvim": {
+      "rev": "dea4525d5420b7c32eebda7de15a6beb9d6574fa",
+      "src": "https://github.com/chomosuke/typst-preview.nvim"
     }
   }
 }
