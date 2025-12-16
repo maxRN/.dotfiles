@@ -91,9 +91,9 @@ in
         tmux switch-client -t "$selected_name"
       '')
       (pkgs.writeShellScriptBin "ask-gpt" ''
-        read -p "Ask Gemini: " question 
+        read -p "Ask ChatGPT: " question 
         url_encoded=$(echo $question | ${pkgs.jq}/bin/jq -sRr @uri)
-        open "https://t3.chat/new?model=gemini-2.5-flash&q=$url_encoded"
+        open "https://chatgpt.com/?q=$url_encoded"
       '')
       (pkgs.writeShellScriptBin "ask-tldr" ''
         read -p "Enter CLI/programming lang: " topic
