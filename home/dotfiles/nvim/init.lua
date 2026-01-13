@@ -27,6 +27,11 @@ vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "80"
 vim.opt.winborder = 'rounded'
 
+-- This is so you can use `gf` to open files that are in weird directories.
+-- Namely important for frameworks like expo that use file-based routing.
+-- This enabels you to open `src/(app)/[customerId]/index.tsx` like normal.
+vim.opt.isfname:append({ '(', ')', '[', ']' })
+
 require("plugins.colorscheme")
 require("plugins.lsp")
 require("plugins.neogit")
