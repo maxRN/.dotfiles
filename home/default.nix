@@ -27,10 +27,8 @@ in
     let
       unstable = with pkgs-unstable; [
         kanata-with-cmd
-        opencode
-        claude-code
         gemini-cli
-        codex
+        bun
       ];
       stable = with pkgs; [
         # programming langs
