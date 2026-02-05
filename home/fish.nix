@@ -32,6 +32,23 @@
         end
         abbr --add dotdot --regex '^\.\.+$' --function multicd
 
+        function pw
+            set pass (op item get $argv[1] --format json | jq -r '.fields[] | select(.id=="password").value')
+
+            if test -z "$pass"
+                echo "Password not found"
+                return
+            end
+
+            set old_clip (pbpaste)
+
+            echo -n $pass | pbcopy
+            echo "Password was copied - clipboard will be restored in 15 seconds"
+            sleep 15
+            echo -n $old_clip | pbcopy
+            echo "Clipboard reset."
+        end
+
         eval "$(fnm env --use-on-cd)"
 
         set fish_greeting
