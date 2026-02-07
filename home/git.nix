@@ -8,20 +8,20 @@
     rm -f ~/.gitconfig
   '';
 
+  programs.delta = {
+    enable = true; # try new differ https://github.com/dandavison/delta
+    enableGitIntegration = true;
+  };
+
   programs.git = {
     enable = true;
     lfs.enable = true;
-
-    userName = "Max Große";
-    userEmail = "max12.gro@gmail.com";
 
     signing = {
       format = "ssh";
       key = "~/.ssh/id_ed25519.pub";
       signByDefault = true;
     };
-
-    delta.enable = true; # try new differ https://github.com/dandavison/delta
 
     ignores = [
       "workspace.code-workspace"
@@ -45,7 +45,26 @@
       }
     ];
 
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Max Große";
+        email = "max12.gro@gmail.com";
+      };
+
+      alias = {
+        # common aliases
+        cm = "commit -m";
+        ca = "commit -am";
+        cn = "commit --amend --no-edit";
+        dc = "diff --cached";
+
+        dft = "difftool";
+        dlog = "-c diff.external=difft log -p --ext-diff";
+
+        # aliases for submodule
+        update = "submodule update --init --recursive";
+        foreach = "submodule foreach";
+      };
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
       pull.rebase = true;
@@ -60,21 +79,6 @@
       credential.helper = "osxkeychain";
       core.excludesFile = "${config.home.homeDirectory}/.config/git/ignore";
       rerere.enabled = true;
-    };
-
-    aliases = {
-      # common aliases
-      cm = "commit -m";
-      ca = "commit -am";
-      cn = "commit --amend --no-edit";
-      dc = "diff --cached";
-
-      dft = "difftool";
-      dlog = "-c diff.external=difft log -p --ext-diff";
-
-      # aliases for submodule
-      update = "submodule update --init --recursive";
-      foreach = "submodule foreach";
     };
   };
 }

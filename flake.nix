@@ -6,18 +6,14 @@
     # nixos/nixpkgs/master == nixos/nixpkgs
     # nixos/nixpkgs/nixpkgs-unstable
     # nixos/nixpkgs/nixos-2x.xx
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     pkgs-unstable.url = "github:nixos/nixpkgs/master";
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.3-1.tar.gz";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim-nightly-overlay = {
@@ -28,7 +24,6 @@
 
   outputs =
     {
-      lix-module,
       nix-darwin,
       nixpkgs,
       pkgs-unstable,
@@ -58,8 +53,6 @@
 
           modules = [
             ./hosts/ohnezahn
-            lix-module.nixosModules.default
-
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -90,7 +83,6 @@
 
           modules = [
             ./hosts/shredder
-            lix-module.nixosModules.default
 
             home-manager.darwinModules.home-manager
             {

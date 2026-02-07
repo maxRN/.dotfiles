@@ -21,7 +21,7 @@ in
   home.username = "maxrn";
   home.homeDirectory = "/Users/${config.home.username}";
 
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
 
   home.packages =
     let
@@ -70,7 +70,7 @@ in
     in
     stable
     ++ unstable
-    ++ [ neovim-nightly-overlay.packages.${pkgs.system}.default ]
+    ++ [ neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default ]
     ++ [
       (pkgs.writeShellScriptBin "tmux-sessionizer" ''
         if [[ $# -eq 1 ]]; then
