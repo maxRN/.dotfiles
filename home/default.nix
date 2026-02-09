@@ -16,6 +16,7 @@ in
     ./git.nix
     ./fish.nix
     ./tmux.nix
+    ./fonts.nix
   ];
 
   home.username = "maxrn";
