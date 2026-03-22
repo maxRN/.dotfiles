@@ -10,13 +10,6 @@
         process-unmapped-keys yes
       '';
       config = ''
-        (defalias
-            navleft (cmd open "rectangle://execute-action?name=left-half")
-            navright (cmd open "rectangle://execute-action?name=right-half")
-            navmax (cmd open "rectangle://execute-action?name=maximize")
-            navdisplay (cmd open "rectangle://execute-action?name=next-display")
-        )
-
         (defsrc
             esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
             IntlBackslash 1    2    3    4    5    6    7    8    9    0    -    =    bspc

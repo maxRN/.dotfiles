@@ -12,9 +12,11 @@ in
     ../../modules/fish-fix.nix
     ./homebrew.nix
     ../../modules/darwin-settings.nix
-    ../../modules/kanata/kanata.nix
     ../../modules/nix-gc-optimise.nix
     ../../modules/common-options.nix
+
+    ../shredder/kanata.nix
+    ../shredder/aerospace.nix
   ];
 
   time.timeZone = "Europe/Berlin";
