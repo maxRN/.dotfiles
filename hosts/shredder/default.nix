@@ -26,6 +26,21 @@ in
     fish.enable = true;
   };
 
+  launchd.user.agents.turn-night-shift-on = {
+    serviceConfig = {
+      Label = "org.nixos.turn-night-shift-on";
+      ProgramArguments = [
+        "/usr/bin/shortcuts"
+        "run"
+        "Turn Night Shift On"
+      ];
+      StartCalendarInterval = {
+        Hour = 6;
+        Minute = 0;
+      };
+    };
+  };
+
   networking = {
     hostName = hostname;
     computerName = hostname;
