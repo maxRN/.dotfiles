@@ -38,7 +38,19 @@
           DSDontWriteNetworkStores = true;
           DSDontWriteUSBStores = true;
         };
+        # turn off C-Space (and C-S-Space) to toggle input source
+        "com.apple.symbolichotkeys" = {
+          AppleSymbolicHotKeys = {
+            "60" = {
+              enabled = false;
+            };
+            "61" = {
+              enabled = false;
+            };
+          };
+        };
       };
+
     };
   };
 
