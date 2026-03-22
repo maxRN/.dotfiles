@@ -32,19 +32,6 @@ vim.opt.winborder = 'rounded'
 -- This enabels you to open `src/(app)/[customerId]/index.tsx` like normal.
 vim.opt.isfname:append({ '(', ')', '[', ']' })
 
-require("plugins.colorscheme")
-require("plugins.lsp")
-require("plugins.neogit")
-require("plugins.oil")
-require("plugins.fzf-lua")
-require("plugins.conform")
--- require("plugins.nvim-lint")
-require("plugins.harpoon")
-require("plugins.rustaceanvim")
-require("plugins.treesitter")
-require("plugins.typst-preview")
-require("plugins.typescript-tools")
--- require("plugins.blink")
 vim.diagnostic.config({
     virtual_text = {
         source = true,

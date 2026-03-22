@@ -1,3 +1,4 @@
+vim.pack.add({ "https://github.com/nvim-lua/plenary.nvim" })
 vim.pack.add({ "https://github.com/theprimeagen/harpoon" })
 require("harpoon").setup({
     menu = {
