@@ -35,15 +35,11 @@
       alt-7 = "workspace 7";
       alt-8 = "workspace 8";
       alt-9 = "workspace 9";
+      alt-z = "workspace 11";
+      alt-x = "workspace 12";
+      alt-c = "workspace 13";
+      alt-v = "workspace 14";
       alt-comma = "layout accordion horizontal vertical";
-      alt-enter = ''
-        exec-and-forget osascript -e 'tell application "Ghostty"
-            activate
-            tell application "System Events"
-                keystroke "n" using command down
-            end tell
-        end tell'
-      '';
       alt-h = "focus left";
       alt-j = "focus down";
       alt-k = "focus up";
@@ -87,6 +83,22 @@
       alt-shift-9 = [
         "move-node-to-workspace 9"
         "workspace 9"
+      ];
+      alt-shift-z = [
+        "move-node-to-workspace 11"
+        "workspace 11"
+      ];
+      alt-shift-x = [
+        "move-node-to-workspace 12"
+        "workspace 12"
+      ];
+      alt-shift-c = [
+        "move-node-to-workspace 13"
+        "workspace 13"
+      ];
+      alt-shift-v = [
+        "move-node-to-workspace 14"
+        "workspace 14"
       ];
       alt-shift-equal = "resize smart +50";
       alt-shift-h = "move left";
