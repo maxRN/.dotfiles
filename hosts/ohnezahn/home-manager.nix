@@ -14,6 +14,7 @@
   home.packages =
     let
       unstable = with pkgs-unstable; [
+        astro-language-server
       ];
 
       stable = with pkgs; [
