@@ -8,13 +8,12 @@
     ../../home/default.nix
     ../../home/darwin.nix
     ./ssh.nix
-    ./tmux.nix
+    ./hledger.nix
   ];
 
   home.packages =
     let
       unstable = with pkgs-unstable; [
-        bacon
       ];
 
       stable = with pkgs; [
