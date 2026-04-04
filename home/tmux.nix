@@ -6,7 +6,6 @@
     clock24 = true;
     disableConfirmationPrompt = true;
     historyLimit = 100000;
-    prefix = "C-a";
     shell = "${pkgs.fish}/bin/fish";
     shortcut = "a";
     mouse = true;
@@ -21,6 +20,10 @@
     ];
 
     extraConfig = ''
+      unbind C-b
+      set -g prefix C-a
+      bind C-a send-prefix
+
       set-option -ga terminal-overrides ",xterm-256color:Tc"
       set-option -g default-terminal "tmux-256color"
 
