@@ -3,6 +3,7 @@ vim.pack.add({
 })
 
 vim.lsp.enable({
+    "astro",
     "lua_ls",
     "gopls",
     "nixd",
