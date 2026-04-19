@@ -50,6 +50,9 @@
         name = "Max Große";
         email = "max12.gro@gmail.com";
       };
+      advice = {
+        addIgnoredFile = false;
+      };
 
       alias = {
         # common aliases
