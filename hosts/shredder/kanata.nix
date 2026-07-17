@@ -39,12 +39,32 @@
             _   _ _ _           _            _ _
         )
 
+        (defalias
+          ws1 (cmd /run/current-system/sw/bin/aerospace workspace 1)
+          ws2 (cmd /run/current-system/sw/bin/aerospace workspace 2)
+          ws3 (cmd /run/current-system/sw/bin/aerospace workspace 3)
+          ws4 (cmd /run/current-system/sw/bin/aerospace workspace 4)
+          ws5 (cmd /run/current-system/sw/bin/aerospace workspace 5)
+          ws6 (cmd /run/current-system/sw/bin/aerospace workspace 6)
+          ws7 (cmd /run/current-system/sw/bin/aerospace workspace 7)
+          ws8 (cmd /run/current-system/sw/bin/aerospace workspace 8)
+          ws9 (cmd /run/current-system/sw/bin/aerospace workspace 9)
+          ws11 (cmd /run/current-system/sw/bin/aerospace workspace 11)
+          ws12 (cmd /run/current-system/sw/bin/aerospace workspace 12)
+          ws13 (cmd /run/current-system/sw/bin/aerospace workspace 13)
+          ws14 (cmd /run/current-system/sw/bin/aerospace workspace 14)
+          focus_left (cmd /run/current-system/sw/bin/aerospace focus left)
+          focus_down (cmd /run/current-system/sw/bin/aerospace focus down)
+          focus_up (cmd /run/current-system/sw/bin/aerospace focus up)
+          focus_right (cmd /run/current-system/sw/bin/aerospace focus right)
+        )
+
         (deflayer applayer
             _  _   _    _    _    _    _    _   _   _   _   _   _
             _ _  _    _    _    _    _    _    _    _    _    _    _    _
-            _  A-6 A-7    A-8  A-9   t    _    _    _    _    _    _    _
-            _ A-1 A-2 A-3 A-4  A-5  A-h  A-j A-k A-l @apps    _    _    _
-            _ _  A-z  A-x  A-c A-v   _    _    _    _    _    _    _
+            _  @ws6 @ws7    @ws8  @ws9   t    _    _    _    _    _    _    _
+            _ @ws1 @ws2 @ws3 @ws4  @ws5  @focus_left  @focus_down @focus_up @focus_right @apps    _    _    _
+            _ _  @ws11  @ws12 @ws13 @ws14   _    _    _    _    _    _    _
             _   _ _ _           _            _ _
         )
 

@@ -3,7 +3,7 @@ vim.keymap.set("n", "<leader>f",
     function()
         require("conform").format({ async = true, lsp_format = "fallback" })
     end)
-local prettier_config = { "prettier", stop_after_first = true }
+local prettier_config = { "oxfmt", "prettier", stop_after_first = true }
 require("conform").setup({
     formatters_by_ft = {
         -- Conform will run multiple formatters sequentially
@@ -23,4 +23,8 @@ require("conform").setup({
         rust = { "rustfmt" },
         typst = { "typstyle" },
     },
+    format_on_save = {
+        timeout_ms = 500,
+        lsp_format = "fallback",
+    }
 })

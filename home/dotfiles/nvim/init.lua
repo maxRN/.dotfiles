@@ -103,5 +103,6 @@ vim.api.nvim_create_user_command("GithubLink", function()
     local url = string.format("%s/blob/%s/%s#L%d", remote, commit, rel_path, line)
 
     vim.fn.jobstart({ "open", url }, { detach = true }) -- macOS
-    vim.notify("Opened: " .. url, vim.log.levels.INFO)
 end, {})
+
+vim.keymap.set("n", "<leader>ogh", ":GithubLink<CR>", { desc = "Open GitHub link for current line" })

@@ -1,6 +1,9 @@
 vim.pack.add({
     "https://github.com/folke/tokyonight.nvim",
 })
+require("tokyonight").setup({
+    transparent = true,
+})
 vim.cmd.colorscheme("tokyonight")
 vim.api.nvim_set_hl(0, "LineNrAbove", { fg = "#AAAAAA" })
 vim.api.nvim_set_hl(0, "LineNrBelow", { fg = "#AAAAAA" })
