@@ -8,6 +8,10 @@
 let
   cfg = config.services.kanata;
 
+  # Keep the executable path stable so macOS Input Monitoring permission
+  # survives changes to the package's versioned Nix store path.
+  kanataExecutable = "/run/current-system/sw/bin/kanata";
+
   upstreamDoc =
     "See [the upstream documentation](https://github.com/jtroo/kanata/blob/main/docs/config.adoc)"
     + "and [example config files](https://github.com/jtroo/kanata/tree/main/cfg_samples) for more information.";
@@ -120,14 +124,18 @@ let
   mkService =
     name: keyboard:
     lib.nameValuePair (mkName name) {
-      command = ''
-        ${lib.getExe cfg.package} \
-           --cfg ${keyboard.configFile} \
-           ${lib.optionalString (keyboard.port != null) "--port ${toString keyboard.port} \\"}
-           ${lib.optionalString (keyboard.extraArgs != "") builtins.concatStringsSep " " keyboard.extraArgs}
-      '';
       serviceConfig = {
         Label = "org.nixos.kanata";
+        ProgramArguments = [
+          kanataExecutable
+          "--cfg"
+          (toString keyboard.configFile)
+        ]
+        ++ lib.optionals (keyboard.port != null) [
+          "--port"
+          (toString keyboard.port)
+        ]
+        ++ keyboard.extraArgs;
         KeepAlive = true;
         RunAtLoad = true;
       };
@@ -153,6 +161,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    environment.systemPackages = [ cfg.package ];
+
     warnings =
       let
         keyboardsWithEmptyDevices = lib.filterAttrs (name: keyboard: keyboard.devices == [ ]) cfg.keyboards;
