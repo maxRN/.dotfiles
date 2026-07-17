@@ -31,9 +31,42 @@ sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ohnezahn
     - Make sure it has permissions in Private & Security > Input monitoring
     - and in General > Anmeldeobjekte & Erweiterungen
 
-!!! Make sure that kanata is allowed/added in: !!!
-- Make sure it has permissions in Private & Security > Input monitoring
-- and in General > Anmeldeobjekte & Erweiterungen
+### Enable the Kanata service on macOS
+
+The launchd service runs Kanata through the stable
+`/run/current-system/sw/bin/kanata` path so its macOS Input Monitoring
+permission survives changes to the versioned Nix store path.
+
+1. Build and activate the host configuration so the stable path exists:
+
+    ```shell
+    sudo darwin-rebuild switch --flake .#shredder
+    ```
+
+2. Open **System Settings → Privacy & Security → Input Monitoring**.
+3. Click `+`, press `Shift-Command-G` in the file picker, and enter:
+
+    ```text
+    /run/current-system/sw/bin/kanata
+    ```
+
+4. Select Kanata and enable its toggle. Also ensure Kanata is allowed under
+   **General → Login Items & Extensions** if macOS lists it there.
+5. Stop any Kanata process that was started manually, then restart the service:
+
+    ```shell
+    sudo launchctl kickstart -k system/org.nixos.kanata
+    ```
+
+6. Verify that launchd reports a running process:
+
+    ```shell
+    launchctl print system/org.nixos.kanata | rg 'state = running|pid ='
+    ```
+
+If launchd reports `Abort trap: 6` or the macOS logs contain
+`TCC deny IOHIDDeviceOpen`, remove Kanata from Input Monitoring, add the stable
+path again, and restart the service.
 
 
 - after setup steps:
