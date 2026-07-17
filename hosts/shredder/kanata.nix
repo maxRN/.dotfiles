@@ -1,4 +1,15 @@
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  aerospaceAsPrimaryUser = pkgs.writeShellScript "aerospace-as-primary-user" ''
+    exec /usr/bin/sudo -H -u ${lib.escapeShellArg config.system.primaryUser} -- \
+      ${lib.getExe config.services.aerospace.package} "$@"
+  '';
+in
 {
   imports = [ ../../modules/kanata/kanata-module.nix ];
   services.kanata = {
@@ -40,23 +51,23 @@
         )
 
         (defalias
-          ws1 (cmd /run/current-system/sw/bin/aerospace workspace 1)
-          ws2 (cmd /run/current-system/sw/bin/aerospace workspace 2)
-          ws3 (cmd /run/current-system/sw/bin/aerospace workspace 3)
-          ws4 (cmd /run/current-system/sw/bin/aerospace workspace 4)
-          ws5 (cmd /run/current-system/sw/bin/aerospace workspace 5)
-          ws6 (cmd /run/current-system/sw/bin/aerospace workspace 6)
-          ws7 (cmd /run/current-system/sw/bin/aerospace workspace 7)
-          ws8 (cmd /run/current-system/sw/bin/aerospace workspace 8)
-          ws9 (cmd /run/current-system/sw/bin/aerospace workspace 9)
-          ws11 (cmd /run/current-system/sw/bin/aerospace workspace 11)
-          ws12 (cmd /run/current-system/sw/bin/aerospace workspace 12)
-          ws13 (cmd /run/current-system/sw/bin/aerospace workspace 13)
-          ws14 (cmd /run/current-system/sw/bin/aerospace workspace 14)
-          focus_left (cmd /run/current-system/sw/bin/aerospace focus left)
-          focus_down (cmd /run/current-system/sw/bin/aerospace focus down)
-          focus_up (cmd /run/current-system/sw/bin/aerospace focus up)
-          focus_right (cmd /run/current-system/sw/bin/aerospace focus right)
+          ws1 (cmd ${aerospaceAsPrimaryUser} workspace 1)
+          ws2 (cmd ${aerospaceAsPrimaryUser} workspace 2)
+          ws3 (cmd ${aerospaceAsPrimaryUser} workspace 3)
+          ws4 (cmd ${aerospaceAsPrimaryUser} workspace 4)
+          ws5 (cmd ${aerospaceAsPrimaryUser} workspace 5)
+          ws6 (cmd ${aerospaceAsPrimaryUser} workspace 6)
+          ws7 (cmd ${aerospaceAsPrimaryUser} workspace 7)
+          ws8 (cmd ${aerospaceAsPrimaryUser} workspace 8)
+          ws9 (cmd ${aerospaceAsPrimaryUser} workspace 9)
+          ws11 (cmd ${aerospaceAsPrimaryUser} workspace 11)
+          ws12 (cmd ${aerospaceAsPrimaryUser} workspace 12)
+          ws13 (cmd ${aerospaceAsPrimaryUser} workspace 13)
+          ws14 (cmd ${aerospaceAsPrimaryUser} workspace 14)
+          focus_left (cmd ${aerospaceAsPrimaryUser} focus left)
+          focus_down (cmd ${aerospaceAsPrimaryUser} focus down)
+          focus_up (cmd ${aerospaceAsPrimaryUser} focus up)
+          focus_right (cmd ${aerospaceAsPrimaryUser} focus right)
         )
 
         (deflayer applayer
