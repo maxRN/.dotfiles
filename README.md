@@ -33,11 +33,11 @@ sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ohnezahn
 
 ### Enable the Kanata service on macOS
 
-The launchd service runs Kanata through the stable
-`/run/current-system/sw/bin/kanata` path so its macOS Input Monitoring
-permission survives changes to the versioned Nix store path.
+The launchd service runs Kanata through a `Kanata.app` bundle. macOS Tahoe 26
+does not reliably add plain command-line executables to Privacy & Security, so
+the app bundle gives Input Monitoring a stable, visible entry.
 
-1. Build and activate the host configuration so the stable path exists:
+1. Build and activate the host configuration so the app exists:
 
     ```shell
     sudo darwin-rebuild switch --flake .#shredder
@@ -47,10 +47,10 @@ permission survives changes to the versioned Nix store path.
 3. Click `+`, press `Shift-Command-G` in the file picker, and enter:
 
     ```text
-    /run/current-system/sw/bin/kanata
+    /Applications/Nix Apps/Kanata.app
     ```
 
-4. Select Kanata and enable its toggle. Also ensure Kanata is allowed under
+4. Select **Kanata.app** and enable its toggle. Also ensure Kanata is allowed under
    **General → Login Items & Extensions** if macOS lists it there.
 5. Stop any Kanata process that was started manually, then restart the service:
 
@@ -65,8 +65,8 @@ permission survives changes to the versioned Nix store path.
     ```
 
 If launchd reports `Abort trap: 6` or the macOS logs contain
-`TCC deny IOHIDDeviceOpen`, remove Kanata from Input Monitoring, add the stable
-path again, and restart the service.
+`TCC deny IOHIDDeviceOpen`, remove Kanata from Input Monitoring, add
+`/Applications/Nix Apps/Kanata.app` again, and restart the service.
 
 
 - after setup steps:

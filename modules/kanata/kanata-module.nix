@@ -8,9 +8,31 @@
 let
   cfg = config.services.kanata;
 
-  # Keep the executable path stable so macOS Input Monitoring permission
-  # survives changes to the package's versioned Nix store path.
-  kanataExecutable = "/run/current-system/sw/bin/kanata";
+  # Tahoe no longer reliably exposes plain executables in the Input Monitoring
+  # picker. Package kanata as an app so macOS can attach TCC permission to it.
+  kanataAppExecutable = "/Applications/Nix Apps/Kanata.app/Contents/MacOS/kanata";
+
+  kanataAppInfo = (pkgs.formats.plist { }).generate "Info.plist" {
+    CFBundleDevelopmentRegion = "English";
+    CFBundleExecutable = "kanata";
+    CFBundleIdentifier = "org.nixos.kanata";
+    CFBundleInfoDictionaryVersion = "6.0";
+    CFBundleName = "Kanata";
+    CFBundlePackageType = "APPL";
+    CFBundleShortVersionString = cfg.package.version;
+    CFBundleVersion = cfg.package.version;
+    LSBackgroundOnly = true;
+  };
+
+  kanataApp = pkgs.runCommand "kanata-app-${cfg.package.version}" { } ''
+    app="$out/Applications/Kanata.app/Contents"
+    mkdir -p "$app/MacOS"
+    cp ${kanataAppInfo} "$app/Info.plist"
+    cp ${lib.getExe cfg.package} "$app/MacOS/kanata"
+    chmod u+w "$app/MacOS/kanata"
+    printf 'APPL????' > "$app/PkgInfo"
+    ${lib.getExe pkgs.rcodesign} sign "$out/Applications/Kanata.app"
+  '';
 
   upstreamDoc =
     "See [the upstream documentation](https://github.com/jtroo/kanata/blob/main/docs/config.adoc)"
@@ -127,7 +149,7 @@ let
       serviceConfig = {
         Label = "org.nixos.kanata";
         ProgramArguments = [
-          kanataExecutable
+          kanataAppExecutable
           "--cfg"
           (toString keyboard.configFile)
         ]
@@ -161,7 +183,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [
+      cfg.package
+      kanataApp
+    ];
 
     warnings =
       let
