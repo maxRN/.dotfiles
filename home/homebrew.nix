@@ -14,8 +14,5 @@
       "google-chrome"
       "dropbox"
     ];
-    masApps = {
-      "uBlock Origin Lite" = 6745342698;
-    };
   };
 }
