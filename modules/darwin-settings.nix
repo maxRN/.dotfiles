@@ -49,8 +49,10 @@
             };
           };
         };
+        NSGlobalDomain = {
+          NSMenuEnableActionImages = false;
+        };
       };
-
     };
   };
 
