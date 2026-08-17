@@ -15,8 +15,7 @@ fzl.setup({
 vim.keymap.set("n", "<C-p>", fzl.files, { desc = "fzf lua: Find files" })
 vim.keymap.set("n", "<C-\\>", fzl.buffers, { desc = "fzf lua: search buffers" })
 vim.keymap.set("n", "<leader><C-b>", fzl.builtin, { desc = "fzf lua: search builtins" })
-vim.keymap.set("n", "<leader>rg", fzl.live_grep, { desc = "fzf lua: ripgrep" })
-vim.keymap.set("n", "<C-g>", fzl.grep_project, { desc = "fzf lua: grep project" })
+vim.keymap.set("n", "<leader>rg", fzl.grep_project, { desc = "fzf lua: ripgrep" })
 vim.keymap.set("n",
     "<leader>sc",
     function()
