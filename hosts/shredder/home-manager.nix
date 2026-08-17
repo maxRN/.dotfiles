@@ -27,6 +27,8 @@
       stable = with pkgs; [
         awscli2
         jdk17
+        mysql84
+        postgresql
       ];
     in
     stable ++ unstable;
