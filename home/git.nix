@@ -80,6 +80,15 @@
       diff.colorMoved = "default";
       merge.tool = "nvim";
       credential.helper = "osxkeychain";
+      # origin auth setup-git: empty helper resets inherited helpers for this URL
+      credential."https://origin.cursor.com/git".helper = [
+        ""
+        "!${config.home.homeDirectory}/.local/bin/origin credential-helper"
+      ];
+      credential."https://origin.cursor.com".helper = [
+        ""
+        "!${config.home.homeDirectory}/.local/bin/origin credential-helper"
+      ];
       core.excludesFile = "${config.home.homeDirectory}/.config/git/ignore";
       rerere.enabled = true;
     };
