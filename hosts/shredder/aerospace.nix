@@ -142,7 +142,7 @@
     on-window-detected = [
       {
         "if" = {
-          app-name-regex-substring = "Safari";
+          app-id = "com.apple.Safari";
         };
         run = [
           "move-node-to-workspace 1"
@@ -166,10 +166,58 @@
       }
       {
         "if" = {
-          app-name-regex-substring = "Slack";
+          app-id = "com.apple.reminders";
+        };
+        run = [
+          "move-node-to-workspace 3"
+        ];
+      }
+      {
+        "if" = {
+          app-id = "com.tinyspeck.slackmacgap";
         };
         run = [
           "move-node-to-workspace 6"
+        ];
+      }
+      {
+        "if" = {
+          app-id = "com.openai.codex";
+        };
+        run = [
+          "move-node-to-workspace 7"
+        ];
+      }
+      {
+        "if" = {
+          app-id = "com.todesktop.230313mzl4w4u92";
+        };
+        run = [
+          "move-node-to-workspace 8"
+        ];
+      }
+      {
+        "if" = {
+          app-id = "com.spotify.client";
+        };
+        run = [
+          "move-node-to-workspace 9"
+        ];
+      }
+      {
+        "if" = {
+          app-id = "net.imput.helium";
+        };
+        run = [
+          "move-node-to-workspace 1"
+        ];
+      }
+      {
+        "if" = {
+          app-id = "com.1password.1password";
+        };
+        run = [
+          "move-node-to-workspace 5"
         ];
       }
       {
