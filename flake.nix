@@ -20,6 +20,7 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
+    niks3.url = "github:Mic92/niks3";
   };
 
   outputs =
@@ -29,6 +30,7 @@
       pkgs-unstable,
       home-manager,
       neovim-nightly-overlay,
+      niks3,
       ...
     }:
     let
@@ -49,6 +51,7 @@
                 ];
             };
             inherit neovim-nightly-overlay;
+            inherit niks3;
           };
 
           modules = [
@@ -79,6 +82,7 @@
                 ];
             };
             inherit neovim-nightly-overlay;
+            inherit niks3;
           };
 
           modules = [
