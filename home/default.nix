@@ -110,6 +110,8 @@ in
   # TODO: Maybe this belongs to nix-darwin?
   home.sessionVariables = {
     EDITOR = "nvim";
+    AWS_SHARED_CREDENTIALS_FILE = "${config.home.homeDirectory}/.config/nix-cache/aws-credentials";
+    AWS_DEFAULT_REGION = "auto";
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_DATA_HOME = "$HOME/.local/share";
