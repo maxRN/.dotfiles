@@ -1,7 +1,10 @@
-{ config, niks3, pkgs, ... }:
+{ config, lib, niks3, pkgs, ... }:
 let
   username = config.system.primaryUser;
   userHome = config.users.users.${username}.home;
+  nixCacheDir = "${userHome}/.config/nix-cache";
+  # niks3-hook send defaults here; ldflags override in the package is broken upstream.
+  niks3HookSocketPath = "/run/niks3/upload-to-cache.sock";
 in
 {
   imports = [ niks3.darwinModules.niks3-auto-upload ];
@@ -10,7 +13,17 @@ in
     enable = true;
     package = niks3.packages.${pkgs.stdenv.hostPlatform.system}.niks3-hook;
     serverUrl = "https://niks3-production-9fbd.up.railway.app";
-    authTokenFile = "${userHome}/.config/nix-cache/niks3-token";
+    authTokenFile = "${nixCacheDir}/niks3-token";
+    socketPath = niks3HookSocketPath;
+  };
+
+  system.activationScripts.extraActivation.text = lib.mkAfter ''
+    mkdir -p ${builtins.dirOf niks3HookSocketPath}
+  '';
+
+  launchd.daemons.nix-daemon.serviceConfig.EnvironmentVariables = {
+    AWS_SHARED_CREDENTIALS_FILE = "${nixCacheDir}/aws-credentials";
+    AWS_DEFAULT_REGION = "auto";
   };
 
   nix.package = pkgs.lixPackageSets.stable.lix;
