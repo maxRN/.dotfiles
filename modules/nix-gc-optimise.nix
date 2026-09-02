@@ -1,4 +1,10 @@
-{ config, lib, niks3, pkgs, ... }:
+{
+  config,
+  lib,
+  niks3,
+  pkgs,
+  ...
+}:
 let
   username = config.system.primaryUser;
   userHome = config.users.users.${username}.home;
