@@ -9,8 +9,13 @@ let
   username = config.system.primaryUser;
   userHome = config.users.users.${username}.home;
   nixCacheDir = "${userHome}/.config/nix-cache";
-  # niks3-hook send defaults here; ldflags override in the package is broken upstream.
-  niks3HookSocketPath = "/run/niks3/upload-to-cache.sock";
+  # Keep the socket in persistent state: /run is cleared during macOS boots.
+  niks3HookSocketPath = "/var/lib/niks3-hook/upload-to-cache.sock";
+  niks3Hook = lib.getExe' niks3.packages.${pkgs.stdenv.hostPlatform.system}.niks3-hook "niks3-hook";
+  # Pass the socket explicitly because the package's ldflags override is broken upstream.
+  niks3PostBuildHook = pkgs.writeShellScript "niks3-post-build-hook" ''
+    exec ${niks3Hook} send --socket ${lib.escapeShellArg niks3HookSocketPath} "$@"
+  '';
 in
 {
   imports = [ niks3.darwinModules.niks3-auto-upload ];
@@ -23,8 +28,11 @@ in
     socketPath = niks3HookSocketPath;
   };
 
+  # Override the upstream wrapper so the sender and daemon always use the same socket.
+  nix.settings.post-build-hook = lib.mkForce niks3PostBuildHook;
+
   system.activationScripts.extraActivation.text = lib.mkAfter ''
-    mkdir -p ${builtins.dirOf niks3HookSocketPath}
+    mkdir -p ${lib.escapeShellArg (builtins.dirOf niks3HookSocketPath)}
   '';
 
   launchd.daemons.nix-daemon.serviceConfig.EnvironmentVariables = {
