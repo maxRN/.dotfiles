@@ -18,7 +18,6 @@
         extraConfig = "set -g @catppuccin_flavour 'mocha'";
       }
     ];
-
     extraConfig = ''
       unbind C-b
       set -g prefix C-a
@@ -33,7 +32,7 @@
       bind-key -r T display-popup -h '80%' 'ask-tldr'
       bind-key c new-window -c "#{pane_current_path}"
 
-	  bind-key -r r source-file ~/.config/tmux/tmux.conf \; display-message "tmux config reloaded!"
+      bind-key -r r source-file ~/.config/tmux/tmux.conf \; display-message "tmux config reloaded!"
 
       # setw -g mode-keys vi
       bind-key -T copy-mode-vi v send -X begin-selection
@@ -53,6 +52,8 @@
 
       # So session name doesn't get cut off
       set -g status-left-length 30 # could be any number
+
+      set -g extended-keys on
     '';
   };
 }
