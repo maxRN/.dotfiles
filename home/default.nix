@@ -105,6 +105,7 @@ in
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
     ".config/kanata".source = l "dotfiles/kanata";
+    ".pi/agent/keybindings.json".source = l "dotfiles/pi/keybindings.json";
   };
 
   # TODO: Maybe this belongs to nix-darwin?

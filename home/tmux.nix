@@ -54,6 +54,7 @@
       set -g status-left-length 30 # could be any number
 
       set -g extended-keys on
+      set -g extended-keys-format csi-u
     '';
   };
 }
