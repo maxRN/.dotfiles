@@ -3,6 +3,8 @@
   pkgs,
   pkgs-unstable,
   neovim-nightly-overlay,
+  pi,
+  opencode,
   ...
 }:
 let
@@ -13,6 +15,7 @@ let
 in
 {
   imports = [
+    pi.homeModules.default
     ./git.nix
     ./fish.nix
     ./tmux.nix
@@ -87,6 +90,9 @@ in
 
         tmux switch-client -t "$selected_name"
       '')
+      (pkgs.writeShellScriptBin "rex-sessionizer" ''
+        exec ${config.home.homeDirectory}/.config/rex/sessionizer "$@"
+      '')
       (pkgs.writeShellScriptBin "ask-gpt" ''
         read -p "Ask ChatGPT: " question 
         url_encoded=$(echo $question | ${pkgs.jq}/bin/jq -sRr @uri)
@@ -101,7 +107,12 @@ in
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".local/bin/opencode" = {
+      source = "${config.programs.opencode.package}/bin/opencode";
+      force = true;
+    };
     ".config/nvim".source = l "dotfiles/nvim";
+    ".config/rex".source = l "dotfiles/rex";
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
     ".config/kanata".source = l "dotfiles/kanata";
@@ -148,6 +159,19 @@ in
   ];
 
   programs = {
+    pi.coding-agent.enable = true;
+
+    opencode = {
+      enable = true;
+      # Upstream invokes codesign without including the macOS signing tools.
+      package = opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode.overrideAttrs (old: {
+        nativeBuildInputs = old.nativeBuildInputs ++ [
+          pkgs.darwin.sigtool
+          pkgs.darwin.cctools
+        ];
+      });
+    };
+
     fzf = {
       enable = true;
     };
