@@ -31,6 +31,14 @@ in
   # Override the upstream wrapper so the sender and daemon always use the same socket.
   nix.settings.post-build-hook = lib.mkForce niks3PostBuildHook;
 
+  # launchd starts before /nix is mounted; a missing executable is not retried by KeepAlive.
+  launchd.daemons.niks3-auto-upload.serviceConfig.ProgramArguments = lib.mkBefore [
+    "/bin/sh"
+    "-c"
+    ''/bin/wait4path /nix/store && exec "$@"''
+    "niks3-auto-upload"
+  ];
+
   system.activationScripts.extraActivation.text = lib.mkAfter ''
     mkdir -p ${lib.escapeShellArg (builtins.dirOf niks3HookSocketPath)}
   '';
