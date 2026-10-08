@@ -29,6 +29,7 @@
         jdk17
         mysql84
         postgresql
+        grafana-loki
       ];
     in
     stable ++ unstable;
