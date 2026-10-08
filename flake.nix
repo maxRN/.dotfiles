@@ -21,6 +21,8 @@
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
     niks3.url = "github:Mic92/niks3";
+    pi.url = "github:lukasl-dev/pi.nix";
+    opencode.url = "github:anomalyco/opencode/dev";
   };
 
   outputs =
@@ -31,6 +33,8 @@
       home-manager,
       neovim-nightly-overlay,
       niks3,
+      pi,
+      opencode,
       ...
     }:
     let
@@ -51,7 +55,7 @@
                 ];
             };
             inherit neovim-nightly-overlay;
-            inherit niks3;
+            inherit niks3 pi opencode;
           };
 
           modules = [
@@ -82,7 +86,7 @@
                 ];
             };
             inherit neovim-nightly-overlay;
-            inherit niks3;
+            inherit niks3 pi opencode;
           };
 
           modules = [
