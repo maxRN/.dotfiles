@@ -1,0 +1,92 @@
+#!/bin/bash
+# Pick a project directory, create its Rex session if needed, then switch to it.
+# When this runs in the floating picker, the picker layer is closed afterwards.
+
+export PATH="/etc/profiles/per-user/${USER}/bin:/opt/homebrew/bin:${PATH}"
+
+picker_session="${REX_SESSION:-}"
+picker_block="${REX_BLOCK:-}"
+
+close_picker() {
+    [[ -n "$picker_session" && -n "$picker_block" ]] || return 0
+
+    local layer_id
+    layer_id=$(
+        rex -s "$picker_session" api call session.view |
+            /usr/bin/python3 -c '
+import json, sys
+
+block = sys.argv[1]
+view = json.load(sys.stdin)
+
+def block_ids(node):
+    if isinstance(node, dict):
+        if node.get("block_id"):
+            yield node["block_id"]
+        for value in node.values():
+            yield from block_ids(value)
+    elif isinstance(node, list):
+        for value in node:
+            yield from block_ids(value)
+
+for window in view.get("windows") or []:
+    for layer in window.get("layers") or []:
+        if layer.get("kind") != "floating":
+            continue
+        if block in block_ids(layer):
+            print(layer["layer_id"])
+            raise SystemExit
+' "$picker_block"
+    )
+
+    [[ -n "$layer_id" ]] || return 0
+    rex -s "$picker_session" api call session.close_layer "$(printf '{"layer_id":"%s"}' "$layer_id")" >/dev/null
+}
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    dirs=()
+    for dir in "$HOME/work" "$HOME/code" "$HOME/uni" "$HOME/notes"; do
+        [[ -d "$dir" ]] && dirs+=("$dir")
+    done
+    if [[ ${#dirs[@]} -eq 0 ]]; then
+        echo "sessionizer: no project directories found" >&2
+        exit 1
+    fi
+    selected=$(find "${dirs[@]}" -mindepth 1 -maxdepth 1 -type d | sort | fzf --margin=1 --color 'bg:#1a1b26,bg+:#283457,fg:#c0caf5,fg+:#c0caf5,gutter:#1a1b26,hl:#7aa2f7,pointer:#f7768e,prompt:#7aa2f7') || selected=""
+fi
+
+if [[ -z "${selected:-}" ]]; then
+    close_picker
+    exit 0
+fi
+
+if [[ ! -d "$selected" ]]; then
+    echo "sessionizer: not a directory: $selected" >&2
+    exit 1
+fi
+
+selected_name=$(basename "$selected" | tr "." "_")
+session_id=$(
+    rex ls --json |
+        /usr/bin/python3 -c '
+import json, sys
+
+name = sys.argv[1]
+for session in json.load(sys.stdin).get("sessions") or []:
+    if session.get("label") == name:
+        print(session["session_id"])
+        break
+' "$selected_name"
+)
+
+if [[ -z "$session_id" ]]; then
+    session_id=$(
+        rex new "$selected_name" -c "$selected" --json |
+            /usr/bin/python3 -c 'import json, sys; print(json.load(sys.stdin)["session_id"])'
+    )
+fi
+
+rex do session.select "session_id=${session_id}"
+close_picker
