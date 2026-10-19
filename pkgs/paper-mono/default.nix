@@ -18,17 +18,17 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     unzip
-  ]
-  ++ lib.optionals slashedZero [
     (python3.withPackages (ps: [ ps.fonttools ]))
   ];
 
   dontConfigure = true;
-  dontBuild = !slashedZero;
 
-  buildPhase = lib.optionalString slashedZero ''
+  buildPhase = ''
     runHook preBuild
-    python3 ${./slashed-zero.py} fonts/otf fonts/slashed-zero
+    python3 ${./fixed-pitch.py} fonts/otf fonts/fixed-pitch
+    ${lib.optionalString slashedZero ''
+      python3 ${./slashed-zero.py} fonts/fixed-pitch fonts/slashed-zero
+    ''}
     runHook postBuild
   '';
 
@@ -36,7 +36,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook preInstall
 
     install -Dm644 fonts/${
-      if slashedZero then "slashed-zero" else "otf"
+      if slashedZero then "slashed-zero" else "fixed-pitch"
     }/*.otf -t "$out/share/fonts/opentype"
     install -Dm644 OFL.txt -t "$out/share/licenses/paper-mono"
 
