@@ -103,6 +103,12 @@
           ];
         };
       };
+      packages = forAllSystems (system: {
+        paper-mono = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono { };
+        paper-mono-slashed-zero = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono {
+          slashedZero = true;
+        };
+      });
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
     };
 }
