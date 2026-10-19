@@ -1,5 +1,17 @@
 ---get rid of undefined "vim" global warning
 ---@diagnostic disable: undefined-global
+vim.api.nvim_create_autocmd("PackChanged", {
+    pattern = "fff",
+    callback = function(ev)
+        if ev.data.kind == "install" or ev.data.kind == "update" then
+            if not ev.data.active then
+                vim.cmd.packadd("fff")
+            end
+            require("fff.download").download_or_build_binary()
+        end
+    end,
+})
+
 vim.pack.add({
     "https://github.com/nvim-tree/nvim-web-devicons",
 })
