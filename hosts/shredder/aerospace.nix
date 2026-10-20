@@ -111,6 +111,13 @@
       alt-slash = "layout tiles horizontal vertical";
       alt-tab = "workspace-back-and-forth";
     };
+    mode.resize.binding = {
+      j = [ "resize smart +50" ];
+      k = [ "resize smart -50" ];
+      h = [ "resize smart-opposite +50" ];
+      l = [ "resize smart-opposite -50" ];
+      esc = [ "mode main" ];
+    };
     mode.service.binding = {
       b = [
         "balance-sizes"
@@ -120,16 +127,29 @@
         "close-all-windows-but-current"
         "mode main"
       ];
+      r = [ "mode resize" ];
+      shift-h = [
+        "join-with left"
+        "mode main"
+      ];
+      shift-l = [
+        "join-with right"
+        "mode main"
+      ];
+      shift-j = [
+        "join-with down"
+        "mode main"
+      ];
+      shift-k = [
+        "join-with up"
+        "mode main"
+      ];
       esc = [
         "reload-config"
         "mode main"
       ];
       f = [
         "layout floating tiling"
-        "mode main"
-      ];
-      r = [
-        "flatten-workspace-tree"
         "mode main"
       ];
       x = [
