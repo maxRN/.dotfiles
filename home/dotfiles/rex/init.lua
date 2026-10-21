@@ -1,4 +1,16 @@
 ---@diagnostic disable: undefined-global
+
+-- Config loads cannot call the server API directly. Run startup asynchronously
+-- so the server can finish starting; existing session names are left untouched.
+-- Reloading/checking the config also runs this idempotent helper.
+local home = os.getenv("HOME")
+local startup, startup_err = rex.exec.start({
+    home .. "/.local/bin/rex", "--autostart=false",
+    "--server", "unix://" .. home .. "/Library/Application%20Support/rex/server.sock",
+    "do", home .. "/.config/rex/startup.lua",
+}, { detach = true })
+if startup == nil then rex.log("error", startup_err) end
+
 rex.bind("ctrl+a>c", "client.tab.new")
 rex.bind("ctrl+a>n", "client.tab.next")
 rex.bind("ctrl+a>p", "client.tab.previous")
