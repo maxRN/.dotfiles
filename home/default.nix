@@ -71,6 +71,7 @@ in
     ++ unstable
     ++ [ neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default ]
     ++ [
+      (pkgs.callPackage ../pkgs/secretive { })
       (pkgs.writeShellScriptBin "tmux-sessionizer" ''
         if [[ $# -eq 1 ]]; then
             selected=$1

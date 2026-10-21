@@ -103,12 +103,18 @@
           ];
         };
       };
-      packages = forAllSystems (system: {
-        paper-mono = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono { };
-        paper-mono-slashed-zero = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono {
-          slashedZero = true;
-        };
-      });
+      packages = forAllSystems (
+        system:
+        {
+          paper-mono = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono { };
+          paper-mono-slashed-zero = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono {
+            slashedZero = true;
+          };
+        }
+        // nixpkgs.lib.optionalAttrs (nixpkgs.lib.hasSuffix "darwin" system) {
+          secretive = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/secretive { };
+        }
+      );
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
     };
 }
