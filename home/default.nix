@@ -3,7 +3,6 @@
   pkgs,
   pkgs-unstable,
   neovim-nightly-overlay,
-  pi,
   opencode,
   ...
 }:
@@ -15,7 +14,6 @@ let
 in
 {
   imports = [
-    pi.homeModules.default
     ./git.nix
     ./fish.nix
     ./tmux.nix
@@ -71,6 +69,7 @@ in
     ++ unstable
     ++ [ neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default ]
     ++ [
+      (pkgs.callPackage ../pkgs/pi { })
       (pkgs.callPackage ../pkgs/secretive { })
       (pkgs.writeShellScriptBin "tmux-sessionizer" ''
         if [[ $# -eq 1 ]]; then
@@ -160,8 +159,6 @@ in
   ];
 
   programs = {
-    pi.coding-agent.enable = true;
-
     opencode = {
       enable = true;
       # Upstream invokes codesign without including the macOS signing tools.
