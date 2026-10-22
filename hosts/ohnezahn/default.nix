@@ -39,4 +39,9 @@ in
   };
 
   environment.shells = [ pkgs.fish ];
+
+  security.pam.services.sudo_local = {
+    # I'm using this as kind of a server now so I want to prompted by password.
+    touchIdAuth = false;
+  };
 }
