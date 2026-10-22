@@ -21,7 +21,6 @@
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
     niks3.url = "github:Mic92/niks3";
-    pi.url = "github:lukasl-dev/pi.nix";
     opencode.url = "github:anomalyco/opencode/dev";
   };
 
@@ -33,7 +32,6 @@
       home-manager,
       neovim-nightly-overlay,
       niks3,
-      pi,
       opencode,
       ...
     }:
@@ -55,7 +53,7 @@
                 ];
             };
             inherit neovim-nightly-overlay;
-            inherit niks3 pi opencode;
+            inherit niks3 opencode;
           };
 
           modules = [
@@ -86,7 +84,7 @@
                 ];
             };
             inherit neovim-nightly-overlay;
-            inherit niks3 pi opencode;
+            inherit niks3 opencode;
           };
 
           modules = [
@@ -106,6 +104,7 @@
       packages = forAllSystems (
         system:
         {
+          pi = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/pi { };
           paper-mono = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono { };
           paper-mono-slashed-zero = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono {
             slashedZero = true;
