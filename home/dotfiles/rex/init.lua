@@ -1,15 +1,6 @@
 ---@diagnostic disable: undefined-global
 
--- Config loads cannot call the server API directly. Run startup asynchronously
--- so the server can finish starting; existing session names are left untouched.
--- Reloading/checking the config also runs this idempotent helper.
 local home = os.getenv("HOME")
-local startup, startup_err = rex.exec.start({
-    home .. "/.local/bin/rex", "--autostart=false",
-    "--server", "unix://" .. home .. "/Library/Application%20Support/rex/server.sock",
-    "do", home .. "/.config/rex/startup.lua",
-}, { detach = true })
-if startup == nil then rex.log("error", startup_err) end
 
 rex.bind("ctrl+a>c", "client.tab.new")
 rex.bind("ctrl+a>n", "client.tab.next")
@@ -81,3 +72,38 @@ rex.action {
 }
 
 rex.bind("ctrl+a>f", "sessionizer")
+
+local function claude_project(name, title, repository)
+    rex.action {
+        name        = name .. "_claude",
+        title       = "Open " .. title .. " with Claude",
+        description = "Create a new session in ~/work/" .. repository .. " running Claude.",
+        run         = function()
+            local created, err = rex.call("session.create", {
+                initial_windows = {
+                    {
+                        layout = rex.layout.block {
+                            flavor = "com.superlogical.terminal.shell",
+                            options = {
+                                cwd = home .. "/work/" .. repository,
+                                command = { "claude" },
+                            },
+                        },
+                    },
+                },
+            })
+            if created == nil then error(err, 0) end
+            rex.client.queue("session.select", { session_id = created.session_id })
+            return created
+        end,
+    }
+end
+
+-- These project checkouts are local to shredder; hide their actions elsewhere.
+local hostname = rex.exec({ "hostname", "-s" }, { timeout = 2 })
+if hostname and hostname.ok and hostname.stdout:match("^%s*(.-)%s*$") == "shredder" then
+    claude_project("backoffice", "Backoffice", "zcontrol-backoffice")
+    claude_project("data_platform", "Data Platform", "zcontrol-data-platform")
+    claude_project("mobile", "Mobile", "zcontrol-mobile")
+    claude_project("zcontrol_backend", "zControl Backend", "zcontrol-backend")
+end
