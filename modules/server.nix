@@ -93,7 +93,6 @@ let
 
   tailscale = "/opt/homebrew/bin/tailscale";
   tailscaledLabel = "homebrew.mxcl.tailscale";
-  rexServer = "/Applications/Rex Beta.app/Contents/Helpers/Rex Server.app/Contents/MacOS/rex";
   rexSocket = "${home}/Library/Application Support/rex/server.sock";
 
   # Runs a command in the logged-in user's GUI (Aqua) launchd domain, e.g. from SSH.
@@ -304,7 +303,8 @@ in
       # one, this exits 0 and launchd re-checks after ThrottleInterval.
       launchd.user.agents.rex-server = {
         script = ''
-          rex=${lib.escapeShellArg rexServer}
+          # home-manager's resolver (home/rex.nix); Rex moves its CLI between releases.
+          rex=${lib.escapeShellArg "${home}/.local/bin/rex"}
           if "$rex" --autostart=false --timeout 5s ls >/dev/null 2>&1; then
             exit 0
           fi

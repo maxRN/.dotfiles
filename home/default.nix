@@ -16,6 +16,7 @@ in
   imports = [
     ./git.nix
     ./fish.nix
+    ./rex.nix
     ./tmux.nix
     ./fonts.nix
   ];
@@ -90,9 +91,6 @@ in
 
         tmux switch-client -t "$selected_name"
       '')
-      (pkgs.writeShellScriptBin "rex-sessionizer" ''
-        exec ${config.home.homeDirectory}/.config/rex/sessionizer "$@"
-      '')
       (pkgs.writeShellScriptBin "ask-gpt" ''
         read -p "Ask ChatGPT: " question 
         url_encoded=$(echo $question | ${pkgs.jq}/bin/jq -sRr @uri)
@@ -112,7 +110,6 @@ in
       force = true;
     };
     ".config/nvim".source = l "dotfiles/nvim";
-    ".config/rex".source = l "dotfiles/rex";
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
     ".config/kanata".source = l "dotfiles/kanata";
