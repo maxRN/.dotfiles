@@ -131,10 +131,12 @@ if [ "$profile" = server ]; then
   uid=$(id -u)
   if launchctl print "gui/$uid" >/dev/null 2>&1; then
     pass "GUI (Aqua) session for uid $uid exists"
-    for label in org.nixos.rex-server org.nixos.grok-bot dev.maxrn.linkding-sync; do
+    for label in org.nixos.grok-bot dev.maxrn.linkding-sync; do
       expect "agent $label loaded" "agent $label not loaded" quiet launchctl print "gui/$uid/$label"
     done
-    expect "rex server answers" "rex server not answering" quiet "$HOME/.local/bin/rex" --autostart=false --timeout 5s ls
+    # The directory Rex exports as REX_BIN_DIR; this runs outside Rex terminals too.
+    rex="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
+    expect "rex server answers" "rex server not answering" quiet "$rex" --autostart=false --timeout 5s ls
     expect "Grok Bot running" "Grok Bot not running" /usr/bin/pgrep -xq 'Grok Bot'
   else
     fail "no GUI session (nobody logged in): agents, Dropbox, Simulator are down; log in via Screen Sharing"

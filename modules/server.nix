@@ -96,7 +96,6 @@ let
 
   tailscale = "/opt/homebrew/bin/tailscale";
   tailscaledLabel = "homebrew.mxcl.tailscale";
-  rexSocket = "${home}/Library/Application Support/rex/server.sock";
 
   # Runs a command in the logged-in user's GUI (Aqua) launchd domain, e.g. from SSH.
   gui = pkgs.writeShellApplication {
@@ -293,31 +292,6 @@ in
           RunAtLoad = true;
           StandardOutPath = "/var/log/server-watchdog.log";
           StandardErrorPath = "/var/log/server-watchdog.log";
-        };
-      };
-
-      # Rex server outside Rex.app, so sessions survive the app being closed and
-      # come back after login. Same bundle (com.superlogical.rex.server) as the
-      # app-spawned server, so its TCC grants apply. If Rex.app already started
-      # one, this exits 0 and launchd re-checks after ThrottleInterval.
-      launchd.user.agents.rex-server = {
-        script = ''
-          # home-manager's resolver (home/rex.nix); Rex moves its CLI between releases.
-          rex=${lib.escapeShellArg "${home}/.local/bin/rex"}
-          if "$rex" --autostart=false --timeout 5s ls >/dev/null 2>&1; then
-            exit 0
-          fi
-          exec "$rex" server run \
-            --listen ${lib.escapeShellArg "unix://${lib.replaceStrings [ " " ] [ "%20" ] rexSocket}"} \
-            --websocket-origin-pattern https://rex.superlogical.com \
-            --log-format text
-        '';
-        serviceConfig = {
-          KeepAlive = true;
-          ThrottleInterval = 60;
-          LimitLoadToSessionType = "Aqua";
-          StandardOutPath = "${home}/Library/Logs/rex-server-agent.log";
-          StandardErrorPath = "${home}/Library/Logs/rex-server-agent.log";
         };
       };
 
