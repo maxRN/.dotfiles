@@ -1,9 +1,12 @@
 # Unattended-server profile for ohnezahn (MacBook Air M3, Mac15,12).
 #
 # Imported by both `#ohnezahn` (server.enable = false) and `#ohnezahn-server`
-# (server.enable = true). Everything sticky (pmset, Remote Login, Screen Sharing,
+# (server.enable = true). Everything sticky (pmset, Remote Login,
 # DevToolsSecurity, auto-install of macOS updates) is set explicitly in BOTH
-# branches, so switching profiles reverts it. See docs/ohnezahn-server.md.
+# branches, so switching profiles reverts it. Screen Sharing is deliberately not
+# managed: started via launchctl it listens but refuses connections ("Screen
+# Sharing is not permitted") until toggled in System Settings. See
+# docs/ohnezahn-server.md.
 {
   config,
   lib,
@@ -212,9 +215,7 @@ in
       system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
 
       system.activationScripts.postActivation.text = ''
-        echo "server mode off: disabling Screen Sharing and DevToolsSecurity..." >&2
-        launchctl bootout system/com.apple.screensharing 2>/dev/null || true
-        launchctl disable system/com.apple.screensharing
+        echo "server mode off: disabling DevToolsSecurity..." >&2
         DevToolsSecurity -disable >/dev/null 2>&1 || true
       '';
     })
@@ -236,9 +237,7 @@ in
       system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
 
       system.activationScripts.postActivation.text = ''
-        echo "server mode on: Screen Sharing, DevToolsSecurity, boot-on-power, Tailscale SSH..." >&2
-        launchctl enable system/com.apple.screensharing
-        launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.screensharing.plist 2>/dev/null || true
+        echo "server mode on: DevToolsSecurity, boot-on-power, Tailscale SSH..." >&2
 
         # lldb / xcodebuild test over SSH can't answer the debugger auth dialog.
         DevToolsSecurity -enable >/dev/null 2>&1 || true

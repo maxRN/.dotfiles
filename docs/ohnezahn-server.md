@@ -63,11 +63,11 @@ Code: `modules/server.nix`, `modules/server/ohnezahn-{check,update}.sh`, `secret
 
 ### Claims I couldn't verify
 
-1. Whether `fdesetup authrestart` ends at the login window or logs the user in. This decides whether agents, Dropbox and Simulator come back by themselves.
+1. Whether `fdesetup authrestart` ends at the login window or logs the user in. This decides whether agents, Dropbox and Simulator come back by themselves. *Answered 2026-10-25 (§7): FileVault unlocks unattended, but it stops at the login window.*
 2. Whether `softwareupdate -i -a -R --stdinpass --user` restarts *through* FileVault. `LastLoginWindowHarvestMethod = ReqAuto` hints that macOS harvests credentials for its own auto-installs, but that's undocumented.
 3. Whether wall power coming back with the cable already plugged in counts as "connecting power" for auto-boot after the battery hit 0%.
 4. Which process TCC blames for commands in a **Tailscale SSH** session (likely `tailscaled`, an ad-hoc-signed Homebrew binary whose grant would break on every upgrade).
-5. Whether `launchctl bootstrap … com.apple.screensharing.plist` still enables Screen Sharing on macOS 27, and whether Screen Sharing gives a usable desktop with the lid closed and no display attached.
+5. Whether `launchctl bootstrap … com.apple.screensharing.plist` still enables Screen Sharing on macOS 27 (*answered (§7): no. It listens but refuses connections*), and whether Screen Sharing gives a usable desktop with the lid closed and no display attached.
 6. That `launchctl asuser` (the `gui` helper) puts commands in the Aqua domain from an SSH session, and whether `xcrun simctl` needs it.
 7. The current TCC grants (DBs unreadable, see above).
 8. A CLI for the macOS native charge limit (none found; `pmset -g battlimit` reports "No battery level limits set" although the limit is clearly enforced).
@@ -83,7 +83,7 @@ Each of these is a runbook item in §5.
 |---|---|---|---|
 | **Lid closed** (incl. thermals) | Laptop profile: clamshell sleep, seen twice on 10-24. Tailscale can't wake a sleeping Mac (`womp` is Ethernet magic packet only). Server: `disablesleep 1` keeps it up. Fanless chassis with the lid closed throttles under sustained load. | `ohnezahn-check --since "<t>"` counts `Sleep` events; `pmset -g therm` / `pmset -g thermlog`. | Prevention only: `disablesleep 1`, `sleep 0`, `standby 0`, `powernap 0`. Throttling self-limits. Keep it on a hard, ventilated surface. |
 | **Wi-Fi drop** | Every remote path (no Ethernet today). | Peer offline in `tailscale status` from another node or in the admin console. No alerting (your choice). | macOS rejoins known networks. `server-watchdog` (root, every 5 min) power-cycles Wi-Fi after 2 failed gateway pings, at most every 30 min, and kickstarts tailscaled if `BackendState≠Running` twice. Better: a USB-C Ethernet adapter. |
-| **Planned reboot** | GUI login (unverified, §1 #1). If it lands at the login window, tailscaled, sshd and Screen Sharing are up, but rex, Grok Bot, linkding-sync, Dropbox, AeroSpace and Simulator are not. | `ohnezahn-check`: "no GUI session". | `ohnezahn-update reboot` → `fdesetup authrestart` skips the FileVault unlock. If needed, log in via Screen Sharing over Tailscale; agents then start (`RunAtLoad`/`KeepAlive`). |
+| **Planned reboot** | GUI login: authrestart lands at the **login window** (verified, §7). tailscaled, sshd and Screen Sharing are up, but rex, Grok Bot, linkding-sync, Dropbox, AeroSpace and Simulator are not. | `ohnezahn-check`: "no GUI session". | `ohnezahn-update reboot` → `fdesetup authrestart` skips the FileVault unlock. Then log in via Screen Sharing over Tailscale (needs Screen Sharing switched on in System Settings beforehand); agents then start (`RunAtLoad`/`KeepAlive`). |
 | **Unplanned reboot / power loss, FileVault on** | Power loss alone: the battery takes over (hours; `lowpowermode 1` on battery). Battery at 0 → shutdown; power back → boots, since `BootPreference` is unset (§1 #3). It boots to **FileVault pre-boot**: data volume locked, so **no tailscaled** (its state is on that volume) and no agents. Kernel freeze → `restartAfterFreeze`. | Node offline. Nothing on the machine can tell you. | From the **LAN only**: `ssh maxrn@192.168.1.122` with your **password** unlocks the volume (`apple_ssh_and_filevault(7)`). From outside you need a LAN jump host on the tailnet, and **none exists today**: the Pi at 192.168.1.4 isn't on it. Then GUI login via Screen Sharing. Until then this is a **known limit**: an unplanned reboot means unreachable until someone on the LAN unlocks. |
 | **macOS update** | Server mode turns off `AutomaticallyInstallMacOSUpdates`, so no surprise nightly reboots. Downloads and critical/RSR updates stay on. | `ohnezahn-update status`. | `ohnezahn-update macos` (`softwareupdate --install --all --restart --stdinpass --user`). If it doesn't return on Tailscale in ~20 min, recover as for an unplanned reboot (§1 #2). |
 | **App self-updates** | Grok Bot and Cursor (Squirrel/ShipIt: Grok Bot 0.68.1 and 0.70.2 helpers are running side by side right now), Rex, AlDente, Codex (Sparkle), Dropbox, Chrome (Keystone). The app quits or relaunches, or keeps running old code. A new version may ask for a new permission. TCC grants survive if bundle ID + Team ID stay the same (unverified per app). | `ohnezahn-check` (Grok Bot / rex server down); `~/Library/Logs/{grok-bot,rex-server}-agent.log`. | `grok-bot` and `rex-server` agents relaunch within 60 s. Nothing else is supervised. Brew-managed casks change only via `ohnezahn-update brew`. |
@@ -95,7 +95,7 @@ Each of these is a runbook item in §5.
 
 | | **A. FileVault on, no auto-login (recommended)** | B. FileVault off + auto-login |
 |---|---|---|
-| Planned reboot | `fdesetup authrestart`, then maybe a Screen Sharing login (§1 #1) | Comes back fully logged in |
+| Planned reboot | `fdesetup authrestart`, then a Screen Sharing login (verified, §7) | Comes back fully logged in |
 | Unplanned reboot | Unreachable until a LAN SSH password unlock (needs a jump host to do remotely) | Comes back fully, agents included |
 | Laptop stolen | Disk unreadable without password/recovery key | Everything readable, and the thief boots straight into your session: tailnet node key (ohnezahn acts as *you* on the tailnet since §7), sops age key → all secrets, SSH keys, Dropbox, Cursor/Grok/Discord sessions, git credentials |
 | Cost | Authrestart briefly keeps an unlock key in memory/SMC (fdesetup(8)); pre-boot SSH accepts password auth from the LAN | Auto-login is incompatible with FileVault, so B means disabling encryption on a machine that also travels |
@@ -108,7 +108,7 @@ Each of these is a runbook item in §5.
 |---|---|
 | All pmset keys incl. `disablesleep` (activation script) | TCC grants (SIP-protected DB; §4) |
 | Remote Login on/off + keys-only config + authorized keys | Native charge limit (no documented CLI) |
-| Screen Sharing on/off (`launchctl`, §1 #5) | "Allow full disk access for remote users" (Remote Login pane) |
+| | "Allow full disk access for remote users" (Remote Login pane); **Screen Sharing on/off** (System Settings only, §3.4) |
 | `DevToolsSecurity`, `restartAfterFreeze`, `BootPreference` unset, `AutomaticallyInstallMacOSUpdates` | Tailscale key expiry, ACLs, tags (admin console) |
 | `tailscale set --ssh=true` (server); the `tailscale` brew is declared | Removing the stale Tailscale extension and VPN profiles |
 | Agents: rex-server, grok-bot (server); linkding-sync (both) | Stopping Grok Bot from also opening at login (harmless duplicate; `open -W` attaches) |
@@ -128,7 +128,7 @@ Homebrew's open-source tailscaled stays the daemon in **both** profiles; nix dec
 `services.openssh.enable = true` (laptop: `false`). Settings: `PasswordAuthentication no`, `KbdInteractiveAuthentication no`, `AuthenticationMethods publickey`, `PermitRootLogin no`, `AllowUsers maxrn`, with one key in `server.sshAuthorizedKeys` (GitHub key 128219878, `SHA256:Kh5W…`). **Cost:** port 22 is open on the LAN (the application firewall is off). At FileVault pre-boot, sshd can't read this config, so the LAN can try your **login password**; make it strong.
 
 ### 3.4 Screen Sharing
-Enabled via `launchctl` (laptop: booted out and disabled). Your user is already in `com.apple.access_screensharing`. **Cost:** VNC on port 5900 is reachable from the whole LAN with password auth. To restrict it to the tailnet, add a pf anchor allowing 5900 only on `utun*`; not done here because a pf mistake can lock you out.
+**Not managed by nix.** Started via `launchctl`, it listens on 5900 but refuses every connection with "Screen Sharing is not permitted … Disable and re-enable Screen Sharing" (seen 2026-10-25). Only the toggle in System Settings › General › Sharing permits it, so turn it on there once and leave it; the laptop profile doesn't touch it either. `ohnezahn-check` can only see the port, and a refusing server offers the same RFB banner and security types as a permitting one, so it reports WARN at most; connecting is the real test. Your user is already in `com.apple.access_screensharing`. **Cost:** VNC on port 5900 is reachable from the whole LAN with password auth. To restrict it to the tailnet, add a pf anchor allowing 5900 only on `utun*`; not done here because a pf mistake can lock you out.
 
 ### 3.5 GUI apps and Simulator from SSH
 - `gui <cmd>` runs a command in the Aqua domain via `sudo launchctl asuser`.
@@ -227,7 +227,7 @@ Run R1 in person. Everything else runs remotely unless marked otherwise.
 
 | # | Test | Steps | Pass |
 |---|---|---|---|
-| R1 | Switch to server | `sudo darwin-rebuild switch --flake ~/code/.dotfiles#ohnezahn-server` | `ohnezahn-check` exits 0 (battery may WARN). Covers §1 #5 (5900 listening) |
+| R1 | Switch to server | `sudo darwin-rebuild switch --flake ~/code/.dotfiles#ohnezahn-server` | `ohnezahn-check` exits 0 (battery and Screen Sharing may WARN), **and** `open vnc://ohnezahn.diplodocus-barley.ts.net` from another device reaches the login prompt |
 | R2 | 2 h lid closed, SSH from cellular | Note `T0=$(date '+%F %H:%M')`; close lid on AC; after ≥ 2 h, phone on **cellular** (Wi-Fi off) → `ssh maxrn@ohnezahn` over Tailscale | `ohnezahn-check --since "$T0"` → `PASS 0 Sleep event(s)`, no thermal FAIL/WARN |
 | R3 | Remote authrestart | `ohnezahn-update reboot` | `tailscale ping ohnezahn` answers within 10 min and SSH works. Record `launchctl print gui/501` → answers §1 #1. If absent: Screen Sharing login, then `ohnezahn-check` = 0 |
 | R4a | Power pull | Unplug charger | `pmset -g batt` shows "Battery Power", still reachable, `lowpowermode` active |
@@ -266,6 +266,8 @@ Run R1 in person. Everything else runs remotely unless marked otherwise.
   - **What it costs:** ohnezahn acts as you on the tailnet (§2, §3.2), and policy rules that targeted `tag:build-mac` no longer apply to it.
   - **Alternative not taken:** keys-only sshd on shredder, admitting only ohnezahn's key from tailnet addresses (validated with `sshd -t`/`sshd -T`). It's in `git stash` as "shredder sshd for ohnezahn (reverted in favour of untagging ohnezahn)".
 - **sops** only uses the age key (`age.sshKeyPaths = gnupg.sshKeyPaths = [ ]`). The defaults also tried `/etc/ssh/ssh_host_*_key`, which macOS only creates on first sshd use; that caused "Cannot read ssh key" noise and pulled in gnupg.
-- **`~/.local/bin/rex`** now points at `Rex Beta.app/Contents/Helpers/Rex Server.app/Contents/MacOS/rex`. The old target, `Rex Beta.app/Contents/MacOS/Rex`, crashed when launched through a symlink (missing `swift-ghostty_GhosttyRender` bundle), which broke the `init.lua` startup hook and `rex-sessionizer`. This symlink isn't managed by nix.
+- **`~/.local/bin/rex` is a home-manager script now, not a symlink** (`home/default.nix`, both Macs). Rex moved its CLI twice in a week: `Rex Beta.app/Contents/MacOS/Rex` (crashed when launched through a symlink: missing `swift-ghostty_GhosttyRender` bundle), then `Contents/Helpers/Rex Server.app` (`Rex Server.rex` on shredder), then `~/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/…` after the 2026-10-25 update. That last move broke the `rex-server` agent (exit 127 every 60 s) and the check's probe. The script tries `$REX_BIN_DIR` (exported by Rex in its terminals), then `Versions/Current`, then the old in-app paths, and execs the first that exists by absolute path. The agent and `ohnezahn-check` call it too.
 - **hermes** (Discord agent, gateway watchdog, iOS relay) was uninstalled: agents unloaded, plists, `~/.hermes` and `~/hermes-local-relay` deleted. Its Discord/Google credentials need revoking on the provider side.
 - **Done in person:** age key `chmod 600`, Lock Screen immediate, stale Tailscale VPN profiles removed and the Standalone extension disabled, Clippings set to Keep Downloaded (linkding-sync created 60 previously skipped links on its next run).
+- **Reboot test (R3), 2026-10-25 16:40:** after `ohnezahn-update reboot`, ohnezahn came back on Tailscale (direct, LAN) with nobody at the Mac, so **authrestart unlocks FileVault unattended**. But the Rex server, which only runs in a GUI login, was still down 11 min later, so **it stops at the login window**. Planned reboots therefore always end with one Screen Sharing login.
+- **Screen Sharing via `launchctl` doesn't work.** Port 5900 listened, but the client said "Screen Sharing is not permitted on ohnezahn… Disable and re-enable Screen Sharing or Remote Management in System Settings". The module no longer manages it in either profile (§3.4), and the check now WARNs instead of claiming PASS from the open port. Fix: at the Mac, toggle it off and on in System Settings › General › Sharing.

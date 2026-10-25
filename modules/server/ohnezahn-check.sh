@@ -106,15 +106,21 @@ if /usr/bin/pgrep -qf 'io.tailscale.ipn.macsys.network-extension'; then
   warn "Standalone Tailscale network extension is running next to tailscaled"
 fi
 
-# --- sshd / Screen Sharing reachability matches profile
-for svc in "sshd:22" "Screen Sharing:5900"; do
-  name=${svc%:*} port=${svc#*:}
-  if [ "$profile" = server ]; then
-    expect "$name listening on :$port" "$name not listening on :$port" port_open "$port"
-  else
-    expect "$name off" "$name listening on :$port in laptop profile" port_closed "$port"
-  fi
-done
+# --- sshd reachability matches profile
+if [ "$profile" = server ]; then
+  expect "sshd listening on :22" "sshd not listening on :22" port_open 22
+else
+  expect "sshd off" "sshd listening on :22 in laptop profile" port_closed 22
+fi
+
+# --- Screen Sharing: not managed by nix. A listening port doesn't prove connections
+# are permitted (launchctl-started sharing listens and then refuses logins), so
+# this is a WARN at most; R1 in the doc is the real test.
+if port_open 5900; then
+  warn "Screen Sharing listening on :5900 (permitted only if switched on in System Settings; verify by connecting)"
+elif [ "$profile" = server ]; then
+  fail "Screen Sharing off: turn it on in System Settings > General > Sharing"
+fi
 if [ "$profile" = server ] && sudo -n true 2>/dev/null; then
   pa=$(sudo -n /usr/sbin/sshd -T 2>/dev/null | awk '$1 == "passwordauthentication" { print $2 }')
   expect "sshd PasswordAuthentication no" "sshd PasswordAuthentication=$pa" [ "$pa" = no ]
@@ -128,8 +134,7 @@ if [ "$profile" = server ]; then
     for label in org.nixos.rex-server org.nixos.grok-bot dev.maxrn.linkding-sync; do
       expect "agent $label loaded" "agent $label not loaded" quiet launchctl print "gui/$uid/$label"
     done
-    rex="/Applications/Rex Beta.app/Contents/Helpers/Rex Server.app/Contents/MacOS/rex"
-    expect "rex server answers" "rex server not answering" quiet "$rex" --autostart=false --timeout 5s ls
+    expect "rex server answers" "rex server not answering" quiet "$HOME/.local/bin/rex" --autostart=false --timeout 5s ls
     expect "Grok Bot running" "Grok Bot not running" /usr/bin/pgrep -xq 'Grok Bot'
   else
     fail "no GUI session (nobody logged in): agents, Dropbox, Simulator are down; log in via Screen Sharing"
