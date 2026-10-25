@@ -31,7 +31,7 @@ Code: `modules/server.nix`, `modules/server/ohnezahn-{check,update}.sh`, `secret
 | `launchctl print gui/501` | Hand-written agent: `dev.maxrn.linkding-sync`. Rex server and Grok Bot have no agents; Rex.app spawns its server. |
 | `softwareupdate --list` | Nothing pending. `AutomaticallyInstallMacOSUpdates = 1`. |
 | `brew outdated --greedy` | 44 formulae, 15 casks (incl. `tailscale` 1.102.3 → 1.104.2, `dropbox`, `aldente`). `mas outdated`: Xcode 27.0 → 27.1. |
-| `tailscale version` / `debug prefs` / `status --json` | Homebrew **open-source tailscaled 1.102.3** as system daemon `homebrew.mxcl.tailscale` (KeepAlive). `RunSSH: true`. Tag `tag:build-mac`, but **`KeyExpiry 2027-02-18`**. |
+| `tailscale version` / `debug prefs` / `status --json` | Homebrew **open-source tailscaled 1.102.3** as system daemon `homebrew.mxcl.tailscale` (KeepAlive). `RunSSH: true`. Tag `tag:build-mac`, but **`KeyExpiry 2027-02-18`**. *Untagged and re-authenticated as maxRN@github since; see §7.* |
 | `systemextensionsctl list` / `scutil --nc list` | A stale **Standalone Tailscale network extension** (1.102.2) is activated, plus two disconnected VPN profiles ("Tailscale", "Tailscale 2"). No Tailscale.app is installed. |
 | Remote Login / Screen Sharing | Both off (ports 22 and 5900 closed). sshd config files from nix-darwin already exist. |
 | Wi-Fi | WPA2 Personal, 5 GHz; LAN IP 192.168.1.122. USB Ethernet adapters present (en3, en4). |
@@ -57,7 +57,7 @@ Code: `modules/server.nix`, `modules/server/ohnezahn-{check,update}.sh`, `secret
 - [support.apple.com/120622](https://support.apple.com/en-us/120622): Apple silicon laptops start up when the lid opens or power is connected, unless `nvram BootPreference` is set. It's unset here.
 - [Tailscale macOS variants](https://tailscale.com/kb/1065/macos-variants): only the open-source `tailscaled` runs before login and can be an SSH server. No auto-update. "Only recommended for unattended installs."
 - [Tailscale SSH](https://tailscale.com/kb/1193/tailscale-ssh): `accept` vs `check` (default re-auth 12 h). `autogroup:member` can reach a tagged dst as any user incl. root if the rule allows it. Restarting tailscaled kills open Tailscale SSH sessions.
-- [Key expiry](https://tailscale.com/kb/1028/key-expiry): expiry is disabled by default when a tag is applied for the first time and the device authenticates. That isn't what's observed here, so disable it manually.
+- [Key expiry](https://tailscale.com/kb/1028/key-expiry): expiry is disabled by default when a tag is applied for the first time and the device authenticates. That wasn't what we observed here. Moot now: ohnezahn is user-owned and its key expiry is disabled per device (§7).
 - Grok Bot ([get started](https://cursor.com/docs/grok-bot/get-started), [security](https://cursor.com/docs/grok-bot/security)): an Anysphere Electron app (`com.anysphere.sand`, team `DCNK4UB866`). Bots run on a Cursor-hosted cloud computer. The desktop app lets them "run commands, read files, and move files" on the local machine, with per-command approval by default. It auto-updates.
 - [batt README](https://github.com/charlie0129/batt): see §3.6.
 
@@ -71,7 +71,7 @@ Code: `modules/server.nix`, `modules/server/ohnezahn-{check,update}.sh`, `secret
 6. That `launchctl asuser` (the `gui` helper) puts commands in the Aqua domain from an SSH session, and whether `xcrun simctl` needs it.
 7. The current TCC grants (DBs unreadable, see above).
 8. A CLI for the macOS native charge limit (none found; `pmset -g battlimit` reports "No battery level limits set" although the limit is clearly enforced).
-9. Whether Rex's embedded tsnet node (`ohnezahn-rex` peer) is an independent shell path when tailscaled is down.
+9. Whether Rex's embedded tsnet node (`ohnezahn-rex` peer) is an independent shell path when tailscaled is down. *Partly answered (§7): it's a separate tailnet node, and Rex-to-Rex over the tailnet works; not yet tested with tailscaled down.*
 
 Each of these is a runbook item in §5.
 
@@ -88,7 +88,7 @@ Each of these is a runbook item in §5.
 | **macOS update** | Server mode turns off `AutomaticallyInstallMacOSUpdates`, so no surprise nightly reboots. Downloads and critical/RSR updates stay on. | `ohnezahn-update status`. | `ohnezahn-update macos` (`softwareupdate --install --all --restart --stdinpass --user`). If it doesn't return on Tailscale in ~20 min, recover as for an unplanned reboot (§1 #2). |
 | **App self-updates** | Grok Bot and Cursor (Squirrel/ShipIt: Grok Bot 0.68.1 and 0.70.2 helpers are running side by side right now), Rex, AlDente, Codex (Sparkle), Dropbox, Chrome (Keystone). The app quits or relaunches, or keeps running old code. A new version may ask for a new permission. TCC grants survive if bundle ID + Team ID stay the same (unverified per app). | `ohnezahn-check` (Grok Bot / rex server down); `~/Library/Logs/{grok-bot,rex-server}-agent.log`. | `grok-bot` and `rex-server` agents relaunch within 60 s. Nothing else is supervised. Brew-managed casks change only via `ohnezahn-update brew`. |
 | **New permission prompt** ("Rex Server wants access to Dropbox") | A modal on the console waits indefinitely. SSH and background processes get a silent `Operation not permitted`. | `EPERM` in logs/output. TCC barely logs at default level. | None unattended: nix can't pre-grant (TCC.db is SIP-protected; only an MDM-delivered PPPC profile can, and none is available here). Remote fallback: Screen Sharing over Tailscale → click Allow. Pre-grant everything in §4 once, in person. |
-| **Tailscale itself broken** | Crash → the brew plist's `KeepAlive` restarts it. Wedged (not `Running`) → watchdog kickstart. Logged out or **expired node key** (2027-02-18) → no self-recovery. ACL change → locked out. | Peer offline; `ohnezahn-check` from any other path. | Disable key expiry for ohnezahn now. Fallbacks: keys-only sshd on the LAN; Rex's tsnet node (§1 #9). Remove the stale Standalone extension and VPN profiles (a second Tailscale stack fighting over routes/DNS). Upgrades restart tailscaled and drop Tailscale SSH sessions: `ohnezahn-update tailscale` warns first. |
+| **Tailscale itself broken** | Crash → the brew plist's `KeepAlive` restarts it. Wedged (not `Running`) → watchdog kickstart. Logged out or **expired node key** (expiry currently disabled) → no self-recovery. ACL change → locked out. | Peer offline; `ohnezahn-check` from any other path. | Keep key expiry disabled (re-check after any re-auth). Fallbacks: keys-only sshd on the LAN; Rex's tsnet node (§1 #9). Remove the stale Standalone extension and VPN profiles (a second Tailscale stack fighting over routes/DNS). Upgrades restart tailscaled and drop Tailscale SSH sessions: `ohnezahn-update tailscale` warns first. |
 | **Battery at 100 % around the clock** | Faster wear and swelling risk, worse with heat. | `ohnezahn-check` FAILs if > limit on AC; `ioreg -rn AppleSmartBattery`. | macOS native 80 % limit, firmware-enforced, independent of any app or login. Currently held at 80 (AlDente sets it via `useTahoeNativeLimit`). Check physically for swelling now and then. |
 
 ### FileVault vs auto-login
@@ -97,7 +97,7 @@ Each of these is a runbook item in §5.
 |---|---|---|
 | Planned reboot | `fdesetup authrestart`, then maybe a Screen Sharing login (§1 #1) | Comes back fully logged in |
 | Unplanned reboot | Unreachable until a LAN SSH password unlock (needs a jump host to do remotely) | Comes back fully, agents included |
-| Laptop stolen | Disk unreadable without password/recovery key | Everything readable, and the thief boots straight into your session: tailnet node key (`tag:build-mac`), sops age key → all secrets, SSH keys, Dropbox, Cursor/Grok/Discord sessions, git credentials |
+| Laptop stolen | Disk unreadable without password/recovery key | Everything readable, and the thief boots straight into your session: tailnet node key (ohnezahn acts as *you* on the tailnet since §7), sops age key → all secrets, SSH keys, Dropbox, Cursor/Grok/Discord sessions, git credentials |
 | Cost | Authrestart briefly keeps an unlock key in memory/SMC (fdesetup(8)); pre-boot SSH accepts password auth from the LAN | Auto-login is incompatible with FileVault, so B means disabling encryption on a machine that also travels |
 
 **Recommendation: A.** This is a laptop that switches back to laptop duty, so B trades an occasional manual unlock for a total loss on theft. Close A's gap by putting an always-on LAN device (the Pi) on the tailnet as a jump host. An unplanned reboot then becomes `ssh -J pi maxrn@192.168.1.122` from anywhere.
@@ -122,7 +122,7 @@ Each of these is a runbook item in §5.
 `pmset -a disablesleep 1` plus `sleep 0`, `disksleep 0`, `standby 0`, `powernap 0` on both sources, `lowpowermode 1` on battery. **Cost:** lid closed ≠ asleep ≠ locked. The machine stays on in a bag and gets hot, and anyone who opens the lid gets whatever the screen lock allows. Set Lock Screen → "Require password immediately".
 
 ### 3.2 tailscaled + Tailscale SSH
-Homebrew's open-source tailscaled stays the daemon in **both** profiles; nix declares the brew, and server mode asserts `tailscale set --ssh=true`. Why not `services.tailscale`: no `KeepAlive`; nixpkgs is 4–12 minor versions **older** than the build that owns the state file, and newer builds don't compile with the pinned Go. Also, any switch that changes the daemon restarts tailscaled, killing the Tailscale SSH session that runs the switch. With brew, tailscaled never changes during `darwin-rebuild`. **Cost:** the tailnet ACL is your SSH auth. Anyone whose identity the ACL lets reach `tag:build-mac` gets a shell, root if the rule says so. Use `"action": "check"` for humans, restrict `users` to `maxrn`, and disable node key expiry (or set a calendar reminder).
+Homebrew's open-source tailscaled stays the daemon in **both** profiles; nix declares the brew, and server mode asserts `tailscale set --ssh=true`. Why not `services.tailscale`: no `KeepAlive`; nixpkgs is 4–12 minor versions **older** than the build that owns the state file, and newer builds don't compile with the pinned Go. Also, any switch that changes the daemon restarts tailscaled, killing the Tailscale SSH session that runs the switch. With brew, tailscaled never changes during `darwin-rebuild`. **Cost:** the tailnet policy is your SSH auth. Since §7 ohnezahn is user-owned, so your own-devices rule (typically `autogroup:member → autogroup:self`) decides who gets a shell; restrict `users` to `maxrn`. In the other direction, ohnezahn now *is* you on the tailnet: a compromise reaches every device and service you can reach. Keep node key expiry disabled (or set a calendar reminder).
 
 ### 3.3 Keys-only sshd fallback
 `services.openssh.enable = true` (laptop: `false`). Settings: `PasswordAuthentication no`, `KbdInteractiveAuthentication no`, `AuthenticationMethods publickey`, `PermitRootLogin no`, `AllowUsers maxrn`, with one key in `server.sshAuthorizedKeys` (GitHub key 128219878, `SHA256:Kh5W…`). **Cost:** port 22 is open on the LAN (the application firewall is off). At FileVault pre-boot, sshd can't read this config, so the LAN can try your **login password**; make it strong.
@@ -248,7 +248,7 @@ Run R1 in person. Everything else runs remotely unless marked otherwise.
 2. **TCC grants** from §4. Turn on "Allow full disk access for remote users", then dump TCC.db to confirm.
 3. **Charge limit:** System Settings › Battery › Charge Limit = 80 %. Decide whether to keep AlDente.
 4. **Remove the stale Tailscale Standalone network extension** and the "Tailscale" / "Tailscale 2" VPN profiles.
-5. **Tailscale admin console:** disable key expiry for ohnezahn (now 2027-02-18). Review the `ssh` ACL for `tag:build-mac` (check mode, `users: ["maxrn"]`).
+5. ~~**Tailscale admin console:** disable key expiry; review the `tag:build-mac` SSH rule.~~ Done differently (§7): untagged, key expiry disabled. Still worth checking: policy rules that referenced `tag:build-mac` (e.g. remote builds) no longer match ohnezahn.
 6. **Jump host:** put the Pi (192.168.1.4) on the tailnet and give ohnezahn a DHCP reservation (192.168.1.122). Without this, an unplanned reboot can't be recovered from outside.
 7. **R4b** power-loss / FileVault pre-boot unlock test, once.
 8. **Obsidian Clippings → Keep Downloaded** (linkding-sync `EDEADLK`).
@@ -256,3 +256,16 @@ Run R1 in person. Everything else runs remotely unless marked otherwise.
 10. Confirm which device holds GitHub key `SHA256:Kh5W…`; add the phone's key if you SSH from it.
 11. **git-crypt key in the public repo:** decide on removal and history rewrite. The fonts that key protected are already exposed.
 12. Lock Screen: require password immediately. Placement: hard, ventilated surface; check now and then for battery swelling. Consider USB-C Ethernet.
+
+---
+
+## 7. Changes after the first write-up (2026-10-25)
+
+- **ohnezahn is no longer tagged.** It was `tag:build-mac`, which made Tailscale treat it as owned by the tag. That blocked everything ohnezahn → your own devices: Taildrop ("peer is owned by a different user"), Rex to `shredder-rex`, and Tailscale SSH (tagged → user-owned isn't allowed). The admin console can't remove the last tag, so ohnezahn was re-authenticated with `sudo tailscale up --reset --force-reauth --ssh` and signed in as maxRN@github. Verified afterwards: `tags: null`, user `425445568916800`, same IP `100.115.33.68` and MagicDNS name, `KeyExpiry: null`, `RunSSH: true`, `ohnezahn-check` 0 failures.
+  - **What works now:** `rex -S shredder-rex.diplodocus-barley.ts.net …` from ohnezahn (and `rex -S ohnezahn-rex…` from shredder), and Taildrop between the two.
+  - **What it costs:** ohnezahn acts as you on the tailnet (§2, §3.2), and policy rules that targeted `tag:build-mac` no longer apply to it.
+  - **Alternative not taken:** keys-only sshd on shredder, admitting only ohnezahn's key from tailnet addresses (validated with `sshd -t`/`sshd -T`). It's in `git stash` as "shredder sshd for ohnezahn (reverted in favour of untagging ohnezahn)".
+- **sops** only uses the age key (`age.sshKeyPaths = gnupg.sshKeyPaths = [ ]`). The defaults also tried `/etc/ssh/ssh_host_*_key`, which macOS only creates on first sshd use; that caused "Cannot read ssh key" noise and pulled in gnupg.
+- **`~/.local/bin/rex`** now points at `Rex Beta.app/Contents/Helpers/Rex Server.app/Contents/MacOS/rex`. The old target, `Rex Beta.app/Contents/MacOS/Rex`, crashed when launched through a symlink (missing `swift-ghostty_GhosttyRender` bundle), which broke the `init.lua` startup hook and `rex-sessionizer`. This symlink isn't managed by nix.
+- **hermes** (Discord agent, gateway watchdog, iOS relay) was uninstalled: agents unloaded, plists, `~/.hermes` and `~/hermes-local-relay` deleted. Its Discord/Google credentials need revoking on the provider side.
+- **Done in person:** age key `chmod 600`, Lock Screen immediate, stale Tailscale VPN profiles removed and the Standalone extension disabled, Clippings set to Keep Downloaded (linkding-sync created 60 previously skipped links on its next run).
