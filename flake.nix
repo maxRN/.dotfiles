@@ -22,6 +22,10 @@
     };
     niks3.url = "github:Mic92/niks3";
     opencode.url = "github:anomalyco/opencode/dev";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "pkgs-unstable";
+    };
   };
 
   outputs =
@@ -33,14 +37,15 @@
       neovim-nightly-overlay,
       niks3,
       opencode,
+      sops-nix,
       ...
     }:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
-    in
-    {
-      darwinConfigurations = {
-        ohnezahn = nix-darwin.lib.darwinSystem rec {
+
+      mkOhnezahn =
+        { server }:
+        nix-darwin.lib.darwinSystem rec {
           system = "aarch64-darwin";
           specialArgs = {
             pkgs-unstable = import pkgs-unstable {
@@ -58,6 +63,11 @@
 
           modules = [
             ./hosts/ohnezahn
+            sops-nix.darwinModules.sops
+            {
+              sops.package = sops-nix.packages.aarch64-darwin.sops-install-secrets;
+              server.enable = server;
+            }
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -68,6 +78,11 @@
             }
           ];
         };
+    in
+    {
+      darwinConfigurations = {
+        ohnezahn = mkOhnezahn { server = false; };
+        ohnezahn-server = mkOhnezahn { server = true; };
 
         shredder = nix-darwin.lib.darwinSystem rec {
           system = "aarch64-darwin";

@@ -1,0 +1,8 @@
+# age recipient = ohnezahn's machine key (~/.config/sops/age/keys.txt, never committed).
+keys:
+  - &ohnezahn age17x4dh9q0ucp698sgvl7npx478js0uw05kte4pffrn6cmfxdsf94q4vlkse
+creation_rules:
+  - path_regex: secrets/ohnezahn\.yaml$
+    key_groups:
+      - age:
+          - *ohnezahn
