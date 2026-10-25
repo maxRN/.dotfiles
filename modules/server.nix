@@ -177,6 +177,10 @@ in
       sops = {
         defaultSopsFile = ../secrets/ohnezahn.yaml;
         age.keyFile = "${home}/.config/sops/age/keys.txt";
+        # Defaults also try /etc/ssh/ssh_host_*_key, which macOS only creates on
+        # first sshd use ("Cannot read ssh key" noise) and pull in gnupg.
+        age.sshKeyPaths = [ ];
+        gnupg.sshKeyPaths = [ ];
         secrets.blinks_api_key = {
           owner = user;
           # sync_blinks.py falls back to this path when BLINKS_API_KEY is unset.
