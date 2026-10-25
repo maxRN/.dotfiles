@@ -20,7 +20,6 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
-    niks3.url = "github:Mic92/niks3";
     opencode.url = "github:anomalyco/opencode/dev";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -35,7 +34,6 @@
       pkgs-unstable,
       home-manager,
       neovim-nightly-overlay,
-      niks3,
       opencode,
       sops-nix,
       ...
@@ -58,7 +56,7 @@
                 ];
             };
             inherit neovim-nightly-overlay;
-            inherit niks3 opencode;
+            inherit opencode;
           };
 
           modules = [
@@ -99,7 +97,7 @@
                 ];
             };
             inherit neovim-nightly-overlay;
-            inherit niks3 opencode;
+            inherit opencode;
           };
 
           modules = [
