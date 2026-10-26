@@ -232,6 +232,10 @@ in
       # via a LAN jump host), and needed for the FileVault pre-boot SSH unlock.
       services.openssh.enable = true;
 
+      # Lid closed, no local keyboard or windows to manage.
+      services.kanata.enable = lib.mkForce false;
+      services.aerospace.enable = lib.mkForce false;
+
       # Reboots only when planned (ohnezahn-update macos / reboot).
       system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
 
