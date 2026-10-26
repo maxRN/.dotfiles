@@ -10,7 +10,9 @@ let
 
   # Tahoe no longer reliably exposes plain executables in the Input Monitoring
   # picker. Package kanata as an app so macOS can attach TCC permission to it.
-  kanataAppExecutable = "/Applications/Nix Apps/Kanata.app/Contents/MacOS/kanata";
+  # Activation copies it here and signs it, see ./sign-app.sh.
+  kanataAppPath = "/Applications/Kanata.app";
+  kanataAppExecutable = "${kanataAppPath}/Contents/MacOS/kanata";
 
   kanataAppInfo = (pkgs.formats.plist { }).generate "Info.plist" {
     CFBundleDevelopmentRegion = "English";
@@ -31,8 +33,13 @@ let
     cp ${lib.getExe cfg.package} "$app/MacOS/kanata"
     chmod u+w "$app/MacOS/kanata"
     printf 'APPL????' > "$app/PkgInfo"
-    ${lib.getExe pkgs.rcodesign} sign "$out/Applications/Kanata.app"
   '';
+
+  signApp = pkgs.writeShellApplication {
+    name = "kanata-sign-app";
+    runtimeInputs = [ pkgs.openssl ];
+    text = builtins.readFile ./sign-app.sh;
+  };
 
   upstreamDoc =
     "See [the upstream documentation](https://github.com/jtroo/kanata/blob/main/docs/config.adoc)"
@@ -158,6 +165,9 @@ let
           (toString keyboard.port)
         ]
         ++ keyboard.extraArgs;
+        # The executable path never changes, so reference the store app to make
+        # launchd reload the daemon whenever the signed copy is replaced.
+        EnvironmentVariables.KANATA_APP_SOURCE = "${kanataApp}";
         KeepAlive = true;
         RunAtLoad = true;
       };
@@ -183,10 +193,11 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [
-      cfg.package
-      kanataApp
-    ];
+    environment.systemPackages = [ cfg.package ];
+
+    system.activationScripts.extraActivation.text = lib.mkAfter ''
+      ${lib.getExe signApp} ${kanataApp}/Applications/Kanata.app ${lib.escapeShellArg kanataAppPath} /var/lib/kanata-codesign
+    '';
 
     warnings =
       let

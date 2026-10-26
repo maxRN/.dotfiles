@@ -37,6 +37,12 @@ The launchd service runs Kanata through a `Kanata.app` bundle. macOS Tahoe 26
 does not reliably add plain command-line executables to Privacy & Security, so
 the app bundle gives Input Monitoring a stable, visible entry.
 
+Activation copies the bundle to `/Applications/Kanata.app` and signs it with a
+self-signed certificate that it creates on first run in
+`/var/lib/kanata-codesign`. The Input Monitoring grant is tied to that
+certificate, so it survives Kanata updates. Grant it once per machine. Deleting
+`/var/lib/kanata-codesign` creates a new certificate and requires a new grant.
+
 1. Build and activate the host configuration so the app exists:
 
     ```shell
@@ -47,7 +53,7 @@ the app bundle gives Input Monitoring a stable, visible entry.
 3. Click `+`, press `Shift-Command-G` in the file picker, and enter:
 
     ```text
-    /Applications/Nix Apps/Kanata.app
+    /Applications/Kanata.app
     ```
 
 4. Select **Kanata.app** and enable its toggle. Also ensure Kanata is allowed under
@@ -66,7 +72,7 @@ the app bundle gives Input Monitoring a stable, visible entry.
 
 If launchd reports `Abort trap: 6` or the macOS logs contain
 `TCC deny IOHIDDeviceOpen`, remove Kanata from Input Monitoring, add
-`/Applications/Nix Apps/Kanata.app` again, and restart the service.
+`/Applications/Kanata.app` again, and restart the service.
 
 
 - after setup steps:
