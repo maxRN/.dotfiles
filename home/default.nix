@@ -37,7 +37,7 @@ in
         rustup
         nixd
         fnm
-        nixfmt-rfc-style
+        nixfmt
         lua-language-server
         uv
 
@@ -47,7 +47,7 @@ in
         curl
         wget
         fd
-        neofetch
+        fastfetch
         ripgrep
         tree
         jq
