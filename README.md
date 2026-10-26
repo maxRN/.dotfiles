@@ -77,7 +77,7 @@ If launchd reports `Abort trap: 6` or the macOS logs contain
 
 - after setup steps:
 - chsh -s to make fish default
-- Run and setup aldente
+- Setup 80% charge limit in settings.
 - Optionally install tailscale if needed
 
 ## Config reference

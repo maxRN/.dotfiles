@@ -27,10 +27,9 @@ Code: `modules/server.nix`, `modules/server/ohnezahn-{check,update}.sh`, `secret
 | `pmset -g assertions` | Cursor holds `NoIdleSleepAssertion`. Assertions don't stop clamshell sleep. |
 | `fdesetup status` / `supportsauthrestart` | FileVault on; authrestart supported. No auto-login (`autoLoginUser` unset, no `/etc/kcpassword`). Secure token on for `maxrn`. |
 | `ioreg -rn AppleSmartBattery` | 113 cycles, FullChargeCapacity 4252 of DesignCapacity 4563 mAh (93%). |
-| `defaults read com.apphousekitchen.aldente-pro` | AlDente 1.34.1 runs with `useTahoeNativeLimit = 1`, `chargeVal = 80`, i.e. it delegates to the macOS native limit. |
 | `launchctl print gui/501` | Hand-written agent: `dev.maxrn.linkding-sync`. Rex server and Grok Bot have no agents; Rex.app spawns its server. |
 | `softwareupdate --list` | Nothing pending. `AutomaticallyInstallMacOSUpdates = 1`. |
-| `brew outdated --greedy` | 44 formulae, 15 casks (incl. `tailscale` 1.102.3 → 1.104.2, `dropbox`, `aldente`). `mas outdated`: Xcode 27.0 → 27.1. |
+| `brew outdated --greedy` | 44 formulae, 15 casks (incl. `tailscale` 1.102.3 → 1.104.2, `dropbox`). `mas outdated`: Xcode 27.0 → 27.1. |
 | `tailscale version` / `debug prefs` / `status --json` | Homebrew **open-source tailscaled 1.102.3** as system daemon `homebrew.mxcl.tailscale` (KeepAlive). `RunSSH: true`. Tag `tag:build-mac`, but **`KeyExpiry 2027-02-18`**. *Untagged and re-authenticated as maxRN@github since; see §7.* |
 | `systemextensionsctl list` / `scutil --nc list` | A stale **Standalone Tailscale network extension** (1.102.2) is activated, plus two disconnected VPN profiles ("Tailscale", "Tailscale 2"). No Tailscale.app is installed. |
 | Remote Login / Screen Sharing | Both off (ports 22 and 5900 closed). sshd config files from nix-darwin already exist. |
@@ -86,10 +85,10 @@ Each of these is a runbook item in §5.
 | **Planned reboot** | GUI login: authrestart lands at the **login window** (verified, §7). tailscaled, sshd and Screen Sharing are up, but rex, Grok Bot, linkding-sync, Dropbox and Simulator are not. | `ohnezahn-check`: "no GUI session". | `ohnezahn-update reboot` → `fdesetup authrestart` skips the FileVault unlock. Then log in via Screen Sharing over Tailscale (needs Screen Sharing switched on in System Settings beforehand); agents then start (`RunAtLoad`/`KeepAlive`). |
 | **Unplanned reboot / power loss, FileVault on** | Power loss alone: the battery takes over (hours; `lowpowermode 1` on battery). Battery at 0 → shutdown; power back → boots, since `BootPreference` is unset (§1 #3). It boots to **FileVault pre-boot**: data volume locked, so **no tailscaled** (its state is on that volume) and no agents. Kernel freeze → `restartAfterFreeze`. | Node offline. Nothing on the machine can tell you. | From the **LAN only**: `ssh maxrn@192.168.1.122` with your **password** unlocks the volume (`apple_ssh_and_filevault(7)`). From outside you need a LAN jump host on the tailnet, and **none exists today**: the Pi at 192.168.1.4 isn't on it. Then GUI login via Screen Sharing. Until then this is a **known limit**: an unplanned reboot means unreachable until someone on the LAN unlocks. |
 | **macOS update** | Server mode turns off `AutomaticallyInstallMacOSUpdates`, so no surprise nightly reboots. Downloads and critical/RSR updates stay on. | `ohnezahn-update status`. | `ohnezahn-update macos` (`softwareupdate --install --all --restart --stdinpass --user`). If it doesn't return on Tailscale in ~20 min, recover as for an unplanned reboot (§1 #2). |
-| **App self-updates** | Grok Bot and Cursor (Squirrel/ShipIt: Grok Bot 0.68.1 and 0.70.2 helpers are running side by side right now), Rex, AlDente, Codex (Sparkle), Dropbox, Chrome (Keystone). The app quits or relaunches, or keeps running old code. A new version may ask for a new permission. TCC grants survive if bundle ID + Team ID stay the same (unverified per app). | `ohnezahn-check` (Grok Bot / rex server down); `~/Library/Logs/grok-bot-agent.log`. | The `grok-bot` agent relaunches within 60 s; Rex.app starts its own server. Nothing else is supervised. Brew-managed casks change only via `ohnezahn-update brew`. |
+| **App self-updates** | Grok Bot and Cursor (Squirrel/ShipIt: Grok Bot 0.68.1 and 0.70.2 helpers are running side by side right now), Rex, Codex (Sparkle), Dropbox, Chrome (Keystone). The app quits or relaunches, or keeps running old code. A new version may ask for a new permission. TCC grants survive if bundle ID + Team ID stay the same (unverified per app). | `ohnezahn-check` (Grok Bot / rex server down); `~/Library/Logs/grok-bot-agent.log`. | The `grok-bot` agent relaunches within 60 s; Rex.app starts its own server. Nothing else is supervised. Brew-managed casks change only via `ohnezahn-update brew`. |
 | **New permission prompt** ("Rex Server wants access to Dropbox") | A modal on the console waits indefinitely. SSH and background processes get a silent `Operation not permitted`. | `EPERM` in logs/output. TCC barely logs at default level. | None unattended: nix can't pre-grant (TCC.db is SIP-protected; only an MDM-delivered PPPC profile can, and none is available here). Remote fallback: Screen Sharing over Tailscale → click Allow. Pre-grant everything in §4 once, in person. |
 | **Tailscale itself broken** | Crash → the brew plist's `KeepAlive` restarts it. Wedged (not `Running`) → watchdog kickstart. Logged out or **expired node key** (expiry currently disabled) → no self-recovery. ACL change → locked out. | Peer offline; `ohnezahn-check` from any other path. | Keep key expiry disabled (re-check after any re-auth). Fallbacks: keys-only sshd on the LAN; Rex's tsnet node (§1 #9). Remove the stale Standalone extension and VPN profiles (a second Tailscale stack fighting over routes/DNS). Upgrades restart tailscaled and drop Tailscale SSH sessions: `ohnezahn-update tailscale` warns first. |
-| **Battery at 100 % around the clock** | Faster wear and swelling risk, worse with heat. | `ohnezahn-check` FAILs if > limit on AC; `ioreg -rn AppleSmartBattery`. | macOS native 80 % limit, firmware-enforced, independent of any app or login. Currently held at 80 (AlDente sets it via `useTahoeNativeLimit`). Check physically for swelling now and then. |
+| **Battery at 100 % around the clock** | Faster wear and swelling risk, worse with heat. | `ohnezahn-check` FAILs if > limit on AC; `ioreg -rn AppleSmartBattery`. | macOS native 80 % limit, firmware-enforced, independent of any app or login. Currently held at 80. Check physically for swelling now and then. |
 
 ### FileVault vs auto-login
 
@@ -149,18 +148,6 @@ No external heartbeat, per your choice.
 ### 3.7 Restart after power failure
 `pmset autorestart` isn't available on this hardware. The equivalent is Apple silicon's boot-on-power-connect: server mode deletes `nvram BootPreference` to keep it, and sets `restartAfterFreeze`. FileVault still stops the boot at pre-boot (§2).
 
-### 3.8 80 % charge limit: AlDente vs batt
-On firmware ≥ 20457.0.125 (this machine: 20457.1.29), the batt README says Apple gated the SMC charge keys. Both tools then end up on the **macOS native limit** (80–100 %).
-
-| | AlDente (installed, Pro) | batt (`brew install batt`) |
-|---|---|---|
-| Mechanism here | `useTahoeNativeLimit = 1` → native limit | Falls back to the native limit; "adapter mode" cuts wall power for limits < 80 |
-| Headless | GUI app + privileged helper; app must be running to change settings | Root daemon + CLI (`sudo batt limit 80`), works before login and over SSH |
-| Updates | Sparkle self-update, needs GUI | brew |
-| Attack surface | Closed source, privileged helper | Open source, root daemon |
-
-For 80 % on this firmware, **neither is needed**. Set System Settings › Battery › Charge Limit = 80 % once; it's firmware-enforced and needs no login. Use batt only if you want < 80 % (adapter mode) or to adjust over SSH. Don't run both. Nothing for this is in nix (no documented CLI).
-
 ### 3.9 Remote updates: `ohnezahn-update`
 | Subcommand | Does | Drops the connection? |
 |---|---|---|
@@ -196,7 +183,6 @@ Server mode disables Kanata and AeroSpace (`modules/server.nix`), so they need n
 | tailscaled (`/opt/homebrew/…/tailscaled`, ad-hoc) | FDA, if Tailscale SSH sessions need protected paths | Attribution unverified (§1 #4); grant breaks on each brew upgrade |
 | sshd | Remote Login › "Allow full disk access for remote users" | Stable, Apple-signed |
 | linkding-sync (`uv`) | None; instead set **Obsidian Clippings → Keep Downloaded** | Fixes the `EDEADLK` skips |
-| AlDente helper | Already approved | Only if you keep AlDente |
 
 **Remote fallback when a prompt appears:** Screen Sharing over Tailscale. On a Mac: `open vnc://ohnezahn.diplodocus-barley.ts.net`; on iPhone, any VNC client to the same name. It works at the login window too. If the lid-closed desktop is black (§1 #5), an HDMI dummy plug gives a framebuffer.
 
@@ -245,7 +231,7 @@ Run R1 in person. Everything else runs remotely unless marked otherwise.
 
 1. **First server switch (R1)**, with the sudo password at the keyboard.
 2. **TCC grants** from §4. Turn on "Allow full disk access for remote users", then dump TCC.db to confirm.
-3. **Charge limit:** System Settings › Battery › Charge Limit = 80 %. Decide whether to keep AlDente.
+3. **Charge limit:** System Settings › Battery › Charge Limit = 80 %.
 4. **Remove the stale Tailscale Standalone network extension** and the "Tailscale" / "Tailscale 2" VPN profiles.
 5. ~~**Tailscale admin console:** disable key expiry; review the `tag:build-mac` SSH rule.~~ Done differently (§7): untagged, key expiry disabled. Still worth checking: policy rules that referenced `tag:build-mac` (e.g. remote builds) no longer match ohnezahn.
 6. **Jump host:** put the Pi (192.168.1.4) on the tailnet and give ohnezahn a DHCP reservation (192.168.1.122). Without this, an unplanned reboot can't be recovered from outside.
