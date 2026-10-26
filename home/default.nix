@@ -3,7 +3,6 @@
   pkgs,
   pkgs-unstable,
   neovim-nightly-overlay,
-  opencode,
   ...
 }:
 let
@@ -105,10 +104,6 @@ in
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".local/bin/opencode" = {
-      source = "${config.programs.opencode.package}/bin/opencode";
-      force = true;
-    };
     ".config/nvim".source = l "dotfiles/nvim";
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
@@ -156,17 +151,6 @@ in
   ];
 
   programs = {
-    opencode = {
-      enable = true;
-      # Upstream invokes codesign without including the macOS signing tools.
-      package = opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode.overrideAttrs (old: {
-        nativeBuildInputs = old.nativeBuildInputs ++ [
-          pkgs.darwin.sigtool
-          pkgs.darwin.cctools
-        ];
-      });
-    };
-
     fzf = {
       enable = true;
     };
