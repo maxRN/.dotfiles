@@ -178,6 +178,14 @@
       }
       {
         "if" = {
+          app-id = "com.superlogical.rex";
+        };
+        run = [
+          "move-node-to-workspace 2"
+        ];
+      }
+      {
+        "if" = {
           app-id = "md.obsidian";
         };
         run = [
