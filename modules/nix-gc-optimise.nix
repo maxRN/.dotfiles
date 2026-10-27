@@ -1,10 +1,10 @@
 {
-  pkgs-unstable,
+  pkgs,
   ...
 }:
 {
-  # Lix 2.95 from 25.11 isn't in the binary cache and fails its tests on darwin.
-  nix.package = pkgs-unstable.lixPackageSets.lix_2_95.lix;
+  # Stable's default Lix is still 2.94; 2.95 from 26.05 is cached and passes on darwin.
+  nix.package = pkgs.lixPackageSets.lix_2_95.lix;
 
   nix.optimise.automatic = true;
 
