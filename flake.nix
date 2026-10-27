@@ -28,6 +28,7 @@
 
   outputs =
     {
+      self,
       nix-darwin,
       nixpkgs,
       pkgs-unstable,
@@ -123,6 +124,8 @@
           secretive = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/secretive { };
         }
       );
+      # `nix flake check` doesn't build darwinConfigurations on its own.
+      checks.aarch64-darwin = nixpkgs.lib.mapAttrs (_: cfg: cfg.system) self.darwinConfigurations;
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
     };
 }
