@@ -30,7 +30,6 @@ in
     let
       unstable = with pkgs-unstable; [
         bun
-        gemini-cli
       ];
       stable = with pkgs; [
         # programming langs
