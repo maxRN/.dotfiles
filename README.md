@@ -27,9 +27,14 @@ sudo /usr/libexec/PlistBuddy -c "Add 'redesigned_text_cursor:Enabled' bool false
 sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake .#ohnezahn
 ```
 
-- install karabiner elements from website: https://karabiner-elements.pqrs.org/
-    - Make sure it has permissions in Private & Security > Input monitoring
-    - and in General > Anmeldeobjekte & Erweiterungen
+  Afterwards use `make build`/`make switch` (see the Makefile). On ohnezahn,
+  pick the profile explicitly: `make switch PROFILE=ohnezahn-server`.
+
+- install Karabiner-Elements from the website: https://karabiner-elements.pqrs.org/
+    - Kanata doesn't use Karabiner's remapping. It needs the Karabiner
+      VirtualHIDDevice driver and daemon that Karabiner-Elements installs and runs.
+    - Allow the driver in General > Login Items & Extensions
+    - Input Monitoring goes to `Kanata.app`, see below
 
 ### Enable the Kanata service on macOS
 
