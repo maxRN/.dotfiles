@@ -213,6 +213,10 @@ in
       services.openssh.enable = false;
       system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = true;
 
+      # Menu bar auto-hide ("Always"), as before server mode existed.
+      system.defaults.NSGlobalDomain._HIHideMenuBar = true;
+      system.defaults.CustomUserPreferences.NSGlobalDomain.AppleMenuBarVisibleInFullscreen = false;
+
       system.activationScripts.postActivation.text = ''
         echo "server mode off: disabling DevToolsSecurity..." >&2
         DevToolsSecurity -disable >/dev/null 2>&1 || true
@@ -235,6 +239,11 @@ in
       # Lid closed, no local keyboard or windows to manage.
       services.kanata.enable = lib.mkForce false;
       services.aerospace.enable = lib.mkForce false;
+
+      # Screen Sharing sessions: keep Dock and menu bar visible ("Never" auto-hide).
+      system.defaults.dock.autohide = lib.mkForce false;
+      system.defaults.NSGlobalDomain._HIHideMenuBar = false;
+      system.defaults.CustomUserPreferences.NSGlobalDomain.AppleMenuBarVisibleInFullscreen = true;
 
       # Reboots only when planned (ohnezahn-update macos / reboot).
       system.defaults.SoftwareUpdate.AutomaticallyInstallMacOSUpdates = false;
