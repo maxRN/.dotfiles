@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgs-unstable,
   ...
 }:
 {
@@ -18,19 +17,13 @@
     "$ANDROID_HOME/platform-tools"
   ];
 
-  home.packages =
-    let
-      unstable = with pkgs-unstable; [
-        _1password-gui
-      ];
-
-      stable = with pkgs; [
-        awscli2
-        jdk17
-        mysql84
-        postgresql
-        grafana-loki
-      ];
-    in
-    stable ++ unstable;
+  # The 1Password app lives in /Applications and updates itself; op comes from
+  # programs._1password in ./default.nix.
+  home.packages = with pkgs; [
+    awscli2
+    jdk17
+    mysql84
+    postgresql
+    grafana-loki
+  ];
 }

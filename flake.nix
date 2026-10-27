@@ -105,7 +105,6 @@
           unstableUnfree = [
             "ffmpeg-full"
             "claude-code"
-            "1password"
             "1password-cli"
           ];
         };
