@@ -40,38 +40,54 @@
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
 
-      mkOhnezahn =
-        { server }:
+      # One nix-darwin system with home-manager for maxrn. `unstableUnfree` only
+      # applies to pkgs-unstable; the stable package set keeps its own policy.
+      mkDarwin =
+        {
+          hostModule,
+          homeModule,
+          extraModules ? [ ],
+          unstableUnfree ? [ ],
+        }:
         nix-darwin.lib.darwinSystem rec {
           system = "aarch64-darwin";
           specialArgs = {
             pkgs-unstable = import pkgs-unstable {
-              system = "aarch64-darwin";
-              config.allowUnfreePredicate =
-                pkg:
-                builtins.elem (nixpkgs.lib.getName pkg) [
-                  "ffmpeg-full"
-                  "claude-code"
-                ];
+              inherit system;
+              config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) unstableUnfree;
             };
             inherit neovim-nightly-overlay;
           };
 
           modules = [
-            ./hosts/ohnezahn
-            sops-nix.darwinModules.sops
-            {
-              sops.package = sops-nix.packages.aarch64-darwin.sops-install-secrets;
-              server.enable = server;
-            }
+            hostModule
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.verbose = true;
-              home-manager.users.maxrn = ./hosts/ohnezahn/home-manager.nix;
+              home-manager.users.maxrn = homeModule;
               home-manager.extraSpecialArgs = specialArgs;
             }
+          ]
+          ++ extraModules;
+        };
+
+      mkOhnezahn =
+        { server }:
+        mkDarwin {
+          hostModule = ./hosts/ohnezahn;
+          homeModule = ./hosts/ohnezahn/home-manager.nix;
+          extraModules = [
+            sops-nix.darwinModules.sops
+            {
+              sops.package = sops-nix.packages.aarch64-darwin.sops-install-secrets;
+              server.enable = server;
+            }
+          ];
+          unstableUnfree = [
+            "ffmpeg-full"
+            "claude-code"
           ];
         };
     in
@@ -80,34 +96,14 @@
         ohnezahn = mkOhnezahn { server = false; };
         ohnezahn-server = mkOhnezahn { server = true; };
 
-        shredder = nix-darwin.lib.darwinSystem rec {
-          system = "aarch64-darwin";
-          specialArgs = {
-            pkgs-unstable = import pkgs-unstable {
-              system = "aarch64-darwin";
-              config.allowUnfreePredicate =
-                pkg:
-                builtins.elem (nixpkgs.lib.getName pkg) [
-                  "ffmpeg-full"
-                  "claude-code"
-                  "1password"
-                  "1password-cli"
-                ];
-            };
-            inherit neovim-nightly-overlay;
-          };
-
-          modules = [
-            ./hosts/shredder
-
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.verbose = true;
-              home-manager.users.maxrn = ./hosts/shredder/home-manager.nix;
-              home-manager.extraSpecialArgs = specialArgs;
-            }
+        shredder = mkDarwin {
+          hostModule = ./hosts/shredder;
+          homeModule = ./hosts/shredder/home-manager.nix;
+          unstableUnfree = [
+            "ffmpeg-full"
+            "claude-code"
+            "1password"
+            "1password-cli"
           ];
         };
       };
