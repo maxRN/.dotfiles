@@ -13,6 +13,7 @@ in
     ./homebrew.nix
     ../../modules/darwin-settings.nix
     ../../modules/nix-gc-optimise.nix
+    ../../modules/linux-builder.nix
     ../../modules/common-options.nix
     ../../modules/server.nix
 
