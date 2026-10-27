@@ -82,7 +82,6 @@
           extraModules = [
             sops-nix.darwinModules.sops
             {
-              sops.package = sops-nix.packages.aarch64-darwin.sops-install-secrets;
               server.enable = server;
             }
           ];
