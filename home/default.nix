@@ -107,7 +107,6 @@ in
     ".config/nvim".source = l "dotfiles/nvim";
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
-    ".config/kanata".source = l "dotfiles/kanata";
     ".pi/agent/keybindings.json".source = l "dotfiles/pi/keybindings.json";
   };
 
