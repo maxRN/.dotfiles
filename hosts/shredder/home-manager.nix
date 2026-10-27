@@ -22,7 +22,6 @@
     let
       unstable = with pkgs-unstable; [
         _1password-gui
-        _1password-cli
       ];
 
       stable = with pkgs; [

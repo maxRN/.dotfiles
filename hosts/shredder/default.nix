@@ -1,3 +1,4 @@
+{ pkgs-unstable, ... }:
 let
   hostname = "shredder";
 in
@@ -30,6 +31,12 @@ in
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local = {
     touchIdAuth = true;
+  };
+
+  # The 1Password app only integrates with an op installed at /usr/local/bin/op.
+  programs._1password = {
+    enable = true;
+    package = pkgs-unstable._1password-cli;
   };
 
 }
