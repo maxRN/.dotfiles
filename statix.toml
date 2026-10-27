@@ -1,0 +1,2 @@
+# This repo deliberately writes options as repeated dotted keys (a.b = ...; a.c = ...;).
+disabled = [ "repeated_keys" ]

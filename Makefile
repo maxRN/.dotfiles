@@ -14,7 +14,7 @@ ACTIVE := $(shell cat /etc/ohnezahn/profile 2>/dev/null)
 PROFILE ?= $(if $(filter ohnezahn,$(HOST)),$(if $(filter server,$(ACTIVE)),ohnezahn-server,ohnezahn),$(HOST))
 INPUT ?=
 
-.PHONY: profile build check switch update
+.PHONY: profile build check switch update fmt lint
 
 profile:
 	@echo "profile: $(PROFILE)"
@@ -31,3 +31,10 @@ switch: profile
 
 update:
 	nix flake update $(INPUT)
+
+fmt:
+	nix fmt
+
+lint:
+	nix run --inputs-from . nixpkgs#statix -- check .
+	nix run --inputs-from . nixpkgs#deadnix -- --fail .
