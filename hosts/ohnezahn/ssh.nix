@@ -18,10 +18,9 @@
       Host *
           IdentityFile ~/.ssh/id_ed25519
           SetEnv TERM=xterm-256color
-      Host pi
+      Host beholder
           HostName 192.168.1.4
-          User pi
-          IdentityFile ~/.ssh/raspi
+          User root
       Host jump-serve
           HostName login.zih.tu-dresden.de 
           User s4389254
