@@ -9,6 +9,7 @@ let
   homeManager = "${config.dotfiles.path}/home";
   link = config.lib.file.mkOutOfStoreSymlink;
   l = x: link homeManager + "/${x}";
+  localPkgs = import ../pkgs { inherit pkgs; };
 in
 {
   imports = [
@@ -68,8 +69,8 @@ in
     ++ unstable
     ++ [ neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default ]
     ++ [
-      (pkgs.callPackage ../pkgs/pi { })
-      (pkgs.callPackage ../pkgs/secretive { })
+      localPkgs.pi
+      localPkgs.secretive
       (pkgs.writeShellScriptBin "tmux-sessionizer" ''
         if [[ $# -eq 1 ]]; then
             selected=$1

@@ -1,9 +1,12 @@
 { pkgs, ... }:
+let
+  localPkgs = import ../pkgs { inherit pkgs; };
+in
 {
   home.packages = [
     pkgs.cascadia-code
-    (pkgs.callPackage ../pkgs/paper-mono { })
-    (pkgs.callPackage ../pkgs/paper-mono { slashedZero = true; })
+    localPkgs.paper-mono
+    localPkgs.paper-mono-slashed-zero
   ];
 
   fonts.fontconfig.enable = true;

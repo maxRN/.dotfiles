@@ -110,19 +110,7 @@
           ];
         };
       };
-      packages = forAllSystems (
-        system:
-        {
-          pi = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/pi { };
-          paper-mono = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono { };
-          paper-mono-slashed-zero = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/paper-mono {
-            slashedZero = true;
-          };
-        }
-        // nixpkgs.lib.optionalAttrs (nixpkgs.lib.hasSuffix "darwin" system) {
-          secretive = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/secretive { };
-        }
-      );
+      packages = forAllSystems (system: import ./pkgs { pkgs = nixpkgs.legacyPackages.${system}; });
       # `nix flake check` doesn't build darwinConfigurations on its own.
       checks.aarch64-darwin = nixpkgs.lib.mapAttrs (_: cfg: cfg.system) self.darwinConfigurations;
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
