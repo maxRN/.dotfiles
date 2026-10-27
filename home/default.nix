@@ -140,7 +140,6 @@ in
 
   home.sessionPath = [
     "$HOME/bin"
-    "$XDG_CONFIG_HOME/nix-darwin/home/dotfiles/scripts"
     "$HOME/.local/bin"
     "./node_modules/.bin"
     "$HOME/go/bin"
