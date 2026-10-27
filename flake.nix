@@ -2,10 +2,9 @@
   description = "NixOS and nix-darwin configuration";
 
   inputs = {
-    # apparently it goes like this from fresh to stale:
-    # nixos/nixpkgs/master == nixos/nixpkgs
-    # nixos/nixpkgs/nixpkgs-unstable
-    # nixos/nixpkgs/nixos-2x.xx
+    # Stable release for the system; pkgs-unstable for the few packages that need
+    # newer versions. nixpkgs-unstable (not master) only advances after Hydra's
+    # build and test gates, so its packages are more likely to be cached.
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
     pkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
