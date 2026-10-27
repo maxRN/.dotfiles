@@ -15,5 +15,5 @@
   '';
 
   home.file.".config/rex".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/code/.dotfiles/home/dotfiles/rex";
+    config.lib.file.mkOutOfStoreSymlink "${config.dotfiles.path}/home/dotfiles/rex";
 }

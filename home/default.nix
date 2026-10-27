@@ -6,13 +6,13 @@
   ...
 }:
 let
-  # needs to be absolute path. Important!
-  homeManager = builtins.toPath "/Users/${config.home.username}/code/.dotfiles/home";
+  homeManager = "${config.dotfiles.path}/home";
   link = config.lib.file.mkOutOfStoreSymlink;
   l = x: link homeManager + "/${x}";
 in
 {
   imports = [
+    ./dotfiles-path.nix
     ./git.nix
     ./fish.nix
     ./rex.nix
