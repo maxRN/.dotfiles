@@ -1,5 +1,4 @@
 {
-  imports = [ ../../home/homebrew.nix ];
   homebrew = {
     enable = true;
     casks = [

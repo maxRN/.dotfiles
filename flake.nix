@@ -49,8 +49,10 @@
           extraModules ? [ ],
           unstableUnfree ? [ ],
         }:
-        nix-darwin.lib.darwinSystem rec {
+        let
           system = "aarch64-darwin";
+        in
+        nix-darwin.lib.darwinSystem rec {
           specialArgs = {
             pkgs-unstable = import pkgs-unstable {
               inherit system;
@@ -60,6 +62,7 @@
           };
 
           modules = [
+            { nixpkgs.hostPlatform = system; }
             hostModule
             home-manager.darwinModules.home-manager
             {
