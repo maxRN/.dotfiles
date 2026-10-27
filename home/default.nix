@@ -28,7 +28,6 @@ in
   home.packages =
     let
       unstable = with pkgs-unstable; [
-        kanata-with-cmd
         bun
         gemini-cli
       ];
