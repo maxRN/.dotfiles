@@ -71,34 +71,50 @@ in
     ++ [
       localPkgs.pi
       localPkgs.secretive
-      (pkgs.writeShellScriptBin "tmux-sessionizer" ''
-        if [[ $# -eq 1 ]]; then
-            selected=$1
-        else
-            selected=$(find ~/work ~/code ~/uni ~/notes -mindepth 1 -maxdepth 1 -type d | fzf --tmux --color gutter:-1)
-        fi
+      (pkgs.writeShellApplication {
+        name = "tmux-sessionizer";
+        runtimeInputs = [
+          pkgs.fzf
+          pkgs.tmux
+        ];
+        text = ''
+          if [[ $# -eq 1 ]]; then
+              selected=$1
+          else
+              # A missing directory or a cancelled fzf just means "nothing selected".
+              selected=$(find ~/work ~/code ~/uni ~/notes -mindepth 1 -maxdepth 1 -type d | fzf --tmux --color gutter:-1) || true
+          fi
 
-        if [[ -z $selected ]]; then
-            exit 0
-        fi
+          if [[ -z $selected ]]; then
+              exit 0
+          fi
 
-        selected_name=$(basename "$selected" | tr . _)
+          selected_name=$(basename "$selected" | tr . _)
 
-        if ! tmux has-session -t="$selected_name" 2> /dev/null; then
-            tmux new-session -ds "$selected_name" -c "$selected"
-        fi
+          if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+              tmux new-session -ds "$selected_name" -c "$selected"
+          fi
 
-        tmux switch-client -t "$selected_name"
-      '')
-      (pkgs.writeShellScriptBin "ask-gpt" ''
-        read -p "Ask ChatGPT: " question 
-        url_encoded=$(echo $question | ${pkgs.jq}/bin/jq -sRr @uri)
-        open "https://chatgpt.com/?q=$url_encoded"
-      '')
-      (pkgs.writeShellScriptBin "ask-tldr" ''
-        read -p "Enter CLI/programming lang: " topic
-        ${pkgs.tldr}/bin/tldr $topic
-      '')
+          tmux switch-client -t "$selected_name"
+        '';
+      })
+      (pkgs.writeShellApplication {
+        name = "ask-gpt";
+        runtimeInputs = [ pkgs.jq ];
+        text = ''
+          read -r -p "Ask ChatGPT: " question
+          url_encoded=$(printf '%s' "$question" | jq -sRr @uri)
+          open "https://chatgpt.com/?q=$url_encoded"
+        '';
+      })
+      (pkgs.writeShellApplication {
+        name = "ask-tldr";
+        runtimeInputs = [ pkgs.tldr ];
+        text = ''
+          read -r -a topic -p "Enter CLI/programming lang: "
+          tldr "''${topic[@]}"
+        '';
+      })
     ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

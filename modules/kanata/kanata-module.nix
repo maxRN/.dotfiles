@@ -201,7 +201,9 @@ in
 
     warnings =
       let
-        keyboardsWithEmptyDevices = lib.filterAttrs (name: keyboard: keyboard.devices == [ ]) cfg.keyboards;
+        keyboardsWithEmptyDevices = lib.filterAttrs (
+          _name: keyboard: keyboard.devices == [ ]
+        ) cfg.keyboards;
         existEmptyDevices = lib.length (lib.attrNames keyboardsWithEmptyDevices) > 0;
         moreThanOneKeyboard = lib.length (lib.attrNames cfg.keyboards) > 1;
       in
