@@ -25,6 +25,31 @@ rex.bind("ctrl+a>k", "pane.focus.up")
 rex.bind("ctrl+a>h", "pane.focus.left")
 rex.bind("ctrl+a>l", "pane.focus.right")
 
+rex.action {
+    name        = "sessionizer",
+    title       = "Open Sessionizer",
+    description = "Pick a project in a floating pane and switch to its session.",
+    run         = function(ctx)
+        -- rex-sessionizer switches the app in REX_CLIENT, the one that ran this.
+        local command = { "rex-sessionizer" }
+        if ctx.client_id ~= nil then
+            command = { "env", "REX_CLIENT=" .. ctx.client_id, "rex-sessionizer" }
+        end
+        local layer, err = rex.session.new_layer {
+            bounds = { 0.15, 0.15, 0.7, 0.7 },
+            focus  = true,
+            layout = rex.layout.block {
+                flavor  = "com.superlogical.terminal.shell",
+                options = { command = command },
+            },
+        }
+        if err ~= nil then error(err, 0) end
+        return layer
+    end,
+}
+
+rex.bind("ctrl+a>f", "sessionizer")
+
 local function claude_project(name, title, repository)
     rex.action {
         name        = name .. "_claude",
