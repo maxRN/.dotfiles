@@ -19,7 +19,7 @@
           IdentityFile ~/.ssh/id_ed25519
           SetEnv TERM=xterm-256color
       Host beholder
-          HostName 192.168.1.4
+          HostName 10.10.0.4
           User root
       Host jump-serve
           HostName login.zih.tu-dresden.de 
