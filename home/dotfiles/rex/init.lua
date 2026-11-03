@@ -84,3 +84,5 @@ if hostname and hostname.ok and hostname.stdout:match("^%s*(.-)%s*$") == "shredd
     claude_project("mobile", "Mobile", "zcontrol-mobile")
     claude_project("zcontrol_backend", "zControl Backend", "zcontrol-backend")
 end
+
+require("maestro")

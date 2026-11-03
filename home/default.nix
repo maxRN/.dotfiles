@@ -122,6 +122,7 @@ in
     ".config/nvim".source = l "dotfiles/nvim";
     ".config/ghostty".source = l "dotfiles/ghostty";
     ".config/fish/themes".source = l "dotfiles/fish/themes";
+    ".config/fish/functions/fish_prompt.fish".source = l "dotfiles/fish/functions/fish_prompt.fish";
     ".pi/agent/keybindings.json".source = l "dotfiles/pi/keybindings.json";
   };
 
@@ -167,6 +168,7 @@ in
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+      config.global.hide_env_diff = true;
     };
 
     home-manager.enable = true;

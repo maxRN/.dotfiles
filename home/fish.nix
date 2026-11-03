@@ -99,8 +99,7 @@
             source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
         end
 
-        # Prompt
-        fish_config prompt choose arrow
+        # Prompt lives in dotfiles/fish/functions/fish_prompt.fish
         fish_config theme choose my
 
         fish_add_path /opt/homebrew/opt/ruby/bin
